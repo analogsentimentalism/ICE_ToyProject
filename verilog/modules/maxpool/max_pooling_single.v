@@ -1,4 +1,4 @@
-module max_pooling(
+module max_pooling_single(
     single_input_data, single_output_data
 );
 

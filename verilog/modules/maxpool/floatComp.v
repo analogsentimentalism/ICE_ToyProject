@@ -4,9 +4,9 @@ module floatComp(
 parameter DATA_BITS = 32;
 
 input [DATA_BITS-1 : 0] floatA, floatB;
-output [DATA_BITS-1 : 0] Max;
+output reg [DATA_BITS-1 : 0] Max;
 
-reg signA, signB:
+reg signA, signB;
 reg [7:0] exponentA, exponentB;
 reg [22:0] mantissaA, mantissaB;
 
