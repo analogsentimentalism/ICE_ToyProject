@@ -12,8 +12,8 @@ input [0:H*W*D*DATA_BITS-1] multi_input_data;
 output reg [0:(H*W/4) *D*DATA_BITS-1] multi_output_data;
 
 reg [0:H*W*DATA_BITS -1] single_input_data;
-wire [0:(H*W*/4) * DATA_BITS -1] single_output_data;
-integer count;
+wire [0:(H*W/4) * DATA_BITS -1] single_output_data;
+integer counter;
 
 max_pooling_single u_max_pooling_single(
     .single_input_data(single_input_data),

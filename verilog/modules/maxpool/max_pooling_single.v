@@ -22,7 +22,7 @@ generate
                 .numB(single_input_data[(i*W+j+1)*DATA_BITS+:DATA_BITS]),
                 .numC(single_input_data[((i+1)*W+j)*DATA_BITS+:DATA_BITS]),
                 .numD(single_input_data[((i+1)*W+j+1)*DATA_BITS+:DATA_BITS]),
-                .MaxOut(single_output_data[(i*H/4+j/2*DATA_BITS+:DATA_BITS)])
+                .MaxOut(single_output_data[(i*H/4+j/2)*DATA_BITS+:DATA_BITS])
             );
 
         end
