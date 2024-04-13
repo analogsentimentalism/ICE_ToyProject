@@ -16,7 +16,7 @@ module batch_normalization_layer #(
 reg	[DATA_WIDTH - 1:0]	betas				[0:FILTERS-1]	;
 reg	[DATA_WIDTH - 1:0]	gammas				[0:FILTERS-1]	;
 reg	[DATA_WIDTH - 1:0]	moving_means		[0:FILTERS-1]	;
-reg	[DATA_WIDTH - 1:0]	moving_variences	[0:FILTERS-1]	;
+reg	[DATA_WIDTH - 1:0]	denominators		[0:FILTERS-1]	;
 
 initial begin
 	$readmemh(	BETAFILE,	betas				);
@@ -31,6 +31,7 @@ generate
 		batch_normalization u_batch_normalization (
 			.clk			(	clk											),
 			.data_i			(	input_layer		[i * DATA_WIDTH * DEPTH * INPUT * INPUT +:DATA_WIDTH * DEPTH * INPUT * INPUT]),
+			.beta_i			(	betas			[i]							),
 			.gamma_i		(	gammas			[i]							),
 			.moving_mean_i	(	moving_means	[i]							),
 			.denominator_i	(	denominators	[i]							),
