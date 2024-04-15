@@ -11,8 +11,8 @@ input reset, clk;
 input [H*W*D*DATA_BITS-1:0] multi_input_data;
 output reg [(H*W/4) *D*DATA_BITS-1:0] multi_output_data;
 
-reg [0:H*W*DATA_BITS -1] single_input_data;
-wire [0:(H*W/4) * DATA_BITS -1] single_output_data;
+reg [H*W*DATA_BITS -1:0] single_input_data;
+wire [(H*W/4) * DATA_BITS -1:0] single_output_data;
 integer counter;
 
 max_pooling_single u_max_pooling_single(

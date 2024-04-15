@@ -7,7 +7,7 @@ parameter D = 1;
 parameter W = 46;
 parameter H = 46;
 
-input [0: H*W*DATA_BITS - 1] single_input_data;
+input [H*W*DATA_BITS - 1:0] single_input_data;
 output [(H*W/4)*DATA_BITS -1 : 0] single_output_data;
 
 genvar i, j;
