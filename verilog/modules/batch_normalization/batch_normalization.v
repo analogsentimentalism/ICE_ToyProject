@@ -1,14 +1,14 @@
 module batch_normalization #(
-	parameter	DATA_WIDTH	= 32										,
-	parameter	FILTERS		= 64										,
-	parameter	DEPTH		= 1											,
-	parameter	INPUT		= 30										,
+	parameter	DATA_WIDTH	= 32	,
+	parameter	DEPTH		= 1		,
+	parameter	INPUT		= 30
 ) (
-	input			[DEPTH * INPUT * INPUT * DATA_WIDTH - 1:0]	data_i	,
+	input			[DEPTH * INPUT * INPUT * DATA_WIDTH - 1:0]	data_i			,
 	input														clk				,
-	input			[INPUT * INPUT * DATA_WIDTH - 1 : 0]		gamma_i			,
-	input			[INPUT * INPUT * DATA_WIDTH - 1 : 0]		moving_means_i	,
-	input			[INPUT * INPUT * DATA_WIDTH - 1 : 0]		denominators_i	,
+	input			[DATA_WIDTH - 1 : 0]						gamma_i			,
+	input			[DATA_WIDTH - 1 : 0]						beta_i			,
+	input			[DATA_WIDTH - 1 : 0]						moving_mean_i	,
+	input			[DATA_WIDTH - 1 : 0]						denominator_i	,
 	output			[DEPTH * INPUT * INPUT * DATA_WIDTH - 1:0]	result_o	
 );
 
@@ -18,9 +18,10 @@ generate
 		batch_normalization_element u_PE (
 			.clk			(	clk											),
 			.data_i			(	data_i			[i * DATA_WIDTH+:DATA_WIDTH]),
-			.gamma_i		(	gamma_i			[i * DATA_WIDTH+:DATA_WIDTH]),
-			.moving_mean_i	(	moving_means_i	[i * DATA_WIDTH+:DATA_WIDTH]),
-			.denominator_i	(	denominators_i	[i * DATA_WIDTH+:DATA_WIDTH]),
+			.gamma_i		(	gamma_i										),
+			.beta_i			(	beta_i										),
+			.moving_mean_i	(	moving_mean_i								),
+			.denominator_i	(	denominator_i								),
 			.result_o		(	result_o		[i * DATA_WIDTH+:DATA_WIDTH])
 		);
 	end
