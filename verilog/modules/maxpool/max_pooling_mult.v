@@ -8,8 +8,8 @@ parameter H = 46;
 parameter W = 46;
 
 input reset, clk;
-input [0:H*W*D*DATA_BITS-1] multi_input_data;
-output reg [0:(H*W/4) *D*DATA_BITS-1] multi_output_data;
+input [H*W*D*DATA_BITS-1:0] multi_input_data;
+output reg [(H*W/4) *D*DATA_BITS-1:0] multi_output_data;
 
 reg [0:H*W*DATA_BITS -1] single_input_data;
 wire [0:(H*W/4) * DATA_BITS -1] single_output_data;

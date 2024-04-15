@@ -10,9 +10,9 @@ parameter F = 3; //Size of filter
 parameter K = 2; //Number of filters applied
 
 input clk, reset;
-input [0:D*H*W*DATA_WIDTH-1] image;
-input [0:K*D*F*F*DATA_WIDTH-1] filters;
-output [0:K*(H-F+1)*(W-F+1)*DATA_WIDTH-1] outputConv;
+input [D*H*W*DATA_WIDTH-1:0] image;
+input [K*D*F*F*DATA_WIDTH-1:0] filters;
+output [K*(H-F+1)*(W-F+1)*DATA_WIDTH-1:0] outputConv;
 
 genvar i;
 

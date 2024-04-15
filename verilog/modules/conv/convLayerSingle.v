@@ -9,14 +9,14 @@ parameter W = 48; //Width of the image
 parameter F = 3; //Size of the filter
 
 input clk, reset;
-input [0:D*H*W*DATA_WIDTH-1] image;
-input [0:D*F*F*DATA_WIDTH-1] filter;
-output reg [0:(H-F+1)*(W-F+1)*DATA_WIDTH-1] outputConv; // output of the module
+input [D*H*W*DATA_WIDTH-1:0] image;
+input [D*F*F*DATA_WIDTH-1:0] filter;
+output reg [(H-F+1)*(W-F+1)*DATA_WIDTH-1:0] outputConv; // output of the module
 
-wire [0:(W-F+1)*DATA_WIDTH-1] outputConvUnits; // output of the conv units and input to the row selector
+wire [(W-F+1)*DATA_WIDTH-1:0] outputConvUnits; // output of the conv units and input to the row selector
 
 reg internalReset;
-wire [0:((W-F+1)*D*F*F*DATA_WIDTH)-1] receptiveField; // array of the matrices to be sent to conv units
+wire [((W-F+1)*D*F*F*DATA_WIDTH)-1:0] receptiveField; // array of the matrices to be sent to conv units
 
 
 integer counter;

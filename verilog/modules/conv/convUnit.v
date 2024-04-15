@@ -7,8 +7,8 @@ parameter D = 1; //depth of the filter
 parameter F = 3; //size of the filter
 
 input clk, reset;
-input [0:D*F*F*DATA_WIDTH-1] image, filter;
-output [0:DATA_WIDTH-1] result;
+input [D*F*F*DATA_WIDTH-1:0] image, filter;
+output [DATA_WIDTH-1:0] result;
 
 reg [DATA_WIDTH-1:0] selectedInput1, selectedInput2;
 
