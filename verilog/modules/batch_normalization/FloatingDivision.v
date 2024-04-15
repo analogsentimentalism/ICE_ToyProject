@@ -2,9 +2,6 @@ module FloatingDivision#(parameter XLEN=32)
                         (input [XLEN-1:0]A,
                          input [XLEN-1:0]B,
                          input clk,
-                         output overflow,
-                         output underflow,
-                         output exception,
                          output [XLEN-1:0] result);
                          
 reg [23:0] A_Mantissa,B_Mantissa;
@@ -23,6 +20,8 @@ reg [6:0] exp_adjust;
 reg [XLEN-1:0] B_scaled; 
 reg en1,en2,en3,en4,en5;
 reg dummy;
+wire overflow,underflow,exception;
+
 /*----Initial value----*/
 FloatingMultiplication M1(.A({{1'b0,8'd126,B[22:0]}}),.B(32'h3ff0f0f1),.clk(clk),.result(temp1)); //verified
 assign debug = {1'b1,temp1[30:0]};

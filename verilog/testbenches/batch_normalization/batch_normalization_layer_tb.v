@@ -7,24 +7,58 @@ module batch_normalization_layer_tb #(
 	parameter	INPUT		= 30
 ) ();
 
-reg	 	[DEPTH * INPUT * INPUT * DATA_WIDTH - 1:0] 	input_layer	;
+reg	 	[DEPTH * INPUT * INPUT * DATA_WIDTH * FILTERS - 1:0] 	input_layer	;
 reg													clk			;
-wire	[DEPTH * INPUT * INPUT * DATA_WIDTH - 1:0] 	output_layer;
+wire	[DEPTH * INPUT * INPUT * DATA_WIDTH * FILTERS - 1:0] 	output_layer;
 
-batch_normalization u_batch_normalization (
-	.input_layer	(	input_layer	),
-	.clk			(	clk			),
-	.output_layer	(	output_layer)
+batch_normalization_layer u_batch_normalization_layer (
+	.input_layer	(	input_layer		),
+	.clk			(	clk				),
+	.output_layer	(	output_layer	)
 );
 
 initial begin
 	forever	#1	clk 	= ~clk	;
 end
 
+integer i, j, k;
+
+integer output_log;
+
 initial begin
-	input_layer	= {3600{8'hAC}};
+	output_log = $fopen("../BN_layer_log.txt", "wb"	);
+	for(i=0; i<FILTERS; i = i + 1) begin
+		for(j=0; j<DEPTH * INPUT; j = j +1) begin
+			for(k=0; k<INPUT;k=k+1) begin
+				input_layer[(i*INPUT*INPUT+j*INPUT+k)*DATA_WIDTH+:DATA_WIDTH]	= $shortrealtobits(0.019338 - DEPTH * INPUT * INPUT * 0.000025+(i*INPUT*INPUT+j*INPUT+k)*0.00005);
+				$write("%f\t", $bitstoshortreal(input_layer[(i*INPUT*INPUT+j*INPUT+k)*DATA_WIDTH+:DATA_WIDTH]));
+				$fwrite(output_log, "%f\t", $bitstoshortreal(input_layer[(i*INPUT*INPUT+j*INPUT+k)*DATA_WIDTH+:DATA_WIDTH]));
+			end
+			$fwrite(output_log, "\n");
+			$display();
+		end
+		$display("\n");
+		$fwrite(output_log, "\n\n");
+	end
+	$display("\n\n\n");
+	$fwrite(output_log, "\n\n\n");
 	#1;
-	$display("%h", output_layer);
+	for(i=0; i<FILTERS; i = i + 1) begin
+		$display("%dth FILTER", i);
+		for(j=0; j < DEPTH * INPUT; j = j +1) begin
+			for(k=0; k<INPUT; k = k+1) begin
+				$write("%f\t", $bitstoshortreal(output_layer[(i*INPUT*INPUT+j*INPUT+k)*DATA_WIDTH+:DATA_WIDTH]));
+				$fwrite(output_log, "%f\t", $bitstoshortreal(output_layer[(i*INPUT*INPUT+j*INPUT+k)*DATA_WIDTH+:DATA_WIDTH]));
+			end
+			$fwrite(output_log, "\n");
+			$display();
+		end
+		$fwrite(output_log, "\n\n");
+		$display("\n");
+	end
+
+	$fclose(output_log);
+	$finish();
 end
 
 endmodule

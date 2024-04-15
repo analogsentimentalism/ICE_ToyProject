@@ -18,10 +18,10 @@ generate
 		batch_normalization_element u_PE (
 			.clk			(	clk											),
 			.data_i			(	data_i			[i * DATA_WIDTH+:DATA_WIDTH]),
-			.gamma_i		(	gamma_i			[0+:DATA_WIDTH]				),
-			.beta_i			(	beta_i			[0+:DATA_WIDTH]				),
-			.moving_mean_i	(	moving_mean_i	[0+:DATA_WIDTH]				),
-			.denominator_i	(	denominator_i	[0+:DATA_WIDTH]				),
+			.gamma_i		(	gamma_i										),
+			.beta_i			(	beta_i										),
+			.moving_mean_i	(	moving_mean_i								),
+			.denominator_i	(	denominator_i								),
 			.result_o		(	result_o		[i * DATA_WIDTH+:DATA_WIDTH])
 		);
 	end

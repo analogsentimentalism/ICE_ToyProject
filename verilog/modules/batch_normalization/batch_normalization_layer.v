@@ -13,16 +13,35 @@ module batch_normalization_layer #(
 	output			[DEPTH * INPUT * INPUT * DATA_WIDTH * FILTERS - 1:0]	output_layer	
 );
 
-reg	[DATA_WIDTH - 1:0]	betas				[0:FILTERS-1]	;
-reg	[DATA_WIDTH - 1:0]	gammas				[0:FILTERS-1]	;
-reg	[DATA_WIDTH - 1:0]	moving_means		[0:FILTERS-1]	;
-reg	[DATA_WIDTH - 1:0]	denominators		[0:FILTERS-1]	;
+reg [32:0] a [0:2];
+wire [32:0] b;
+assign b = a[2];
+
+reg		[DATA_WIDTH - 1:0]	betas_all			[0:63]			;
+reg		[DATA_WIDTH - 1:0]	gammas_all			[0:63]			;
+reg		[DATA_WIDTH - 1:0]	moving_means_all	[0:63]			;
+reg		[DATA_WIDTH - 1:0]	denominators_all	[0:63]			;
+
+wire	[DATA_WIDTH - 1:0]	betas				[0:FILTERS-1]	;
+wire	[DATA_WIDTH - 1:0]	gammas				[0:FILTERS-1]	;
+wire	[DATA_WIDTH - 1:0]	moving_means		[0:FILTERS-1]	;
+wire	[DATA_WIDTH - 1:0]	denominators		[0:FILTERS-1]	;
+
+genvar n;
+generate
+	for(n=0; n<FILTERS; n=n+1) begin
+		assign	betas		[n]	= betas_all 		[n]	;
+		assign	gammas		[n]	= gammas_all		[n]	;
+		assign	moving_means[n]	= moving_means_all	[n]	;
+		assign	denominators[n]	= denominators_all 	[n]	;
+	end
+endgenerate
 
 initial begin
-	$readmemh(	BETAFILE,	betas				);
-	$readmemh(	GAMMAFILE,	gammas				);
-	$readmemh(	MMFILE,		moving_means		);
-	$readmemh(	MVFILE,		moving_variences	);
+	$readmemh(	BETAFILE,	betas_all			);
+	$readmemh(	GAMMAFILE,	gammas_all			);
+	$readmemh(	MMFILE,		moving_means_all	);
+	$readmemh(	MVFILE,		denominators_all	);
 end
 
 genvar i;

@@ -2,9 +2,6 @@ module FloatingMultiplication #(parameter XLEN=32)
                                 (input [XLEN-1:0]A,
                                  input [XLEN-1:0]B,
                                  input clk,
-                                 output overflow,
-                                 output underflow,
-                                 output exception,
                                  output reg  [XLEN-1:0] result);
 
 reg [23:0] A_Mantissa,B_Mantissa;
@@ -14,6 +11,8 @@ reg [7:0] A_Exponent,B_Exponent,Temp_Exponent,diff_Exponent,Exponent;
 reg A_sign,B_sign,Sign;
 reg [32:0] Temp;
 reg [6:0] exp_adjust;
+
+wire overflow,underflow,exception;
 always@(*)
 begin
 A_Mantissa = {1'b1,A[22:0]};

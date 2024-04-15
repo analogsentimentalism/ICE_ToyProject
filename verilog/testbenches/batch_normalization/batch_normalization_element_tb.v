@@ -58,7 +58,7 @@ initial begin
 	show(data_i, gammas[0], moving_means[0], denominators[0], betas[0], result_o)	;
 	clk		= 1'b1			;
 	for(i=0; i<10; i = i + 1) begin
-		#10 data_i	= $urandom()	;
+		#10 data_i	= $shortrealtobits(0.019338 - 10 * 0.000025 +i*0.00005)	;
 		#1 show(data_i, gammas[0], moving_means[0], denominators[0], betas[0], result_o)	;
 		$display("------------------------------------------");
 	end
