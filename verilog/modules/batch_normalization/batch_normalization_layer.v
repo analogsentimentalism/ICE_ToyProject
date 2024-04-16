@@ -1,13 +1,13 @@
 module batch_normalization_layer #(
 	parameter	DATA_WIDTH	= 32										,
 	parameter	FILTERS		= 64										,
-	parameter	NUM			= 0											; // 몇번째 layer인지. layer 너무 커서 분할 용도.
+	parameter	NUM			= 0											, // 몇번째 layer인지. layer 너무 커서 분할 용도.
 	parameter	DEPTH		= 1											,
 	parameter	INPUT		= 30										,
 	parameter	BETAFILE	= "batch_normalization_beta.txt"			,
 	parameter	GAMMAFILE	= "batch_normalization_gamma.txt"			,
 	parameter	MMFILE		= "batch_normalization_moving_mean.txt"		,
-	parameter	MVFILE		= "batch_normalization_denominator.txt"		,
+	parameter	MVFILE		= "batch_normalization_denominator.txt"		
 ) (
 	input			[DEPTH * INPUT * INPUT * DATA_WIDTH * FILTERS - 1:0]	input_layer	,
 	input																	clk			,
