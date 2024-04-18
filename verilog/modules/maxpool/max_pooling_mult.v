@@ -1,4 +1,6 @@
+`timescale 1 ns / 10 ps
 module max_pooling_mult(
+
     clk, reset, multi_input_data, multi_output_data, valid_i, valid_o
 );
 
@@ -8,7 +10,8 @@ parameter H = 92;
 parameter W = 92;
 
 input reset, clk;
-input valid;
+input valid_i;
+
 input [1*W*D*DATA_BITS-1:0] multi_input_data;
 output reg [(1*W/2) *D*DATA_BITS-1:0] multi_output_data;
 output reg valid_o;
@@ -29,7 +32,7 @@ always@(posedge clk or posedge reset) begin
     if(reset) begin
         first_line <= 'd0;
     end
-    else if (valid & !check)
+    else if (valid_i & !check)
         first_line <= multi_input_data;
     else
         first_line <= first_line;
@@ -38,7 +41,7 @@ always@(posedge clk or posedge reset) begin
     if(reset) begin
         second_line <= 'd0;
     end
-    else if (valid & check)
+    else if (valid_i & check)
         second_line <= multi_input_data;
     else
         second_line <= second_line;
@@ -47,26 +50,19 @@ end
 always@(posedge clk or posedge reset) begin
     if(reset) 
         check <= 1'b0;
-    else if (valid)
+    else if (valid_i)
         check <= !check;
     else
         check <= check;
 end
 
 
-always @(posedge clk or posedge reset) begin
-    if (reset) begin
-        counter = 0;
-    end
-    else if (counter <D) begin
-        counter = counter + 1;
-    end
-end
+
 
 always@(*) begin
     single_input_data = {second_line, first_line};
     multi_output_data = single_output_data;
-    valid_o           = (!check & valid_i) ? 1'b1 : 1'b0;
+    valid_o           = (check & valid_i) ? 1'b1 : 1'b0; // 아무것도 안들어온 초기값처리는 해줘야할듯 처음부터 valid_o가 나온다.
 end
 
 endmodule

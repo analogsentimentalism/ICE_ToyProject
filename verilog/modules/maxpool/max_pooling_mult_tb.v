@@ -5,9 +5,10 @@
 module max_pooling_mult_tb ();
 
 reg clk,reset;
-reg [32*46*46*32-1:0] multi_input_data;
-wire [32*23*23*32-1:0] multi_output_data;
-
+reg [4*92*32-1:0] multi_input_data;
+wire [4*46*32-1:0] multi_output_data;
+wire valid_o;
+reg valid_i;
 localparam PERIOD = 100;
 
 integer i;
@@ -19,29 +20,28 @@ initial begin
     #0
     clk = 1'b0;
 	reset = 1;
-    multi_input_data = {16928{128'h0C0000008C0000000A0000000B000000}};
+    multi_input_data = {184{64'h0C0000008C000000}};
+	valid_i = 1'b1;
     #(PERIOD)
 	  reset = 0;
-    
+	#(PERIOD)
+	valid_i = 1'b0;
+	#(PERIOD)
+	valid_i = 1'b1;
+	multi_input_data = {184{64'hA0000000B000000}};
     #(8*PERIOD)
-    for (i = 32*23*23-1; i >=0; i = i - 1) begin
+    for (i = 4*46-1; i >=0; i = i - 1) begin
 		  $displayh(multi_output_data[i*32+:32]);
-	  end
+	end
 	#(PERIOD)
-	reset =1;
-    	multi_input_data = {16928{128'h0C0000008C0000000D0000000A000000}};
-	#(PERIOD)
-	reset=0;	
-	#(8*PERIOD)
-    for (i = 32*23*23-1; i >=0; i = i - 1) begin
-		  $displayh(multi_output_data[i*32+:32]);
-	  end
 	$stop;
 end
 max_pooling_mult UUT
   (
     .clk(clk),
     .reset(reset),
+    .valid_i(valid_i),
+    .valid_o(valid_o),
     .multi_input_data(multi_input_data),
     .multi_output_data(multi_output_data)
   );

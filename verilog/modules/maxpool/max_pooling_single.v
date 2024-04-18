@@ -14,14 +14,14 @@ genvar i, j;
 
 
 generate
-    for(i=0;i<D;i = i+1)
+    for(i=0;i<D;i = i+1) begin
         for( j= 0; j<W; j = j+2) begin
             MaxUnit u_MaxUnit(
-                .numA(single_input_data[D*(j)*DATA_BITS+:DATA_BITS]),
-                .numB(single_input_data[D*(j+1)*DATA_BITS+:DATA_BITS]),
-                .numC(single_input_data[D*(W+j)*DATA_BITS+:DATA_BITS]),
-                .numD(single_input_data[D*(W+j+1)*DATA_BITS+:DATA_BITS]),
-                .MaxOut(single_output_data[D*(j/2)*DATA_BITS+:DATA_BITS])
+                .numA(single_input_data[(i*W*2+j)*DATA_BITS+:DATA_BITS]),
+                .numB(single_input_data[(i*W*2+j+1)*DATA_BITS+:DATA_BITS]),
+                .numC(single_input_data[(i*W*2+W+j)*DATA_BITS+:DATA_BITS]),
+                .numD(single_input_data[(i*W*2+W+j+1)*DATA_BITS+:DATA_BITS]),
+                .MaxOut(single_output_data[(i*W/2+j/2)*DATA_BITS+:DATA_BITS])
             );
         end
     end
