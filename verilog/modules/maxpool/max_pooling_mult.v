@@ -1,24 +1,58 @@
 module max_pooling_mult(
-    clk, reset, multi_input_data, multi_output_data
+    clk, reset, multi_input_data, multi_output_data, valid_i, valid_o
 );
 
 parameter DATA_BITS = 32;
-parameter D = 32;
-parameter H = 46;
-parameter W = 46;
+parameter D = 64;
+parameter H = 92;
+parameter W = 92;
 
 input reset, clk;
-input [H*W*D*DATA_BITS-1:0] multi_input_data;
-output reg [(H*W/4) *D*DATA_BITS-1:0] multi_output_data;
+input valid;
+input [1*W*D*DATA_BITS-1:0] multi_input_data;
+output reg [(1*W/2) *D*DATA_BITS-1:0] multi_output_data;
+output reg valid_o;
 
-reg [H*W*DATA_BITS -1:0] single_input_data;
-wire [(H*W/4) * DATA_BITS -1:0] single_output_data;
-integer counter;
+reg [2*W*D*DATA_BITS -1:0] single_input_data;
+reg [W*D*DATA_BITS-1 :0] first_line;  // maxpool 두줄씩 해야하니까 내부에서 한번 저장
+reg [W*D*DATA_BITS-1 :0] second_line;
+reg check; //second까지 잘 찼는지
+
+wire [(1*W/2)*D * DATA_BITS -1:0] single_output_data;
 
 max_pooling_single u_max_pooling_single(
     .single_input_data(single_input_data),
     .single_output_data(single_output_data)
 );
+
+always@(posedge clk or posedge reset) begin
+    if(reset) begin
+        first_line <= 'd0;
+    end
+    else if (valid & !check)
+        first_line <= multi_input_data;
+    else
+        first_line <= first_line;
+end
+always@(posedge clk or posedge reset) begin
+    if(reset) begin
+        second_line <= 'd0;
+    end
+    else if (valid & check)
+        second_line <= multi_input_data;
+    else
+        second_line <= second_line;
+end
+
+always@(posedge clk or posedge reset) begin
+    if(reset) 
+        check <= 1'b0;
+    else if (valid)
+        check <= !check;
+    else
+        check <= check;
+end
+
 
 always @(posedge clk or posedge reset) begin
     if (reset) begin
@@ -30,9 +64,9 @@ always @(posedge clk or posedge reset) begin
 end
 
 always@(*) begin
-    single_input_data = multi_input_data[counter * H * W * DATA_BITS+:H*W*DATA_BITS];
-    multi_output_data[counter * H * W / 4 *DATA_BITS +:(H*W/4) *DATA_BITS] = single_output_data;
-
+    single_input_data = {second_line, first_line};
+    multi_output_data = single_output_data;
+    valid_o           = (!check & valid_i) ? 1'b1 : 1'b0;
 end
 
 endmodule
