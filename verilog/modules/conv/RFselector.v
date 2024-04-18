@@ -1,3 +1,5 @@
+NO USE
+/*
 `timescale 1 ns / 10 ps
 
 module RFselector(image,rowNumber,receptiveField);
@@ -27,3 +29,4 @@ always @ (image or rowNumber) begin
 end
 
 endmodule
+*/
