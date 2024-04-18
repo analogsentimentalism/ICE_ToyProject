@@ -3,28 +3,26 @@ module max_pooling_single(
 );
 
 parameter DATA_BITS = 32;
-parameter D = 1;
-parameter W = 46;
-parameter H = 46;
+parameter D = 32;
+parameter W = 92;
+parameter H = 92;
 
-input [H*W*DATA_BITS - 1:0] single_input_data;
-output [(H*W/4)*DATA_BITS -1 : 0] single_output_data;
+input [2*W*D*DATA_BITS - 1:0] single_input_data;
+output [(1*W/2)*D*DATA_BITS -1 : 0] single_output_data;
 
 genvar i, j;
 
 
 generate
-    for (i = 0; i<H; i = i+2) begin
+    for(i=0;i<D;i = i+1)
         for( j= 0; j<W; j = j+2) begin
-            
             MaxUnit u_MaxUnit(
-                .numA(single_input_data[(i*W+j)*DATA_BITS+:DATA_BITS]),
-                .numB(single_input_data[(i*W+j+1)*DATA_BITS+:DATA_BITS]),
-                .numC(single_input_data[((i+1)*W+j)*DATA_BITS+:DATA_BITS]),
-                .numD(single_input_data[((i+1)*W+j+1)*DATA_BITS+:DATA_BITS]),
-                .MaxOut(single_output_data[(i*H/4+j/2)*DATA_BITS+:DATA_BITS])
+                .numA(single_input_data[D*(j)*DATA_BITS+:DATA_BITS]),
+                .numB(single_input_data[D*(j+1)*DATA_BITS+:DATA_BITS]),
+                .numC(single_input_data[D*(W+j)*DATA_BITS+:DATA_BITS]),
+                .numD(single_input_data[D*(W+j+1)*DATA_BITS+:DATA_BITS]),
+                .MaxOut(single_output_data[D*(j/2)*DATA_BITS+:DATA_BITS])
             );
-
         end
     end
 endgenerate
