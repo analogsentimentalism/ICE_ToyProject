@@ -145,5 +145,5 @@ print("final train accuracy = {:.2f} , validation accuracy = {:.2f}".format(trai
 model.save_weights('model.weights.h5')
 # %%
 from keras.utils import plot_model
-plot_model(model, "my_first_model.png", show_shapes=True)
+plot_model(model, "my_first_model.png", show_shapes=True, show_dtype=True, show_layer_names=True,expand_nested=True,show_trainable=True)
 # %%
