@@ -81,7 +81,7 @@ endmodule*/
 
 `timescale 1 ns / 10 ps
 
-module convLayerSingle(clk,reset,image_valid,image0,image1,image2,filter,outputConv);
+module convLayerSingle(clk,reset,image_valid,image0,image1,image2,filter,outputConv,o_valid);
 
 parameter DATA_WIDTH = 32;
 parameter D = 1; //Depth of the filter
@@ -96,6 +96,7 @@ input [0:D*1*W*DATA_WIDTH-1] image1;
 input [0:D*1*W*DATA_WIDTH-1] image2;
 input [0:D*F*F*DATA_WIDTH-1] filter;
 output [0:(W-F+1)*DATA_WIDTH-1] outputConv; // output of the module
+output reg                   o_valid;
 
 //wire [(W-F+1)*DATA_WIDTH-1:0] outputConvUnits; // output of the conv units and input to the row selector
 
@@ -144,14 +145,21 @@ always @ (posedge clk or posedge reset) begin
 	if (reset == 1'b1 || image_valid == 1'b0) begin
 		internalReset = 1'b1;
 		counter = 0;
+		o_valid = 1'b0;
 	end 
 	else begin
-		  if (counter == D*F*F+2) begin
+		  if (counter == D*F*F+1) begin
+		    o_valid = 1'b1;
+		    counter = counter + 1;
+		  end  
+		  else if (counter == D*F*F+2) begin
 			   counter = 0;
 			   internalReset = 1'b1;
+			   o_valid = 1'b0;
 		  end else begin
 			   internalReset = 0;
 			   counter = counter + 1;
+			   o_valid = 1'b0;
 		  end
 	end
 end
