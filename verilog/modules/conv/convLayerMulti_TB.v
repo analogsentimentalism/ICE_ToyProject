@@ -7,8 +7,8 @@ reg [1*1*9*32-1:0] image0;
 reg [1*1*9*32-1:0] image1;
 reg [1*1*9*32-1:0] image2;
 reg [4*1*3*3*32-1:0] filters;
-wire [4*1*7*32-1:0] outputConv;
-reg                image_start;
+wire [4*1*9*32-1:0] outputConv;
+reg                 image_start;
 wire                image_done;
 localparam PERIOD = 100;
 
@@ -38,7 +38,50 @@ initial begin
 	image_start = 1'b1;
   #PERIOD
   image_start = 1'b0;
-	
+	#(PERIOD * 1000)
+	image_start = 1'b1;
+	#PERIOD
+	image_start = 1'b0;	
+	#(PERIOD * 1000)
+	image_start = 1'b1;
+	#PERIOD
+	image_start = 1'b0;
+	#(PERIOD * 1000)
+	image_start = 1'b1;
+	#PERIOD
+	image_start = 1'b0;
+	#(PERIOD * 1000)
+	image_start = 1'b1;
+	#PERIOD
+	image_start = 1'b0;	#(PERIOD * 1000)
+	image_start = 1'b1;
+	#PERIOD
+	image_start = 1'b0;
+	#(PERIOD * 1000)
+	image_start = 1'b1;
+	#PERIOD
+	image_start = 1'b0;	#(PERIOD * 1000)
+	image_start = 1'b1;
+	#PERIOD
+	image_start = 1'b0;
+	#(PERIOD * 1000)
+	image_start = 1'b1;
+	#PERIOD
+	image_start = 1'b0;	#(PERIOD * 1000)
+	image_start = 1'b1;
+	#PERIOD
+	image_start = 1'b0;
+	#(PERIOD * 1000)
+	image_start = 1'b1;
+	#PERIOD
+	image_start = 1'b0;	#(PERIOD * 1000)
+	image_start = 1'b1;
+	#PERIOD
+	image_start = 1'b0;
+	#(PERIOD * 1000)
+	image_start = 1'b1;
+	#PERIOD
+	image_start = 1'b0;
 	#((65*63+1)**PERIOD)
 	for (i = 1*62*62-1; i >=0; i = i - 1) begin
 		$displayh(outputConv[i*32+:32]);
@@ -57,7 +100,7 @@ convLayerMulti #(
 	.image2(image2),
 	.image_start(image_start),
 	.filters(filters),
-	.outputConv(outputConv),
+	.outputCONV(outputConv),
 	.done(image_done)
 );
 
