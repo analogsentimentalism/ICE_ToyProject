@@ -1,4 +1,5 @@
-`timescale 1ns/1ns
+`timescale 1ns / 1ps
+
 module dense_top_tb #(
 	parameter	BIASFILE	= "dense0_bias.txt"		,
 	parameter	KERNELFILE	= "dense0_kernel.txt"	,
@@ -28,14 +29,12 @@ dense_top #(
 	.rstn_i		(	rstn		)
 );
 
-
-
 initial begin
 	forever	#1	clk	= ~clk	;
 end
 
 initial begin
-	std::randomize(data_i);
+	data_i	= '{(NUMS*BIAS*DATA_WIDTH){32'h9739_a395_dbc1_0381}};
 	clk	= 1'b1	;
 	rstn= 1'b1	;
 	#5	rstn	= 1'b0;
