@@ -1,7 +1,7 @@
 module dense_tb #(
-	parameter 	W			= 3,	// NUMS로 고쳐야하지만 귀찮아서 걍...
+	parameter 	W			= 5*5*64*128,	// NUMS로 고쳐야하지만 귀찮아서 걍...
 	parameter	H			= 1,
-	parameter	BIAS		= 256,
+	parameter	BIAS		= 128,
 	parameter	DATA_WIDTH	= 32
 ) ();
 
