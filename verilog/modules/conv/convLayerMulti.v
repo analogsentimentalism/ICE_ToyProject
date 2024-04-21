@@ -4,10 +4,10 @@ module convLayerMulti(clk,reset,image0,image1,image2,image_start,filters,outputC
 
 parameter DATA_WIDTH = 32;
 parameter D = 1; //Depth of image and filter
-parameter H = 64; //Height of image
-parameter W = 64; //Width of image
+parameter H = 48; //Height of image
+parameter W = 48; //Width of image
 parameter F = 3; //Size of filter
-parameter K = 2; //Number of filters applied
+parameter K = 36; //Number of filters applied
 
 input clk, reset;
 input   [0:D*H*1*DATA_WIDTH-1] image0;
@@ -15,10 +15,10 @@ input   [0:D*H*1*DATA_WIDTH-1] image1;
 input   [0:D*H*1*DATA_WIDTH-1] image2;
 input                          image_start;
 input   [0:K*D*F*F*DATA_WIDTH-1] filters;
-output  reg [0:K*H*DATA_WIDTH-1] outputCONV;
+output  reg [0:H*K*DATA_WIDTH-1] outputCONV;
 output                     reg    done;
 
-wire [0:K*(H-F+1)*DATA_WIDTH-1] outputConv;
+wire [0:(H-F+1)*DATA_WIDTH-1] outputConv[K-1:0];
 
 
 /*assign image_done = (counter == 4'b1010);
@@ -121,23 +121,25 @@ generate
 	     		.image1(image1),
 	     		.image2(image2),
 	    		 .filter(filters[D*F*F*DATA_WIDTH*i+:D*F*F*DATA_WIDTH]),
-	     		.outputConv(outputConv[(H-F+1)*DATA_WIDTH*i+:(H-F+1)*DATA_WIDTH]),
+	     		.outputConv(outputConv[i]),
 	     		.o_valid(valid[i])
       		);
   	end
 endgenerate
 
+wire  zero_padding;
+assign zero_padding = (row_counter <= F/2 || row_counter > H - F/2);
+
 integer j;
 always @ (*) begin
-for(j=0;j<H;j=j+1) begin
-  if(row_counter <= F/2 || row_counter > H - F/2) begin
-    outputCONV[H*DATA_WIDTH*j+:H*DATA_WIDTH] = 'b0;
+  for(j=0;j<K;j=j+1) begin
+  if(zero_padding) begin
+    outputCONV = {H*DATA_WIDTH*F{1'b0}};
   end else begin
-    outputCONV[H*DATA_WIDTH*j+:H*DATA_WIDTH] = {32'b0, outputConv[(H-F+1)*DATA_WIDTH*j+:(H-F+1)*DATA_WIDTH], 32'b0};
-  end    
-end
+    outputCONV[H*DATA_WIDTH*j+:H*DATA_WIDTH] = {32'b0, outputConv[j], 32'b0};
+  end
+end    
 end
 
 
 endmodule
-
