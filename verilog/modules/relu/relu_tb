@@ -1,0 +1,44 @@
+//간단한 tb
+`timescale 1ns / 10ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 2024/04/21 21:03:37
+// Design Name: 
+// Module Name: relu_tb
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module relu_tb(
+    );
+reg [0:24*24*32-1]input_data;
+wire [0:24*24*32-1]output_data;
+
+
+integer i;
+
+initial begin
+#0
+    input_data = {144{128'h0C0000008C0000000B000000AB000000}};
+
+#300
+    $stop;
+end
+relu UUT(
+    .input_data(input_data),
+    .output_data(output_data)
+);
+endmodule
+
