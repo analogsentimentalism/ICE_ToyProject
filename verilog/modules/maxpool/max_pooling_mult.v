@@ -5,9 +5,9 @@ module max_pooling_mult(
 );
 
 parameter DATA_BITS = 32;
-parameter D = 64;
-parameter H = 92;
-parameter W = 92;
+parameter D = 1;
+parameter H = 48;
+parameter W = 48;
 
 input reset, clk;
 input valid_i;

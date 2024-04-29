@@ -3,7 +3,7 @@ module max_pooling_single(
 );
 
 parameter DATA_BITS = 32;
-parameter D = 4;
+parameter D = 1;
 parameter W = 92;
 parameter H = 92;
 
