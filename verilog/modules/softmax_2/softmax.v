@@ -1,3 +1,4 @@
+
 module softmax(inputs,clk,enable,outputs,valid_o);
 parameter DATA_WIDTH=32;
 localparam inputNum=7;
@@ -5,7 +6,7 @@ input [DATA_WIDTH*inputNum-1:0] inputs;
 input clk;
 input enable;
 output reg [DATA_WIDTH*inputNum-1:0] outputs;
-output reg vaild_o;
+output reg valid_o; 
 
 wire [DATA_WIDTH-1:0] expSum;
 wire [DATA_WIDTH-1:0] expReciprocal;
@@ -13,11 +14,11 @@ wire [DATA_WIDTH-1:0] outMul;
 wire [DATA_WIDTH*inputNum-1:0] exponents ;
 wire [inputNum-1:0] acksExp; //acknowledge signals of exponents 
 wire ackDiv; //ack signal of the division unit
-
-reg enableDiv; //signal to enable division unit initially zero
-reg [DATA_WIDTH-1:0] outExpReg;
+wire [DATA_WIDTH-1:0] expSums [inputNum:0]; //used in the multiple adders to connected to each other
 reg [3:0] mulCounter;
-reg [3:0] addCounter;
+
+assign expSums[0]=32'b00000000000000000000000000000000; //first one is zero to move the flow
+assign expSum=expSums[inputNum]; //last one in the sum
 
 genvar i;
 generate
@@ -29,33 +30,29 @@ generate
 		.output_exp(exponents[DATA_WIDTH*i+:DATA_WIDTH]),
 		.ack(acksExp[i]));
 	end
-endgenerate
+endgenerate //generating 10 parallel exponent modules 
 
-floatAdd FADD1 (exponents[DATA_WIDTH*addCounter+:DATA_WIDTH],outExpReg,expSum);
-floatReciprocal #(.DATA_WIDTH(DATA_WIDTH)) FR (.number(expSum),.clk(clk),.output_rec(expReciprocal),.ack(ackDiv),.enable(enableDiv));
+genvar j;
+generate 
+	for (j = 0; j < inputNum; j = j + 1) begin
+		floatAdd FADD1 (exponents[DATA_WIDTH*j+:DATA_WIDTH],expSums[j],expSums[j+1]);
+	end
+endgenerate //generating 10 parallel adding modules to get the sum of the exponents
+
+floatReciprocal #(.DATA_WIDTH(DATA_WIDTH)) FR (.number(expSum),.clk(clk),.output_rec(expReciprocal),.ack(ackDiv),.enable(acksExp[0]));//getting reciprocal of the sum of exponents
+//reciprocal activated when exponent finished
 floatMult FM1 (exponents[DATA_WIDTH*mulCounter+:DATA_WIDTH],expReciprocal,outMul); //multiplication with reciprocal
 
 always @ (negedge clk) begin
 	if(enable==1'b1) begin
 		if(valid_o==1'b0) begin 
-			if(acksExp[0]==1'b1) begin //if the exponents finished
-				if(enableDiv==1'b0) begin //division still did not start
-					if(addCounter<4'b1001) begin
-						addCounter=addCounter+1;
-						outExpReg=expSum;
-					end
-					else begin
-						enableDiv=1'b1;
-					end
+			if(ackDiv==1'b1) begin //check if the reciprocal is ready
+				if(mulCounter<4'b0111) begin
+					outputs[DATA_WIDTH*mulCounter+:DATA_WIDTH]=outMul;
+					mulCounter=mulCounter+1;
 				end
-				else if(ackDiv==1'b1) begin //check if the reciprocal is ready
-					if(mulCounter<4'b1010) begin
-						outputs[DATA_WIDTH*mulCounter+:DATA_WIDTH]=outMul;
-						mulCounter=mulCounter+1;
-					end
-					else begin
-						valid_o=1'b1;
-					end
+				else begin
+					valid_o=1'b1;
 				end
 			end
 		end
@@ -63,10 +60,7 @@ always @ (negedge clk) begin
 	else begin
 		//if enable is off reset all counters and acks
 		mulCounter=4'b0000;
-		addCounter=4'b0000;
-		outExpReg=32'b00000000000000000000000000000000;
 		valid_o=1'b0;
-		enableDiv=1'b0;
 	end
 	
 end

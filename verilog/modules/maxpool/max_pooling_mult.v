@@ -5,9 +5,9 @@ module max_pooling_mult(
 );
 
 parameter DATA_BITS = 32;
-parameter D = 64;
-parameter H = 92;
-parameter W = 92;
+parameter D = 1;
+parameter H = 48;
+parameter W = 48;
 
 input reset, clk;
 input valid_i;
@@ -62,7 +62,7 @@ end
 always@(*) begin
     single_input_data = {second_line, first_line};
     multi_output_data = single_output_data;
-    valid_o           = (check & valid_i) ? 1'b1 : 1'b0; // 아무것도 안들어온 초기값처리는 해줘야할듯 처음부터 valid_o가 나온다.
+    valid_o           = (check & valid_i) ? 1'b1 : 1'b0; 
 end
 
 endmodule
