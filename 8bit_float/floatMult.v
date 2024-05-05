@@ -32,7 +32,7 @@ always @ (floatA or floatB) begin
 		end else if (fraction[5] == 1'b1) begin
 			fraction = fraction << 3;
 			exponent = exponent - 3;
-
+		end
 		mantissa = fraction[7:5];
 		product = {sign,exponent,mantissa};
 	end
