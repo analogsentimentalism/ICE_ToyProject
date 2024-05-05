@@ -7,7 +7,7 @@ parameter D = 1; //Depth of image and filter
 parameter H = 48; //Height of image
 parameter W = 48; //Width of image
 parameter F = 3; //Size of filter
-parameter K = 36; //Number of filters applied
+parameter K = 3; //Number of filters applied
 
 input clk, reset;
 input   [0:D*H*1*DATA_WIDTH-1] image0;
@@ -106,7 +106,6 @@ end
   
 
 genvar i;
-
 generate
 	for (i = 0; i < K; i = i + 1) begin //We generate K single conv layers (K = number of filters) and send to each layer the image and the corresponding filter
 		convLayerSingle 
