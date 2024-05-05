@@ -4,8 +4,8 @@ module max_pooling_single(
 
 parameter DATA_BITS = 32;
 parameter D = 1;
-parameter W = 92;
-parameter H = 92;
+parameter W = 48;
+parameter H = 48;
 
 input [2*W*D*DATA_BITS - 1:0] single_input_data;
 output [(1*W/2)*D*DATA_BITS -1 : 0] single_output_data;
