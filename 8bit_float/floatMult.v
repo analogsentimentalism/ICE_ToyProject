@@ -17,7 +17,7 @@ always @ (floatA or floatB) begin
 		product = 0;
 	end else begin
 		sign = floatA[7] ^ floatB[7];
-		exponent = floatA[6:3] + floatB[6:3] - 4'd7;
+		exponent = floatA[6:3] + floatB[6:3] - 4'd7 +4'd2;
 	
 		fractionA = {1'b1,floatA[2:0]};
 		fractionB = {1'b1,floatB[2:0]};
