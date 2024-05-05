@@ -1,3 +1,5 @@
+`timescale 1ns / 1ps
+
 module dense_top #(
 	parameter	BIASFILE	= "dense0_bias.txt"		,
 	parameter	KERNELFILE	= "dense0_kernel.txt"	,
@@ -61,7 +63,6 @@ dense #(
 	.H		(	H		),
 	.W		(	W		)
 ) u_dense (
-	.clk		(	clk			),
 	.data_i		(	data_ic		),
 	.kernel_i	(	kernel_c	),
 	.bias_i		(	bias_c		),

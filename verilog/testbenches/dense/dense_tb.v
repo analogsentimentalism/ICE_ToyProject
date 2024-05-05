@@ -1,3 +1,5 @@
+`timescale 1ns / 1ps
+
 module dense_tb #(
 	parameter 	W			= 5*5*64*128,	// NUMS로 고쳐야하지만 귀찮아서 걍...
 	parameter	H			= 1,
