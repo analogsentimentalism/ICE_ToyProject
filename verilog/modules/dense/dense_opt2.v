@@ -8,7 +8,7 @@ module dense_opt #(
 	parameter	DEPTH		= 64					,	// 이전 레이어의 depth
 	parameter	BIAS		= 128					,
 	parameter	BIAS_BIT	= 8						,
-	parameter	DATA_WIDTH	= 32					,
+	parameter	DATA_WIDTH	= 8					,
 	parameter	PERBIAS		= DEPTH * H * W
 ) (
 	input									clk		,
@@ -47,31 +47,31 @@ end
 genvar i, j, k, l;
 generate
 	for(i=0;i<W;i=i+1) begin: multi_block	// Width까지는 병렬로 처리.
-		FloatingMultiplication multiplication (
-			.A		(	data_i		[i*DATA_WIDTH+:DATA_WIDTH]	),
-			.B		(	kernel_w	[i]							),
-			.result	(	temp		[i]							)
+		floatMult multiplication (
+			.floatA		(	data_i		[i*DATA_WIDTH+:DATA_WIDTH]	),
+			.floatB		(	kernel_w	[i]							),
+			.product	(	temp		[i]							)
 		);
 	end
 	for(i=0;i<2*W-2;i=i+2) begin: add_block
-		FloatingAddition addition (
-			.A		(	temp	[i]		),
-			.B		(	temp	[i+1]	),
-			.result	(	temp	[W+i/2]	)	// width 다 더한 것 temp [2*W-2]
+		floatAdd addition (
+			.floatA		(	temp	[i]		),
+			.floatB		(	temp	[i+1]	),
+			.sum	(	temp	[W+i/2]	)	// width 다 더한 것 temp [2*W-2]
 		);
 	end
 endgenerate
 
-FloatingAddition width_adder (
-	.A		(	temp		[2*W-2]	),
-	.B		(	result_width		),
-	.result	(	result_width_temp	)	// kernel 다 더한 것
+floatAdd width_adder (
+	.floatA		(	temp		[2*W-2]	),
+	.floatB		(	result_width		),
+	.sum	(	result_width_temp	)	// kernel 다 더한 것
 );
 
-FloatingAddition bias_adder (
-	.A		(	result_bias			),
-	.B		(	bias				),
-	.result	(	result_bias_temp	)
+floatAdd bias_adder (
+	.floatA		(	result_bias			),
+	.floatB		(	bias				),
+	.sum	(	result_bias_temp	)
 );
 
 always @(posedge clk or negedge rstn) begin
