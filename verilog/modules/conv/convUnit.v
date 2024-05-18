@@ -2,7 +2,7 @@
 
 module convUnit(clk,reset,image0,image1,image2,filter,result);
 
-parameter DATA_WIDTH = 32;
+parameter DATA_WIDTH = 8;
 parameter D = 1; //depth of the filter
 parameter F = 3; //size of the filter
 
