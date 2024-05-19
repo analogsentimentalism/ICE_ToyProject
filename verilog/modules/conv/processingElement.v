@@ -2,7 +2,7 @@
 
 module processingElement(clk,reset,floatA,floatB,result);
 
-parameter DATA_WIDTH = 32;
+parameter DATA_WIDTH = 8;
 
 input clk, reset;
 input [DATA_WIDTH-1:0] floatA, floatB;

@@ -2,12 +2,12 @@
 
 module convLayerMulti(clk,reset,image0,image1,image2,image_start,filters,outputCONV,done);
 
-parameter DATA_WIDTH = 32;
+parameter DATA_WIDTH = 8;
 parameter D = 1; //Depth of image and filter
-parameter H = 48; //Height of image
-parameter W = 48; //Width of image
+parameter H = 6; //Height of image
+parameter W = 6; //Width of image
 parameter F = 3; //Size of filter
-parameter K = 3; //Number of filters applied
+parameter K = 64; //Number of filters applied
 
 input clk, reset;
 input   [0:D*H*1*DATA_WIDTH-1] image0;
@@ -135,7 +135,7 @@ always @ (*) begin
   if(zero_padding) begin
     outputCONV = {H*DATA_WIDTH*F{1'b0}};
   end else begin
-    outputCONV[H*DATA_WIDTH*j+:H*DATA_WIDTH] = {32'b0, outputConv[j], 32'b0};
+    outputCONV[H*DATA_WIDTH*j+:H*DATA_WIDTH] = {8'b0, outputConv[j], 8'b0};
   end
 end    
 end

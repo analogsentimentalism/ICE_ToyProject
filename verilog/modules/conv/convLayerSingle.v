@@ -83,10 +83,10 @@ endmodule*/
 
 module convLayerSingle(clk,reset,image_valid,image0,image1,image2,filter,outputConv,o_valid);
 
-parameter DATA_WIDTH = 32;
+parameter DATA_WIDTH = 8;
 parameter D = 1; //Depth of the filter
-parameter H = 64; //Height of the image
-parameter W = 64; //Width of the image
+parameter H = 6; //Height of the image
+parameter W = 6; //Width of the image
 parameter F = 3; //Size of the filter
 
 input clk, reset;
