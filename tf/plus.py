@@ -2,17 +2,17 @@ import struct
 import os
 
 src_path = os.path.dirname(os.path.realpath(__file__))+"\\..\\txt\\"
-file = "2424_dense0_kernel.txt"
+file = "mini_dense1_kernel.txt"
 
 dst_path = os.path.dirname(os.path.realpath(__file__))+"\\..\\txt_mod\\"
 
 cnt = 0
 
-B = 128
-W = 2
-H = 2
-D = 64
-ONCE = D*W*H
+B = 7
+W = 1
+H = 1
+D = 128
+ONCE = 1	# W * D
 temp = ''
 modline = [0 for i in range (B*W*H*D)]
 
