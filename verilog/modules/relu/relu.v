@@ -2,7 +2,7 @@ module relu(
     input_data, output_data
 );
 
-parameter DATA_BITS = 32;
+parameter DATA_BITS = 8;
 parameter D = 32;
 parameter H = 23;
 parameter W = 23;
