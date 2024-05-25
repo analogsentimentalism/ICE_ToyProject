@@ -61,12 +61,26 @@ fifo #() u_fifo_0 (
 .o_empty	(	u_fifo_0_empty	)
     o_full
 );
-
+line_3_buffer #(
+	.D	(	1 	),
+	.H  ( 	24	),
+	.W	(	24	),
+	.DATA_BITS	(8),
+	.K  (	1	)
+) u_line_3_buffer_1 (
+	.clk	(clk),
+	.resetn	(resetn),
+	.input_data(u_fifo_0_rdata),
+	.output_1(u_conv_1_image),
+	.output
+);
 conv_top #(
-	.H	(	`H	),
-	.W	(	`W	),
-	.F	(	5	),
-	.K	(	6	)
+	.H	(	24	),
+	.W	(	24	),
+	.F	(	3	),
+	.K	(	6	),
+	.DATA_BITS(8),
+	.F  (	3	)
 ) u_conv2d_1 (
 	.clk			(	clk						),
 	.rstn_i			(	resetn					),

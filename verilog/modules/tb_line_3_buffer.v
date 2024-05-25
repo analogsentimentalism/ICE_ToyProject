@@ -4,7 +4,7 @@ module tb_line_3_buffer;
     // Parameters
     parameter DATA_BITS = 8;
     parameter D = 1;
-    parameter H = 24;
+    parameter H = 6;
     parameter W = 24;
     parameter K = 6;
 
@@ -19,10 +19,12 @@ module tb_line_3_buffer;
     wire [W*DATA_BITS*K-1:0] output_2;
     wire [W*DATA_BITS*K-1:0] output_3;
     wire valid_o;
+	reg behind_conv_done;
 
     // Instantiate the 3_line_buffer module
     line_3_buffer #(DATA_BITS, D, H, W, K) uut (
         .clk(clk),
+	.behind_conv_done(behind_conv_done),
         .resetn(resetn),
         .input_data(input_data),
         .output_1(output_1),
@@ -44,28 +46,31 @@ module tb_line_3_buffer;
         resetn = 0;
         input_data = 0;
         valid_i = 0;
-
+	behind_conv_done = 0;
         // Reset the system
         #10 resetn = 1;
 
         // Apply test vectors
-        #10 input_data = {6{192'hA1A2A3A4A5A6A7A8A9AAABACADAEAF}}; valid_i = 1;
+        #10 input_data = {288{4'hA}}; valid_i = 1;
         #10 valid_i = 0;
 
-        #10 input_data = {6{192'hB1B2B3B4B5B6B7B8B9BABBBCBDBEBF}}; valid_i = 1;
+        #10 input_data = {288{4'hB}}; valid_i = 1;
         #10 valid_i = 0;
 
-        #10 input_data = {6{192'hC1C2C3C4C5C6C7C8C9CACBCCCDCECF}}; valid_i = 1;
+        #10 input_data = {288{4'hC}}; valid_i = 1;
         #10 valid_i = 0;
 
-        #10 input_data = {6{192'hA1A2A3A4A5A6A7A8A9AAABACADAEAF}}; valid_i = 1;
+        #10 input_data = {288{4'hD}}; valid_i = 1;
         #10 valid_i = 0;
 
-        #10 input_data = {6{192'hB1B2B3B4B5B6B7B8B9BABBBCBDBEBF}}; valid_i = 1;
+        #10 input_data = {288{4'hE}}; valid_i = 1;
         #10 valid_i = 0;
 
-        #10 input_data = {6{192'hC1C2C3C4C5C6C7C8C9CACBCCCDCECF}}; valid_i = 1;
+        #10 input_data = {288{4'hF}}; valid_i = 1;
         #10 valid_i = 0;
+
+	#10 behind_conv_done = 1;
+	#10 behind_conv_done = 0;
 
         // Wait and observe outputs
         #30;
