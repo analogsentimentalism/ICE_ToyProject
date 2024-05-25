@@ -19,11 +19,13 @@ module dense_opt #(
 	output	reg								valid_o
 );
 
+reg		[W*ONCE*DATA_WIDTH-1:0]			data_i_reg;
+reg										valid_i_reg;
+
 reg										valid_n;
 
-reg		[clogb2(ONCE-1)-1:0]			o_cnt							;
 reg		[clogb2(BIAS-1)-1:0]			b_cnt							;	// # of bias
-reg		[clogb2(BIAS-1)-1:0]			b_cnt_prev						;	// # of bias
+reg		[clogb2(H-1)-1:0]				h_cnt_p							;	// # of bias
 reg		[clogb2(H-1)-1:0]				h_cnt							;	// # of height
 
 wire	[DATA_WIDTH*(2*W-1)-1:0]		temp				[0:ONCE-1]	;
@@ -31,19 +33,17 @@ reg		[DATA_WIDTH-1:0]				bias				[0:ONCE_B-1];
 wire	[DATA_WIDTH*W-1:0]				kernels_w			[0:ONCE-1]	;
 
 wire	[DATA_WIDTH-1:0]				results_once		[0:2*ONCE-2];
-
-reg		[DATA_WIDTH-1:0]				results_onces		[0:H*DEPTH/ONCE-1];
-wire	[DATA_WIDTH-1:0]				results_onces_w		[0:2*(DEPTH*H/ONCE)-2];
-
-reg		[DATA_WIDTH-1:0]				results_before_bias	[0:BIAS-1];
+reg		[DATA_WIDTH*BIAS-1:0]			results_onces		[0:H-1];
+wire	[DATA_WIDTH*BIAS-1:0]			results_end			[0:2*H-2];
 
 reg										mem_wait						;
+reg										mem_wait_p						;
 
 wire	[ONCE_B * DATA_WIDTH-1:0]		mem_b							;
 wire	[ONCE * W * DATA_WIDTH-1:0]		mem_k							;
 
 wire	[clogb2(DEPTH*H*BIAS/ONCE-1)-1:0]	kptr						;
-assign	kptr	= (b_cnt << clogb2(H-1)) + h_cnt;
+assign	kptr	= b_cnt * H + h_cnt;
 
 rom #(
 	.RAM_WIDTH(ONCE_B * DATA_WIDTH), 
@@ -72,7 +72,7 @@ generate
 	for(j=0;j<ONCE;j=j+1) begin: multiply_with_kernels
 		for(i=0;i<W;i=i+1) begin: width_multi_block	// Width까지는 병렬로 처리.
 			floatMult multiplication (
-				.floatA		(	data_i		[j*W*DATA_WIDTH + i*DATA_WIDTH+:DATA_WIDTH]		),
+				.floatA		(	data_i_reg	[j*W*DATA_WIDTH + i*DATA_WIDTH+:DATA_WIDTH]		),
 				.floatB		(	kernels_w	[j][i*DATA_WIDTH+:DATA_WIDTH]	),
 				.product	(	temp		[j][i*DATA_WIDTH+:DATA_WIDTH]	)
 			);
@@ -88,7 +88,7 @@ generate
 	end
 
 	for (i=0;i<ONCE;i=i+1) begin: assgin_kernels_and_results_once
-		assign	kernels_w[i]	= mem_k[i*W*DATA_WIDTH+h_cnt*W*ONCE*DATA_WIDTH+:W*DATA_WIDTH];
+		assign	kernels_w[i]	= mem_k[i*W*DATA_WIDTH+:W*DATA_WIDTH];
 		assign	results_once[i]	= temp[i][2*(W-1)*DATA_WIDTH+:DATA_WIDTH];
 	end
 
@@ -100,86 +100,101 @@ generate
 		);
 	end
 
-	for (i=0;i<H*DEPTH/ONCE;i=i+1) begin: assign_results_onces_wire
-		assign	results_onces_w[i]	= results_onces[i];
+	for (i=0;i<H;i=i+1) begin: result_end_set
+		assign	results_end	[i]	= results_onces	[i]; 
 	end
 
-	for (i=0;i<2*(DEPTH*H/ONCE)-2;i=i+2) begin: before_bias
-		floatAdd before_bias (
-			.floatA		(	results_onces_w		[i]					),
-			.floatB		(	results_onces_w		[i+1]				),
-			.sum		(	results_onces_w		[DEPTH*H/ONCE+i/2]	)	// kernel 다 더한 것
-		);
+	for (j=0;j<2*H-2; j=j+2) begin
+		for (i=0;i<BIAS;i=i+1) begin: before_bias
+			floatAdd before_bias (
+				.floatA		(	results_end		[j][i*DATA_WIDTH+:DATA_WIDTH]			),
+				.floatB		(	results_end		[j+1][i*DATA_WIDTH+:DATA_WIDTH]		),
+				.sum		(	results_end		[H+j/2][i*DATA_WIDTH+:DATA_WIDTH]	)	// kernel 다 더한 것
+			);
+		end
 	end
+
 
 endgenerate
 
 floatAdd bias_adder (
-	.floatA		(	results_before_bias	[b_cnt]	),
-	.floatB		(	bias				[0]		),
+	.floatA		(	results_end	[2*H-2][b_cnt*DATA_WIDTH+:DATA_WIDTH]	),
+	.floatB		(	bias		[0]				),
 	.sum		(	data_o						)
 );
+
+always @(posedge clk) begin
+	if (~rstn) begin
+		data_i_reg	<= {W*ONCE*DATA_WIDTH{1'b0}};
+		valid_i_reg	<= 1'b0;
+	end
+	else begin
+		valid_i_reg	<= valid_i;
+		if(valid_i) data_i_reg	<= data_i;
+	end
+end
+
+reg flag, flag_n;
 
 integer k;
 always	@(posedge clk) begin: set_results_onces
 	if(~rstn) begin
-		// for(k=0;k<DEPTH*H/ONCE-1;k=k+1) begin
-		// 	results_onces[k]	<=	{DATA_WIDTH{1'b0}};
-		// end
-		for(k=0;k<BIAS;k=k+1) begin
-			results_before_bias[k]	<= {DATA_WIDTH{1'b0}};
+		for(k=0;k<H;k=k+1) begin
+			results_onces[k]	<= {(DATA_WIDTH*BIAS){1'b0}};
 		end
-		o_cnt		<= 'b0;
 		b_cnt		<= 'b0;
 		h_cnt		<= 'b0;
+		h_cnt_p		<= 'b0;
 		mem_wait	<= 'b0;
+		mem_wait_p	<= 'b0;
 		valid_o		<= 'b0;
 		valid_n		<= 'b0;
+		flag		<= 'b0;
+		flag_n		<= 'b0;
 	end
 	else begin
-		if (valid_i | |o_cnt | |b_cnt | |mem_wait) begin
+		flag_n		<= flag;
+		mem_wait_p	<= mem_wait;
+		h_cnt_p	<= h_cnt;
+		if (valid_i_reg | |b_cnt | |mem_wait) begin
 			if(mem_wait) begin
-				if (o_cnt == ONCE-1) begin
-					o_cnt	<= 'b0;
-					if (b_cnt == BIAS-1) begin
-						b_cnt	<= 'b0;
-						results_before_bias[b_cnt]	<= results_onces_w[2*(DEPTH*H/ONCE)-2];
-						mem_wait	<= 'b0;
-						if(h_cnt == H-1) begin
-							h_cnt	<= 'b0;
-						end
-						else begin
-							h_cnt	<= h_cnt + 'b1;
-						end
+				results_onces[h_cnt][b_cnt*DATA_WIDTH+:DATA_WIDTH]	<= results_once[2*ONCE-2];
+				mem_wait	<= 'b0;
+				if (b_cnt == BIAS-1) begin
+					b_cnt	<= 'b0;
+					if(h_cnt == H-1) begin
+						h_cnt	<= 'b0;
+						flag	<= 'b0;
 					end
 					else begin
-						b_cnt	<= b_cnt + 'b1;
+						h_cnt	<= h_cnt + 'b1;
+						if (h_cnt == H-2) begin
+							flag <= 'b1;
+						end
 					end
-
 				end
 				else begin
-					o_cnt	<= o_cnt + 'b1;
+					b_cnt	<= b_cnt + 'b1;
 				end
 			end
 			else begin
 				mem_wait	<= 'b1;
 			end
 		end
-		valid_n	<= (o_cnt == 0) & (h_cnt == H-1) & (b_cnt != b_cnt_prev);	// BIAS 하나씩.
-		valid_o	<= valid_n;
+		valid_o	<= flag_n & ~mem_wait & mem_wait_p;	// BIAS 하나씩.
 	end
-end
-
-always @(posedge clk) begin
-	b_cnt_prev	<= b_cnt;
 end
 
 always	@(*) begin: set_once_kernels
-	for(k=0;k<ONCE_B;k=k+1) begin
-		bias[k]				<= mem_b[k*DATA_WIDTH+:DATA_WIDTH];
+	if(~rstn) begin
+		for(k=0;k<ONCE_B;k=k+1) begin
+			bias[k]				<= {DATA_WIDTH{1'b0}};
+		end
 	end
-	if(valid_i) begin
-		results_onces[h_cnt]	<= results_once[2*ONCE-2];
+	else begin
+		for(k=0;k<ONCE_B;k=k+1) begin
+			bias[k]				<= mem_b[k*DATA_WIDTH+:DATA_WIDTH];
+		end
 	end
 end
 
