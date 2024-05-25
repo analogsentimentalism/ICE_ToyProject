@@ -91,11 +91,11 @@ parameter F = 3; //Size of the filter
 
 input clk, reset;
 input                        image_valid;
-input [0:D*1*W*DATA_WIDTH-1] image0; //input image is 1 line
-input [0:D*1*W*DATA_WIDTH-1] image1;
-input [0:D*1*W*DATA_WIDTH-1] image2;
-input [0:D*F*F*DATA_WIDTH-1] filter;
-output [0:(W-F+1)*DATA_WIDTH-1] outputConv; // output of the module
+input [0:1*(W+2)*DATA_WIDTH-1] image0; //input image is 1 line
+input [0:1*(W+2)*DATA_WIDTH-1] image1;
+input [0:1*(W+2)*DATA_WIDTH-1] image2;
+input [0:F*F*DATA_WIDTH-1] filter;
+output [0:W*DATA_WIDTH-1] outputConv; // output of the module
 output reg                   o_valid;
 
 //wire [(W-F+1)*DATA_WIDTH-1:0] outputConvUnits; // output of the conv units and input to the row selector
@@ -123,7 +123,7 @@ end
 genvar n;
 
 generate 
-	for (n = 0; n < (H-F+1); n = n + 1) begin 
+	for (n = 0; n < W; n = n + 1) begin 
 		convUnit
 		#(
 			.D(D),
