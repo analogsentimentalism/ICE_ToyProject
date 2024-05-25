@@ -4,10 +4,10 @@ module max_pooling_mult(
     clk, reset, multi_input_data, multi_output_data, valid_i, valid_o
 );
 
-parameter DATA_BITS = 32;
+parameter DATA_BITS = 8;
 parameter D = 1;
-parameter H = 48;
-parameter W = 48;
+parameter H = 24;
+parameter W = 24;
 
 input reset, clk;
 input valid_i;
