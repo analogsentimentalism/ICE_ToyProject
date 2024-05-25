@@ -56,6 +56,9 @@ wire [1*6*12*8-1:0] u_relu_3_outputRELU;
 wire [1*3*12*8-1:0] u_max_pooling2d_3_output;
 wire u_max_pooling2d_3_valid_o;
 
+wire [7:0] dense_out;
+wire dense_valid;
+
 fifo #() u_fifo_0 (
 .i_clk		(	clk				),
 .i_resetn	(	u_fifo_0_resetn	),
@@ -238,47 +241,55 @@ max_pooling_mult #(
 	.valid_o			(	u_max_pooling2d_3_valid_o)
 );
 
-
-dense_top #(
-	.H			(	`H/4-2				),
-	.W			(	`W/4-2				),
-	.DEPTH		(	64					),
-	.BIAS		(	128					),
-	.BIASFILE	(	"dense0_bias.txt"	),
-	.KERNELFILE	(	"dense0_kernel.txt"	)
-) u_dense_0 (
-	.clk		(	clk					),
-	.rstn 		(	resetn				),
-	.valid_i 	(	u_max_pooling2d_3_valid_o),
-	.valid_o	(	u_dense_0_valid_o	),
-	.data_i	(	u_max_pooling2d_3_output),
-	.data_o		(	u_dense_0_output	)
+dense_top u_dense_top(
+	.clk(clk),
+	.rstn(resetn),
+	.valid_i(u_max_pooling2d_3_valid_o),
+	.data_i(u_max_pooling2d_3_output),
+	.data_o(dense_out)
+	.valid_o(dense_valid)
 );
 
-relu #(
-	.H	(	`H	),
-	.W	(	`W	),
-	.D	(	6	)
-) u_relu_4 (
-	.input_data		(u_dense_0_output),
-	.output_data	(u_relu_4_outputRELU)
-);
-
-dense_top #(
-	.H			(	`H/4-2				),
-	.W			(	`W/4-2				),
-	.DEPTH		(	1					),
-	.BIAS		(	7					)
-	.BIASFILE	(	"dense1_bias.txt"	),
-	.KERNELFILE	(	"dense1_kernel.txt"	)
-) u_dense_1 (
-	.clk		(	clk					),
-	.rstn 		(	resetn				),
-	.valid_i 	(	u_dense_0_valid_o),
-	.valid_o	(	u_dense_1_valid_o	),
-	.data_i		(	u_relu_4_outputRELU),
-	.data_o		(	u_dense_1_output	)
-);
+//dense_top #(
+//	.H			(	`H/4-2				),
+//	.W			(	`W/4-2				),
+//	.DEPTH		(	64					),
+//	.BIAS		(	128					),
+//	.BIASFILE	(	"dense0_bias.txt"	),
+//	.KERNELFILE	(	"dense0_kernel.txt"	)
+//) u_dense_0 (
+//	.clk		(	clk					),
+//	.rstn 		(	resetn				),
+//	.valid_i 	(	u_max_pooling2d_3_valid_o),
+//	.valid_o	(	u_dense_0_valid_o	),
+//	.data_i	(	u_max_pooling2d_3_output),
+//	.data_o		(	u_dense_0_output	)
+//);
+//
+//relu #(
+//	.H	(	`H	),
+//	.W	(	`W	),
+//	.D	(	6	)
+//) u_relu_4 (
+//	.input_data		(u_dense_0_output),
+//	.output_data	(u_relu_4_outputRELU)
+//);
+//
+//dense_top #(
+//	.H			(	`H/4-2				),
+//	.W			(	`W/4-2				),
+//	.DEPTH		(	1					),
+//	.BIAS		(	7					)
+//	.BIASFILE	(	"dense1_bias.txt"	),
+//	.KERNELFILE	(	"dense1_kernel.txt"	)
+//) u_dense_1 (
+//	.clk		(	clk					),
+//	.rstn 		(	resetn				),
+//	.valid_i 	(	u_dense_0_valid_o),
+//	.valid_o	(	u_dense_1_valid_o	),
+//	.data_i		(	u_relu_4_outputRELU),
+//	.data_o		(	u_dense_1_output	)
+//);
 
 
 endmodule
