@@ -1,7 +1,11 @@
-module 3_line_buffer(
-    clk, resetn, input_data, output_1, output_2, output_3, valid_i, valid_o;
+module line_3_buffer(
+    clk, resetn, input_data, output_1, output_2, output_3, valid_i, valid_o
 );
-
+parameter DATA_BITS = 8;
+parameter D = 1;
+parameter H = 24;
+parameter W = 24;
+parameter K = 6;
 input clk, resetn;
 input [W*DATA_BITS*K-1:0] input_data;
 output [W*DATA_BITS*K-1:0] output_1;
@@ -10,18 +14,14 @@ output [W*DATA_BITS*K-1:0] output_3;
 input valid_i;
 output valid_o;
 reg valid;
-parameter DATA_BITS = 8;
-parameter D = 1;
-parameter H = 24;
-parameter W = 24;
-parameter K = 6;
+
 reg [W*DATA_BITS*K-1:0] buffer [2:0];
 reg [1:0] buffer_full;
 reg [1:0] counter;
 wire [1:0] ptr1, ptr2, ptr3;
 assign ptr1 = counter;
 assign ptr2 = (counter<2'b10) ? counter + 2'h1 : 2'b00;
-assign ptr3 = (ptr2<2'b10) ? ptr2+2'h1 : 2'b00;   
+assign ptr3 = (ptr2<2'b10) ? ptr2+3'h1 : 2'b00;   
 assign output_1 = buffer[ptr1];
 assign output_2 = buffer[ptr2];
 assign output_3 = buffer[ptr3];
@@ -35,7 +35,7 @@ always @ (posedge clk or negedge resetn) begin
         valid<=1'b1;
 end
 always @(posedge clk or negedge resetn)begin
-    if (!rseetn)
+    if (!resetn)
         counter <= 2'h0;
     else if ((counter == 2'b10)&valid_i)
         counter <= 2'h0;
@@ -61,3 +61,4 @@ generate
         end
 end
 endgenerate
+endmodule
