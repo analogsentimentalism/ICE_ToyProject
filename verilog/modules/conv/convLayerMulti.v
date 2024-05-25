@@ -10,16 +10,15 @@ parameter F = 3; //Size of filter
 parameter K = 64; //Number of filters applied
 
 input clk, reset;
-input   [0:D*H*1*DATA_WIDTH-1] image0;
-input   [0:D*H*1*DATA_WIDTH-1] image1;
-input   [0:D*H*1*DATA_WIDTH-1] image2;
+input   [0:(W+2)*1*DATA_WIDTH-1] image0;
+input   [0:(W+2)*1*DATA_WIDTH-1] image1;
+input   [0:(W+2)*1*DATA_WIDTH-1] image2;
 input                          image_start;
-input   [0:K*D*F*F*DATA_WIDTH-1] filters;
-output  reg [0:H*K*DATA_WIDTH-1] outputCONV;
+input   [0:K*F*F*DATA_WIDTH-1] filters;
+output  reg [0:W*K*DATA_WIDTH-1] outputCONV;
 output                     reg    done;
 
-wire [0:(H-F+1)*DATA_WIDTH-1] outputConv[K-1:0];
-
+wire [0:W*DATA_WIDTH-1] outputConv[K-1:0];
 
 /*assign image_done = (counter == 4'b1010);
 
@@ -64,19 +63,7 @@ s	if (reset == 1'b1) begin
 end
 
 */
-integer row_counter;
 
-always @ (posedge clk or posedge reset) begin
-	if (reset == 1'b1) begin
-		row_counter = 0;
-	end else begin
-	  if (image_start) begin
-	    row_counter = row_counter + 1;
-	  end else if(row_counter == H) begin
-			row_counter = 0;
-	 end
-end
-end
 
 reg image_valid;
 always @ (posedge clk or posedge reset) begin
@@ -92,10 +79,13 @@ end
 end
 
 always @ (*) begin
-  if(reset == 1'b1 || image_start == 1'b1) begin
-    done = 1'b0;  
+  if(reset) begin
+    done = 1'b1;  
   end else begin
-    if(valid[0]) begin
+    if(image_start) begin
+    done = 1'b0;    
+    end
+    else if(valid[0]) begin
       done = 1'b1;
     end
     else begin
@@ -119,13 +109,15 @@ generate
 	     		.image0(image0),
 	     		.image1(image1),
 	     		.image2(image2),
-	    		 .filter(filters[D*F*F*DATA_WIDTH*i+:D*F*F*DATA_WIDTH]),
+	    		 .filter(filters[F*F*DATA_WIDTH*i+:F*F*DATA_WIDTH]),
 	     		.outputConv(outputConv[i]),
 	     		.o_valid(valid[i])
       		);
   	end
 endgenerate
 
+
+/*
 wire  zero_padding;
 assign zero_padding = (row_counter <= F/2 || row_counter > H - F/2);
 
@@ -139,6 +131,13 @@ always @ (*) begin
   end
 end    
 end
+*/
 
+integer j;
+always @ (*) begin
+    for(j=0;j<K;j=j+1) begin
+        outputCONV[H*DATA_WIDTH*j+:H*DATA_WIDTH] = outputConv[j];
+    end
+end
 
 endmodule
