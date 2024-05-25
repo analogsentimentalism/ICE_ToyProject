@@ -18,37 +18,43 @@ wire		u_fifo_0_rdata	;
 wire		u_fifo_0_empty	;
 
 
-wire [8*24*1-1:0]u_conv_1_image;
+wire [1*24*8-1 :0] u_fifo_0_rdata;
+wire [1*(24+2)*8-1 :0] u_conv_1_image0;
+wire [1*(24+2)*8-1 :0] u_conv_1_image1;
+wire [1*(24+2)*8-1 :0] u_conv_1_image2;
+wire buffer_1_valid_i;
 wire u_conv_1_image_start;
-wire [8*24-1:0]u_conv_1_outputCONV;
-
-wire [8*24-1:0]u_relu_1_outputRELU;
-wire [8*12-1:0]u_max_pooling2d_1_output;
 wire u_conv_1_done;
+
+wire [1*24*4*8-1:0] u_conv_1_outputCONV;
+wire [1*24*4*8-1:0] u_relu_1_outputRELU;
+
+wire [1*12*4*8-1:0] u_max_pooling2d_1_output;
 wire u_max_pooling2d_1_valid_o;
 
-wire u_conv_2_outputCONV;
-wire u_relu_2_outputRELU;
-
-wire u_max_pooling2d_2_output;
+wire [1*(12+2)*4*8-1:0] u_conv_2_image0;
+wire [1*(12+2)*4*8-1:0] u_conv_2_image1;
+wire [1*(12+2)*4*8-1:0] u_conv_2_image2;
+wire u_conv_2_image_start;
 wire u_conv_2_done;
+
+wire [1*12*8*8-1:0] u_conv_2_outputCONV;
+wire [1*12*8*8-1:0] u_relu_2_outputRELU;
+
+wire [1*6*8*8-1:0] u_max_pooling2d_2_output;
 wire u_max_pooling2d_2_valid_o;
 
-wire u_conv_3_outputCONV;
-
-wire u_relu_3_outputRELU;
-wire u_max_pooling2d_3_output;
+wire [1*(6+2)*8*8-1:0] u_conv_3_image0;
+wire [1*(6+2)*8*8-1:0] u_conv_3_image1;
+wire [1*(6+2)*8*8-1:0] u_conv_3_image2;
+wire u_conv_3_image_start;
 wire u_conv_3_done;
+
+wire [1*6*12*8-1:0] u_conv_3_outputCONV;
+wire [1*6*12*8-1:0] u_relu_3_outputRELU;
+
+wire [1*3*12*8-1:0] u_max_pooling2d_3_output;
 wire u_max_pooling2d_3_valid_o;
-
-wire u_dense_0_valid_o;
-wire u_dense_0_output;
-
-wire u_relu_4_outputRELU;
-
-wire u_dense_1_valid_o;
-wire u_dense_1_output;
-
 
 fifo #() u_fifo_0 (
 .i_clk		(	clk				),
@@ -80,8 +86,8 @@ line_3_buffer #(
 );
 conv_top #(
 	.D 	( 	1	)
-	.H	(	24	),
-	.W	(	24	),
+	.H	(	26	),
+	.W	(	26	),
 	.F	(	3	),
 	.K	(	4	),
 	.DATA_BITS(8)
@@ -136,8 +142,8 @@ line_3_buffer #(
 );
 conv_top #(
 	.D 	( 	4	)
-	.H	(	12	),
-	.W	(	12	),
+	.H	(	14	),
+	.W	(	14	),
 	.F	(	3	),
 	.K	(	8	),
 	.DATA_BITS(8)
@@ -194,8 +200,8 @@ line_3_buffer #(
 );
 conv_top #(
 	.D 	( 	8	)
-	.H	(	6	),
-	.W	(	6	),
+	.H	(	8	),
+	.W	(	8	),
 	.F	(	3	),
 	.K	(	12	),
 	.DATA_BITS(8)
