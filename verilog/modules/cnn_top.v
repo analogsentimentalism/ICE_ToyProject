@@ -71,28 +71,34 @@ line_3_buffer #(
 	.clk	(clk),
 	.resetn	(resetn),
 	.input_data(u_fifo_0_rdata),
-	.output_1(u_conv_1_image),
-	.output
+	.output_1(u_conv_1_image0),
+	.output_2(u_conv_1_image1),
+	.output_3(u_conv_1_image2),
+	.valid_i(buffer_1_valid_i),
+	.valid_o(u_conv_1_image_start),
+	.behind_conv_done(u_conv_1_done)
 );
 conv_top #(
+	.D 	( 	1	)
 	.H	(	24	),
 	.W	(	24	),
 	.F	(	3	),
-	.K	(	6	),
-	.DATA_BITS(8),
-	.F  (	3	)
+	.K	(	4	),
+	.DATA_BITS(8)
 ) u_conv2d_1 (
 	.clk			(	clk						),
 	.rstn_i			(	resetn					),
-	.image_i		(	u_conv_1_image			),
+	.image0			(	u_conv_1_image0			),
+	.image1			(	u_conv_1_image1			),
+	.image2			(	u_conv_1_image2			),
 	.image_start	(	u_conv_1_image_start	),
 	.result_o		(	u_conv_1_outputCONV		),
 	.done			(	u_conv_1_done			)
 );
 relu #(
-	.H	(	`H	),
-	.W	(	`W	),
-	.D	(	6	)
+	.H	(	24	),
+	.W	(	24	),
+	.D	(	4	)
 ) u_relu_1 (
 	.input_data		(u_conv_1_outputCONV),
 	.output_data	(u_relu_1_outputRELU)
@@ -100,9 +106,9 @@ relu #(
 
 
 max_pooling_mult #(
-	.D	(	6	),
-	.H	(	`H	),
-	.W	(	`W	)
+	.D	(	4	),
+	.H	(	24	),
+	.W	(	24	)
 ) u_max_pooling2d_1 (
 	.clk				(	clk				), 
 	.reset				(	resetn			), 
@@ -111,33 +117,55 @@ max_pooling_mult #(
 	.valid_i			(	u_conv_1_done	), 
 	.valid_o			(	u_max_pooling2d_1_valid_o)
 );
+line_3_buffer #(
+	.D	(	1 	),
+	.H  ( 	12	),
+	.W	(	12	),
+	.DATA_BITS	(8),
+	.K  (	4	)
+) u_line_3_buffer_2 (
+	.clk	(clk),
+	.resetn	(resetn),
+	.input_data(u_max_pooling2d_1_output),
+	.output_1(u_conv_2_image0),
+	.output_2(u_conv_2_image1),
+	.output_3(u_conv_2_image2),
+	.valid_i(u_max_pooling2d_1_valid_o),
+	.valid_o(u_conv_2_image_start),
+	.behind_conv_done(u_conv_2_done)
+);
 conv_top #(
-	.H	(	`H	),
-	.W	(	`W	),
-	.F	(	5	),
-	.K	(	6	)
+	.D 	( 	4	)
+	.H	(	12	),
+	.W	(	12	),
+	.F	(	3	),
+	.K	(	8	),
+	.DATA_BITS(8)
+
 ) u_conv2d_2 (
 	.clk			(	clk						),
 	.rstn_i			(	resetn					),
-	.image_i		(u_max_pooling2d_1_output),
-	.image_start	(	u_max_pooling2d_1_valid_o),
+	.image0			(u_conv_2_image0),
+	.image0			(u_conv_2_image1),
+	.image0			(u_conv_2_image2),
+	.image_start	(	u_conv_2_image_start),
 	.result_o		(	u_conv_2_outputCONV		),
 	.done			(	u_conv_2_done			)
 	
 );
 relu #(
-	.H	(	`H	),
-	.W	(	`W	),
-	.D	(	6	)
+	.H	(	12	),
+	.W	(	12	),
+	.D	(	8	)
 ) u_relu_2 (
 	.input_data		(u_conv_2_outputCONV),
 	.output_data	(u_relu_2_outputRELU)
 );
 
 max_pooling_mult #(
-	.D	(	6	),
-	.H	(	`H	),
-	.W	(	`W	)
+	.D	(	8	),
+	.H	(	12	),
+	.W	(	12	)
 ) u_max_pooling2d_2 (
 	.clk				(	clk				), 
 	.reset				(	resetn			), 
@@ -146,31 +174,55 @@ max_pooling_mult #(
 	.valid_i			(	u_conv_2_done), 
 	.valid_o			(	u_max_pooling2d_2_valid_o)
 );
+
+line_3_buffer #(
+	.D	(	1 	),
+	.H  ( 	6	),
+	.W	(	6	),
+	.DATA_BITS	(8),
+	.K  (	8	)
+) u_line_3_buffer_2 (
+	.clk	(clk),
+	.resetn	(resetn),
+	.input_data(u_max_pooling2d_2_output),
+	.output_1(u_conv_3_image0),
+	.output_2(u_conv_3_image1),
+	.output_3(u_conv_3_image2),
+	.valid_i(u_max_pooling2d_2_valid_o),
+	.valid_o(u_conv_3_image_start),
+	.behind_conv_done(u_conv_3_done)
+);
 conv_top #(
-	.H	(	`H	),
-	.W	(	`W	),
-	.F	(	5	),
-	.K	(	6	)
+	.D 	( 	8	)
+	.H	(	6	),
+	.W	(	6	),
+	.F	(	3	),
+	.K	(	12	),
+	.DATA_BITS(8)
+
+
 ) u_conv2d_3 (
 	.clk			(	clk						),
 	.rstn_i			(	resetn					),
-	image_i			(	u_max_pooling2d_2_output),
-	.image_start	(	u_max_pooling2d_2_valid_o	),
+	.image0			(	u_conv_3_image0),
+	.image1			(	u_conv_3_image1),
+	.image2			(	u_conv_3_image2),
+	.image_start	(	u_conv_3_image_start	),
 	.result_o		(	u_conv_3_outputCONV		),
 	.done			(	u_conv_3_done			)
 );
 relu #(
-	.H	(	`H	),
-	.W	(	`W	),
-	.D	(	6	)
+	.H	(	6	),
+	.W	(	6	),
+	.D	(	12	)
 ) u_relu_3 (
 	.input_data		(u_conv_3_outputCONV),
 	.output_data	(u_relu_3_outputRELU)
 );
 max_pooling_mult #(
-	.D	(	6	),
-	.H	(	`H	),
-	.W	(	`W	)
+	.D	(	12	),
+	.H	(	6	),
+	.W	(	6	)
 ) u_max_pooling2d_3 (
 	.clk				(	clk				), 
 	.reset				(	resetn			), 
