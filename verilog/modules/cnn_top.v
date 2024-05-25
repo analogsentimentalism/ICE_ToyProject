@@ -68,7 +68,6 @@ fifo #() u_fifo_0 (
 
 .o_rdata	(	u_fifo_0_rdata	),
 .o_empty	(	u_fifo_0_empty	)
-    o_full
 );
 line_3_buffer #(
 	.D	(	1 	),
