@@ -18,7 +18,7 @@ wire		u_fifo_0_rdata	;
 wire		u_fifo_0_empty	;
 
 
-wire [8*24*24*1-1:0]u_conv_1_image;
+wire [8*24*1-1:0]u_conv_1_image;
 wire u_conv_1_image_start;
 wire [8*24-1:0]u_conv_1_outputCONV;
 
@@ -73,7 +73,7 @@ conv_top #(
 	.image_i		(	u_conv_1_image			),
 	.image_start	(	u_conv_1_image_start	),
 	.result_o		(	u_conv_1_outputCONV		),
-
+	.done			(	u_conv_1_done			)
 );
 relu #(
 	.H	(	`H	),
@@ -108,6 +108,7 @@ conv_top #(
 	.image_i		(u_max_pooling2d_1_output),
 	.image_start	(	u_max_pooling2d_1_valid_o),
 	.result_o		(	u_conv_2_outputCONV		),
+	.done			(	u_conv_2_done			)
 	
 );
 relu #(
@@ -142,6 +143,7 @@ conv_top #(
 	image_i			(	u_max_pooling2d_2_output),
 	.image_start	(	u_max_pooling2d_2_valid_o	),
 	.result_o		(	u_conv_3_outputCONV		),
+	.done			(	u_conv_3_done			)
 );
 relu #(
 	.H	(	`H	),
