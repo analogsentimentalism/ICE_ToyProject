@@ -2,7 +2,9 @@ module cnn_top #(
 
 ) (
 	input	clk,
-	input   resetn
+	input   resetn,
+	input 	[1*24*8-1:0] input_data,
+	input buffer_1_valid_i;
 );
 
 `define		H			24
@@ -59,16 +61,6 @@ wire u_max_pooling2d_3_valid_o;
 wire [7:0] dense_out;
 wire dense_valid;
 
-fifo #() u_fifo_0 (
-.i_clk		(	clk				),
-.i_resetn	(	u_fifo_0_resetn	),
-.i_ren		(	u_fifo_0_ren	),
-.i_wen		(	u_fifo_0_wen	),
-.i_wdata	(	u_fifo_0_wdata	),
-
-.o_rdata	(	u_fifo_0_rdata	),
-.o_empty	(	u_fifo_0_empty	)
-);
 line_3_buffer #(
 	.D	(	1 	),
 	.H  ( 	24	),
