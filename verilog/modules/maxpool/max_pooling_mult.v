@@ -17,13 +17,18 @@ output reg [(1*W/2) *D*DATA_BITS-1:0] multi_output_data;
 output reg valid_o;
 
 reg [2*W*D*DATA_BITS -1:0] single_input_data;
-reg [W*D*DATA_BITS-1 :0] first_line;  // maxpool 두줄씩 해야하니까 내부에서 한번 저장
+reg [W*D*DATA_BITS-1 :0] first_line;  // maxpool �몢以꾩뵫 �빐�빞�븯�땲源� �궡遺��뿉�꽌 �븳踰� ���옣
 reg [W*D*DATA_BITS-1 :0] second_line;
-reg check; //second까지 잘 찼는지
+reg check; //second源뚯� �옒 李쇰뒗吏�
 
 wire [(1*W/2)*D * DATA_BITS -1:0] single_output_data;
 
-max_pooling_single u_max_pooling_single(
+max_pooling_single #(
+    .DATA_BITS(DATA_BITS),
+    .W(W),
+    .D(D),
+    .H(H))
+    u_max_pooling_single(
     .single_input_data(single_input_data),
     .single_output_data(single_output_data)
 );

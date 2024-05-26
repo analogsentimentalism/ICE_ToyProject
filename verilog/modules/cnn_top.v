@@ -174,7 +174,7 @@ max_pooling_mult #(
 	.D	(	8	),
 	.H	(	12	),
 	.W	(	12	),
-	.DATABITS(8)
+	.DATA_BITS(8)
 ) u_max_pooling2d_2 (
 	.clk				(	clk				), 
 	.reset				(	resetn			), 
