@@ -17,7 +17,7 @@ module dense_opt2 #(
 	output	reg								valid_o
 );
 
-reg		[DATA_WIDTH-1:0]				data_i_reg			[0:H-1]		;
+reg		[DATA_WIDTH-1:0]				data_i_reg						;
 reg										valid_i_reg;
 
 reg										valid_n;
@@ -25,13 +25,12 @@ reg										valid_n;
 reg		[clogb2(BIAS-1)-1:0]			b_cnt							;	// # of bias
 reg		[clogb2(H-1)-1:0]				h_cnt_p							;	// # of bias
 reg		[clogb2(H-1)-1:0]				h_cnt							;	// # of height
-reg		[clogb2(H-1)-1:0]				cnt								;
 
 wire	[DATA_WIDTH-1:0]				temp				[0:BIAS-1]	;
 reg		[DATA_WIDTH-1:0]				bias				[0:BIAS-1]	;
 
-reg		[DATA_WIDTH*BIAS-1:0]			results_onces		[0:H-1];
-wire	[DATA_WIDTH*BIAS-1:0]			results_end			[0:2*H-2];
+reg		[DATA_WIDTH*BIAS-1:0]			results_once					;
+wire	[DATA_WIDTH*BIAS-1:0]			results_once_w					;
 
 reg										mem_wait						;
 reg										mem_wait_p						;
@@ -53,39 +52,29 @@ rom #(
 	.dout	(	mem_k	)
 );
 
-wire	[DATA_WIDTH-1:0]	data_i_w;
-
-assign	data_i_w	= data_i_reg[h_cnt];
-
 genvar i, j;
 generate
 	for(j=0;j<BIAS;j=j+1) begin: width_multi_block
 		floatMult multiplication (
-			.floatA		(	data_i_w	),
+			.floatA		(	data_i_reg	),
 			.floatB		(	mem_k	[j*DATA_WIDTH+:DATA_WIDTH]	),
 			.product	(	temp	[j]							)
 		);
 	end
 
-	for (i=0;i<H;i=i+1) begin: result_end_set
-		assign	results_end	[i]	= results_onces	[i]; 
-	end
-
-	for (j=0;j<2*H-2; j=j+2) begin
-		for (i=0;i<BIAS;i=i+1) begin: before_bias
-			floatAdd before_bias (
-				.floatA		(	results_end		[j][i*DATA_WIDTH+:DATA_WIDTH]			),
-				.floatB		(	results_end		[j+1][i*DATA_WIDTH+:DATA_WIDTH]		),
-				.sum		(	results_end		[H+j/2][i*DATA_WIDTH+:DATA_WIDTH]	)	// kernel 다 더한 것
-			);
-		end
+	for (i=0;i<BIAS;i=i+1) begin: before_bias
+		floatAdd before_bias (
+			.floatA		(	temp	[i]									),
+			.floatB		(	results_once	[i*DATA_WIDTH+:DATA_WIDTH]	),
+			.sum		(	results_once_w	[i*DATA_WIDTH+:DATA_WIDTH]	)	// kernel 다 더한 것
+		);
 	end
 
 	for(i=0;i<BIAS;i=i+1) begin
 		floatAdd bias_adder (
-			.floatA		(	results_end	[2*H-2][i*DATA_WIDTH+:DATA_WIDTH]	),
-			.floatB		(	bias		[i]				),
-			.sum		(	data_o		[i*DATA_WIDTH+:DATA_WIDTH]			)
+			.floatA		(	results_once	[i*DATA_WIDTH+:DATA_WIDTH]	),
+			.floatB		(	bias			[i]							),
+			.sum		(	data_o			[i*DATA_WIDTH+:DATA_WIDTH]	)
 		);
 	end
 endgenerate
@@ -93,23 +82,13 @@ endgenerate
 integer k;
 always @(posedge clk) begin
 	if (~rstn) begin
-		for(k=0;k<H;k=k+1) begin
-			data_i_reg [k]	<= {DATA_WIDTH{1'b0}};
-		end
-		
-		cnt			<= 'b0;
+		data_i_reg	<= {DATA_WIDTH{1'b0}};
 		valid_i_reg	<= 1'b0;
 	end
 	else begin
 		valid_i_reg	<= valid_i;
 		if(valid_i)  begin
-			data_i_reg[cnt]	<= data_i;
-			if(cnt	== H - 1) begin
-				cnt	<= 0;
-			end
-			else begin
-				cnt	<= cnt + 1;
-			end
+			data_i_reg	<= data_i;
 		end
 	end
 end
@@ -118,7 +97,7 @@ reg flag, flag_n;
 always	@(posedge clk) begin: set_results_onces
 	if(~rstn) begin
 		for(k=0;k<BIAS;k=k+1) begin
-			results_onces[k]	<= {DATA_WIDTH*H{1'b0}};
+			results_once	<= {(DATA_WIDTH*BIAS){1'b0}};
 		end
 		b_cnt		<= 'b0;
 		h_cnt		<= 'b0;
@@ -128,7 +107,6 @@ always	@(posedge clk) begin: set_results_onces
 		valid_o		<= 'b0;
 		valid_n		<= 'b0;
 		flag		<= 'b0;
-		flag_n		<= 'b1;
 	end
 	else begin
 		flag_n		<= flag;
@@ -137,7 +115,7 @@ always	@(posedge clk) begin: set_results_onces
 		if (valid_i_reg | |b_cnt | |mem_wait | |h_cnt) begin
 			if(mem_wait) begin
 				for(k=0;k<BIAS;k=k+1) begin
-					results_onces[h_cnt][k*DATA_WIDTH+:DATA_WIDTH]	<= temp[k];
+					results_once[k*DATA_WIDTH+:DATA_WIDTH]	<= results_once_w[k*DATA_WIDTH+:DATA_WIDTH];
 				end
 				mem_wait	<= 'b0;
 				if(h_cnt == H-1) begin

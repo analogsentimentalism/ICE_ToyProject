@@ -15,7 +15,7 @@ wire								valid_o;
 
 reg		[DATA_WIDTH*NUMI_ONCE-1:0]	data_temp;
 
-densedense #(
+dense_top #(
 	.DATA_WIDTH	(	DATA_WIDTH	),
 	.NUMI_ONCE	(	NUMI_ONCE	)
 ) u_densedense (
