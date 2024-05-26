@@ -37,7 +37,7 @@ always @ (posedge clk or posedge reset) begin
   end   
 end*/
 
-wire [K-1:0] valid; // if 1 line of convolution finished
+wire valid [K-1:0]; // if 1 line of convolution finished
 
 
 
@@ -111,7 +111,7 @@ generate
 	     		.image2(image2),
 	    		 .filter(filters[F*F*DATA_WIDTH*i+:F*F*DATA_WIDTH]),
 	     		.outputConv(outputConv[i]),
-	     		.o_valid(valid[i])
+	     		.o_valid()
       		);
   	end
 endgenerate
