@@ -23,13 +23,18 @@ reg check; //second까지 잘 찼는지
 
 wire [(1*W/2)*D * DATA_BITS -1:0] single_output_data;
 
-max_pooling_single u_max_pooling_single(
+max_pooling_single #(
+    .DATA_BITS(DATA_BITS),
+    .W(W),
+    .D(D),
+    .H(H))
+     u_max_pooling_single(
     .single_input_data(single_input_data),
     .single_output_data(single_output_data)
 );
 
-always@(posedge clk or posedge reset) begin
-    if(reset) begin
+always@(posedge clk or negedge reset) begin
+    if(!reset) begin
         first_line <= 'd0;
     end
     else if (valid_i & !check)
@@ -37,8 +42,8 @@ always@(posedge clk or posedge reset) begin
     else
         first_line <= first_line;
 end
-always@(posedge clk or posedge reset) begin
-    if(reset) begin
+always@(posedge clk or negedge reset) begin
+    if(!reset) begin
         second_line <= 'd0;
     end
     else if (valid_i & check)
@@ -47,8 +52,8 @@ always@(posedge clk or posedge reset) begin
         second_line <= second_line;
 end
 
-always@(posedge clk or posedge reset) begin
-    if(reset) 
+always@(posedge clk or negedge reset) begin
+    if(!reset) 
         check <= 1'b0;
     else if (valid_i)
         check <= !check;

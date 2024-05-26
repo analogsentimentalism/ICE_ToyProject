@@ -82,7 +82,7 @@ module tb_cnn_top();
         #(CLK_PERIOD);
         buffer_1_valid_i = 0;
         // Wait for outputs
-        #(10000*CLK_PERIOD);
+        #(100000*CLK_PERIOD);
         
                 #(CLK_PERIOD);
         buffer_1_valid_i = 1;

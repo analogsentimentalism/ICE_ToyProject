@@ -111,7 +111,7 @@ generate
 	     		.image2(image2),
 	    		 .filter(filters[F*F*DATA_WIDTH*i+:F*F*DATA_WIDTH]),
 	     		.outputConv(outputConv[i]),
-	     		.o_valid()
+	     		.o_valid(valid[i])
       		);
   	end
 endgenerate

@@ -1,24 +1,24 @@
 # compile verilog/system verilog design source files
 verilog xil_defaultlib  \
-"../../../../../Desktop/종설프/ICE_ToyProject/verilog/modules/maxpool/maxpool_8bit/MaxUnit.v" \
-"../../../../../Desktop/종설프/ICE_ToyProject/verilog/modules/dense/ROM.v" \
-"../../../../../Desktop/종설프/ICE_ToyProject/verilog/modules/conv/add_output.v" \
-"../../../../../Desktop/종설프/ICE_ToyProject/verilog/modules/cnn_top.v" \
-"../../../../../Desktop/종설프/ICE_ToyProject/verilog/modules/conv/convLayerMulti.v" \
-"../../../../../Desktop/종설프/ICE_ToyProject/verilog/modules/conv/convLayerSingle.v" \
-"../../../../../Desktop/종설프/ICE_ToyProject/verilog/modules/conv/convUnit.v" \
-"../../../../../Desktop/종설프/ICE_ToyProject/verilog/modules/conv/conv_top.v" \
-"../../../../../Desktop/종설프/ICE_ToyProject/verilog/modules/dense/dense_opt2_bram.v" \
-"../../../../../Desktop/종설프/ICE_ToyProject/verilog/modules/dense/dense_opt2_bram_rear.v" \
-"../../../../../Desktop/종설프/ICE_ToyProject/verilog/modules/dense/dense_top.v" \
-"../../../../../Desktop/종설프/ICE_ToyProject/verilog/modules/conv/floatAdd.v" \
-"../../../../../Desktop/종설프/ICE_ToyProject/verilog/modules/maxpool/maxpool_8bit/floatComp.v" \
-"../../../../../Desktop/종설프/ICE_ToyProject/verilog/modules/conv/floatMult.v" \
-"../../../../../Desktop/종설프/ICE_ToyProject/verilog/modules/line_3_buffer.v" \
-"../../../../../Desktop/종설프/ICE_ToyProject/verilog/modules/maxpool/maxpool_8bit/max_pooling_mult.v" \
-"../../../../../Desktop/종설프/ICE_ToyProject/verilog/modules/maxpool/maxpool_8bit/max_pooling_single.v" \
-"../../../../../Desktop/종설프/ICE_ToyProject/verilog/modules/conv/processingElement.v" \
-"../../../../../Desktop/종설프/ICE_ToyProject/verilog/modules/relu/relu.v" \
+"../../../../jongseoul_top.srcs/sources_1/imports/ICE_ToyProject/verilog/modules/maxpool/maxpool_8bit/MaxUnit.v" \
+"../../../../jongseoul_top.srcs/sources_1/imports/ICE_ToyProject/verilog/modules/dense/ROM.v" \
+"../../../../jongseoul_top.srcs/sources_1/imports/ICE_ToyProject/verilog/modules/conv/add_output.v" \
+"../../../../jongseoul_top.srcs/sources_1/imports/ICE_ToyProject/verilog/modules/cnn_top.v" \
+"../../../../jongseoul_top.srcs/sources_1/imports/ICE_ToyProject/verilog/modules/conv/convLayerMulti.v" \
+"../../../../jongseoul_top.srcs/sources_1/imports/ICE_ToyProject/verilog/modules/conv/convLayerSingle.v" \
+"../../../../jongseoul_top.srcs/sources_1/imports/ICE_ToyProject/verilog/modules/conv/convUnit.v" \
+"../../../../jongseoul_top.srcs/sources_1/imports/ICE_ToyProject/verilog/modules/conv/conv_top.v" \
+"../../../../jongseoul_top.srcs/sources_1/imports/ICE_ToyProject/verilog/modules/dense/dense_opt2_bram.v" \
+"../../../../jongseoul_top.srcs/sources_1/imports/ICE_ToyProject/verilog/modules/dense/dense_opt2_bram_rear.v" \
+"../../../../jongseoul_top.srcs/sources_1/imports/ICE_ToyProject/verilog/modules/dense/dense_top.v" \
+"../../../../jongseoul_top.srcs/sources_1/imports/ICE_ToyProject/verilog/modules/conv/floatAdd.v" \
+"../../../../jongseoul_top.srcs/sources_1/imports/ICE_ToyProject/verilog/modules/maxpool/maxpool_8bit/floatComp.v" \
+"../../../../jongseoul_top.srcs/sources_1/imports/ICE_ToyProject/verilog/modules/conv/floatMult.v" \
+"../../../../jongseoul_top.srcs/sources_1/imports/ICE_ToyProject/verilog/modules/line_3_buffer.v" \
+"../../../../jongseoul_top.srcs/sources_1/imports/ICE_ToyProject/verilog/modules/maxpool/maxpool_8bit/max_pooling_mult.v" \
+"../../../../jongseoul_top.srcs/sources_1/imports/ICE_ToyProject/verilog/modules/maxpool/maxpool_8bit/max_pooling_single.v" \
+"../../../../jongseoul_top.srcs/sources_1/imports/ICE_ToyProject/verilog/modules/conv/processingElement.v" \
+"../../../../jongseoul_top.srcs/sources_1/imports/ICE_ToyProject/verilog/modules/relu/relu.v" \
 "../../../../jongseoul_top.srcs/sim_1/new/tb_top.v" \
 
 # compile glbl module
