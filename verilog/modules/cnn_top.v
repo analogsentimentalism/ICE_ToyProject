@@ -4,7 +4,9 @@ module cnn_top #(
 	input	clk,
 	input   resetn,
 	input 	[1*24*8-1:0] input_data,
-	input buffer_1_valid_i;
+	input buffer_1_valid_i,
+	output [8*7-1:0] dense_out,
+	output dense_valid
 );
 
 `define		H			24
