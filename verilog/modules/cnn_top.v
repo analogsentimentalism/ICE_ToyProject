@@ -69,6 +69,7 @@ line_3_buffer #(
 	.W	(	24	),
 	.DATA_BITS	(8),
 	.K  (	1	)
+
 ) u_line_3_buffer_1 (
 	.clk	(clk),
 	.resetn	(resetn),
@@ -86,7 +87,9 @@ conv_top #(
 	.W	(	26	),
 	.F	(	3	),
 	.K	(	4	),
-	.DATA_BITS(8)
+	.DATA_BITS(8),
+		.KERNELFILE ("mini_conv0_kernel.txt"),
+	.BIASFILE  ("mini_conv0_bias.txt")
 ) u_conv2d_1 (
 	.clk			(	clk						),
 	.rstn_i			(	resetn					),
@@ -110,7 +113,8 @@ relu #(
 max_pooling_mult #(
 	.D	(	4	),
 	.H	(	24	),
-	.W	(	24	)
+	.W	(	24	),
+	.DATA_BITS(8)
 ) u_max_pooling2d_1 (
 	.clk				(	clk				), 
 	.reset				(	resetn			), 
@@ -142,7 +146,9 @@ conv_top #(
 	.W	(	14	),
 	.F	(	3	),
 	.K	(	8	),
-	.DATA_BITS(8)
+	.DATA_BITS(8),
+			.KERNELFILE ("mini_conv1_kernel.txt"),
+	.BIASFILE  ("mini_conv1_bias.txt")
 
 ) u_conv2d_2 (
 	.clk			(	clk						),
@@ -167,7 +173,8 @@ relu #(
 max_pooling_mult #(
 	.D	(	8	),
 	.H	(	12	),
-	.W	(	12	)
+	.W	(	12	),
+	.DATABITS(8)
 ) u_max_pooling2d_2 (
 	.clk				(	clk				), 
 	.reset				(	resetn			), 
@@ -183,7 +190,7 @@ line_3_buffer #(
 	.W	(	6	),
 	.DATA_BITS	(8),
 	.K  (	8	)
-) u_line_3_buffer_2 (
+) u_line_3_buffer_3 (
 	.clk	(clk),
 	.resetn	(resetn),
 	.input_data(u_max_pooling2d_2_output),
@@ -200,7 +207,9 @@ conv_top #(
 	.W	(	8	),
 	.F	(	3	),
 	.K	(	12	),
-	.DATA_BITS(8)
+	.DATA_BITS(8),
+				.KERNELFILE ("mini_conv1_kernel.txt"),
+	.BIASFILE  ("mini_conv1_bias.txt")
 
 
 ) u_conv2d_3 (
@@ -224,7 +233,8 @@ relu #(
 max_pooling_mult #(
 	.D	(	12	),
 	.H	(	6	),
-	.W	(	6	)
+	.W	(	6	),
+	.DATA_BITS(8)
 ) u_max_pooling2d_3 (
 	.clk				(	clk				), 
 	.reset				(	resetn			), 
