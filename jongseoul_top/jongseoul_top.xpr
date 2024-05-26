@@ -46,7 +46,7 @@
     <Option Name="IPStaticSourceDir" Val="$PIPUSERFILESDIR/ipstatic"/>
     <Option Name="EnableBDX" Val="FALSE"/>
     <Option Name="DSABoardId" Val="nexys4"/>
-    <Option Name="WTXSimLaunchSim" Val="3"/>
+    <Option Name="WTXSimLaunchSim" Val="9"/>
     <Option Name="WTModelSimLaunchSim" Val="0"/>
     <Option Name="WTQuestaLaunchSim" Val="0"/>
     <Option Name="WTIesLaunchSim" Val="0"/>
@@ -75,195 +75,253 @@
   <FileSets Version="1" Minor="31">
     <FileSet Name="sources_1" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
       <Filter Type="Srcs"/>
-      <File Path="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/maxpool/maxpool_8bit/MaxUnit.v">
+      <File Path="$PSRCDIR/sources_1/imports/ICE_ToyProject/verilog/modules/maxpool/maxpool_8bit/MaxUnit.v">
         <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/maxpool/maxpool_8bit/MaxUnit.v"/>
+          <Attr Name="ImportTime" Val="1714969175"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/dense/ROM.v">
+      <File Path="$PSRCDIR/sources_1/imports/ICE_ToyProject/verilog/modules/dense/ROM.v">
         <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/dense/ROM.v"/>
+          <Attr Name="ImportTime" Val="1716609147"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/conv/add_output.v">
+      <File Path="$PSRCDIR/sources_1/imports/ICE_ToyProject/verilog/modules/conv/add_output.v">
         <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/conv/add_output.v"/>
+          <Attr Name="ImportTime" Val="1716709698"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/conv/convLayerMulti.v">
+      <File Path="$PSRCDIR/sources_1/imports/ICE_ToyProject/verilog/modules/conv/convLayerMulti.v">
         <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/conv/convLayerMulti.v"/>
+          <Attr Name="ImportTime" Val="1716709762"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/conv/convLayerSingle.v">
+      <File Path="$PSRCDIR/sources_1/imports/ICE_ToyProject/verilog/modules/conv/convLayerSingle.v">
         <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/conv/convLayerSingle.v"/>
+          <Attr Name="ImportTime" Val="1716709698"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/conv/convUnit.v">
+      <File Path="$PSRCDIR/sources_1/imports/ICE_ToyProject/verilog/modules/conv/convUnit.v">
         <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/conv/convUnit.v"/>
+          <Attr Name="ImportTime" Val="1716120058"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/conv/conv_top.v">
+      <File Path="$PSRCDIR/sources_1/imports/ICE_ToyProject/verilog/modules/conv/conv_top.v">
         <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/conv/conv_top.v"/>
+          <Attr Name="ImportTime" Val="1716715703"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/dense/dense_opt2_bram.v">
+      <File Path="$PSRCDIR/sources_1/imports/ICE_ToyProject/verilog/modules/dense/dense_opt2_bram.v">
         <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/dense/dense_opt2_bram.v"/>
+          <Attr Name="ImportTime" Val="1716709698"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/dense/dense_opt2_bram_rear.v">
+      <File Path="$PSRCDIR/sources_1/imports/ICE_ToyProject/verilog/modules/dense/dense_opt2_bram_rear.v">
         <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/dense/dense_opt2_bram_rear.v"/>
+          <Attr Name="ImportTime" Val="1716709698"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/dense/dense_top.v">
+      <File Path="$PSRCDIR/sources_1/imports/ICE_ToyProject/verilog/modules/dense/dense_top.v">
         <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/dense/dense_top.v"/>
+          <Attr Name="ImportTime" Val="1716709698"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/conv/floatAdd.v">
+      <File Path="$PSRCDIR/sources_1/imports/ICE_ToyProject/verilog/modules/conv/floatAdd.v">
         <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/conv/floatAdd.v"/>
+          <Attr Name="ImportTime" Val="1716120058"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/maxpool/maxpool_8bit/floatComp.v">
+      <File Path="$PSRCDIR/sources_1/imports/ICE_ToyProject/verilog/modules/maxpool/maxpool_8bit/floatComp.v">
         <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/maxpool/maxpool_8bit/floatComp.v"/>
+          <Attr Name="ImportTime" Val="1714969231"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/conv/floatMult.v">
+      <File Path="$PSRCDIR/sources_1/imports/ICE_ToyProject/verilog/modules/conv/floatMult.v">
         <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/conv/floatMult.v"/>
+          <Attr Name="ImportTime" Val="1716120058"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/line_3_buffer.v">
+      <File Path="$PSRCDIR/sources_1/imports/ICE_ToyProject/verilog/modules/line_3_buffer.v">
         <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/line_3_buffer.v"/>
+          <Attr Name="ImportTime" Val="1716627161"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/maxpool/maxpool_8bit/max_pooling_mult.v">
+      <File Path="$PSRCDIR/sources_1/imports/ICE_ToyProject/verilog/modules/maxpool/maxpool_8bit/max_pooling_mult.v">
         <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/maxpool/maxpool_8bit/max_pooling_mult.v"/>
+          <Attr Name="ImportTime" Val="1716608912"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/maxpool/maxpool_8bit/max_pooling_single.v">
+      <File Path="$PSRCDIR/sources_1/imports/ICE_ToyProject/verilog/modules/maxpool/maxpool_8bit/max_pooling_single.v">
         <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/maxpool/maxpool_8bit/max_pooling_single.v"/>
+          <Attr Name="ImportTime" Val="1714969166"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/conv/processingElement.v">
+      <File Path="$PSRCDIR/sources_1/imports/ICE_ToyProject/verilog/modules/conv/processingElement.v">
         <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/conv/processingElement.v"/>
+          <Attr Name="ImportTime" Val="1716120058"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/relu/relu.v">
+      <File Path="$PSRCDIR/sources_1/imports/ICE_ToyProject/verilog/modules/relu/relu.v">
         <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/relu/relu.v"/>
+          <Attr Name="ImportTime" Val="1716120047"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/cnn_top.v">
+      <File Path="$PSRCDIR/sources_1/imports/ICE_ToyProject/verilog/modules/cnn_top.v">
         <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../Desktop/종설프/ICE_ToyProject/verilog/modules/cnn_top.v"/>
+          <Attr Name="ImportTime" Val="1716714992"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../Desktop/종설프/ICE_ToyProject/txt/mini_conv2_bias.txt">
+      <File Path="$PSRCDIR/sources_1/imports/ICE_ToyProject/txt/mini_conv2_bias.txt">
         <FileInfo SFType="MIF">
+          <Attr Name="ImportPath" Val="$PPRDIR/../Desktop/종설프/ICE_ToyProject/txt/mini_conv2_bias.txt"/>
+          <Attr Name="ImportTime" Val="1716612832"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../Desktop/종설프/ICE_ToyProject/txt/mini_conv0_bias.txt">
+      <File Path="$PSRCDIR/sources_1/imports/ICE_ToyProject/txt/mini_conv0_bias.txt">
         <FileInfo SFType="MIF">
+          <Attr Name="ImportPath" Val="$PPRDIR/../Desktop/종설프/ICE_ToyProject/txt/mini_conv0_bias.txt"/>
+          <Attr Name="ImportTime" Val="1716612832"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../Desktop/종설프/ICE_ToyProject/txt/mini_dense0_bias.txt">
+      <File Path="$PSRCDIR/sources_1/imports/ICE_ToyProject/txt/mini_dense0_bias.txt">
         <FileInfo SFType="MIF">
+          <Attr Name="ImportPath" Val="$PPRDIR/../Desktop/종설프/ICE_ToyProject/txt/mini_dense0_bias.txt"/>
+          <Attr Name="ImportTime" Val="1716612832"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../Desktop/종설프/ICE_ToyProject/txt/mini_dense0_kernel.txt">
+      <File Path="$PSRCDIR/sources_1/imports/ICE_ToyProject/txt/mini_dense0_kernel.txt">
         <FileInfo SFType="MIF">
+          <Attr Name="ImportPath" Val="$PPRDIR/../Desktop/종설프/ICE_ToyProject/txt/mini_dense0_kernel.txt"/>
+          <Attr Name="ImportTime" Val="1716612832"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../Desktop/종설프/ICE_ToyProject/txt/mini_conv2_kernel.txt">
+      <File Path="$PSRCDIR/sources_1/imports/ICE_ToyProject/txt/mini_conv2_kernel.txt">
         <FileInfo SFType="MIF">
+          <Attr Name="ImportPath" Val="$PPRDIR/../Desktop/종설프/ICE_ToyProject/txt/mini_conv2_kernel.txt"/>
+          <Attr Name="ImportTime" Val="1716612832"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../Desktop/종설프/ICE_ToyProject/txt/mini_conv1_kernel.txt">
+      <File Path="$PSRCDIR/sources_1/imports/ICE_ToyProject/txt/mini_conv1_kernel.txt">
         <FileInfo SFType="MIF">
+          <Attr Name="ImportPath" Val="$PPRDIR/../Desktop/종설프/ICE_ToyProject/txt/mini_conv1_kernel.txt"/>
+          <Attr Name="ImportTime" Val="1716612832"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../Desktop/종설프/ICE_ToyProject/txt/mini_dense1_bias.txt">
+      <File Path="$PSRCDIR/sources_1/imports/ICE_ToyProject/txt/mini_dense1_bias.txt">
         <FileInfo SFType="MIF">
+          <Attr Name="ImportPath" Val="$PPRDIR/../Desktop/종설프/ICE_ToyProject/txt/mini_dense1_bias.txt"/>
+          <Attr Name="ImportTime" Val="1716612832"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../Desktop/종설프/ICE_ToyProject/txt/mini_dense1_kernel.txt">
+      <File Path="$PSRCDIR/sources_1/imports/ICE_ToyProject/txt/mini_dense1_kernel.txt">
         <FileInfo SFType="MIF">
+          <Attr Name="ImportPath" Val="$PPRDIR/../Desktop/종설프/ICE_ToyProject/txt/mini_dense1_kernel.txt"/>
+          <Attr Name="ImportTime" Val="1716709698"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../Desktop/종설프/ICE_ToyProject/txt/mini_conv0_kernel.txt">
+      <File Path="$PSRCDIR/sources_1/imports/ICE_ToyProject/txt/mini_conv0_kernel.txt">
         <FileInfo SFType="MIF">
+          <Attr Name="ImportPath" Val="$PPRDIR/../Desktop/종설프/ICE_ToyProject/txt/mini_conv0_kernel.txt"/>
+          <Attr Name="ImportTime" Val="1716612832"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../Desktop/종설프/ICE_ToyProject/txt/mini_conv1_bias.txt">
+      <File Path="$PSRCDIR/sources_1/imports/ICE_ToyProject/txt/mini_conv1_bias.txt">
         <FileInfo SFType="MIF">
+          <Attr Name="ImportPath" Val="$PPRDIR/../Desktop/종설프/ICE_ToyProject/txt/mini_conv1_bias.txt"/>
+          <Attr Name="ImportTime" Val="1716612832"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
@@ -282,7 +340,6 @@
     <FileSet Name="sim_1" Type="SimulationSrcs" RelSrcDir="$PSRCDIR/sim_1" RelGenDir="$PGENDIR/sim_1">
       <File Path="$PSRCDIR/sim_1/new/tb_top.v">
         <FileInfo>
-          <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -290,7 +347,7 @@
       </File>
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
-        <Option Name="TopModule" Val="cnn_top"/>
+        <Option Name="TopModule" Val="tb_cnn_top"/>
         <Option Name="TopLib" Val="xil_defaultlib"/>
         <Option Name="TopAutoSet" Val="TRUE"/>
         <Option Name="TransportPathDelay" Val="0"/>

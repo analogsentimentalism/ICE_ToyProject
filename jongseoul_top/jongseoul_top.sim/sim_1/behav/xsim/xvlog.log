@@ -1,7 +1,18 @@
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/82108/Desktop/종설프/ICE_ToyProject/verilog/modules/maxpool/maxpool_8bit/MaxUnit.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module MaxUnit
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/82108/Desktop/종설프/ICE_ToyProject/verilog/modules/dense/ROM.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module rom
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/82108/Desktop/종설프/ICE_ToyProject/verilog/modules/conv/add_output.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module add_output
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/82108/Desktop/종설프/ICE_ToyProject/verilog/modules/cnn_top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module cnn_top
+WARNING: [VRFC 10-2500] empty parameter declaration is only allowed in SystemVerilog mode [C:/Users/82108/Desktop/종설프/ICE_ToyProject/verilog/modules/cnn_top.v:1]
+WARNING: [VRFC 10-3248] data object 'u_fifo_0_rdata' is already declared [C:/Users/82108/Desktop/종설프/ICE_ToyProject/verilog/modules/cnn_top.v:25]
+WARNING: [VRFC 10-3703] second declaration of 'u_fifo_0_rdata' ignored [C:/Users/82108/Desktop/종설프/ICE_ToyProject/verilog/modules/cnn_top.v:25]
+WARNING: [VRFC 10-3029] 'u_fifo_0_rdata' was previously declared without a range [C:/Users/82108/Desktop/종설프/ICE_ToyProject/verilog/modules/cnn_top.v:25]
+WARNING: [VRFC 10-3676] redeclaration of ansi port 'buffer_1_valid_i' is not allowed [C:/Users/82108/Desktop/종설프/ICE_ToyProject/verilog/modules/cnn_top.v:29]
+WARNING: [VRFC 10-3676] redeclaration of ansi port 'dense_out' is not allowed [C:/Users/82108/Desktop/종설프/ICE_ToyProject/verilog/modules/cnn_top.v:63]
+WARNING: [VRFC 10-3676] redeclaration of ansi port 'dense_valid' is not allowed [C:/Users/82108/Desktop/종설프/ICE_ToyProject/verilog/modules/cnn_top.v:64]
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/82108/Desktop/종설프/ICE_ToyProject/verilog/modules/conv/convLayerMulti.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module convLayerMulti
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/82108/Desktop/종설프/ICE_ToyProject/verilog/modules/conv/convLayerSingle.v" into library xil_defaultlib
@@ -32,14 +43,5 @@ INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/82108/Desktop/종설프/ICE_T
 INFO: [VRFC 10-311] analyzing module processingElement
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/82108/Desktop/종설프/ICE_ToyProject/verilog/modules/relu/relu.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module relu
-INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/82108/Desktop/종설프/ICE_ToyProject/verilog/modules/conv/rom.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module rom
-INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/82108/Desktop/종설프/ICE_ToyProject/verilog/modules/cnn_top.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module cnn_top
-WARNING: [VRFC 10-2500] empty parameter declaration is only allowed in SystemVerilog mode [C:/Users/82108/Desktop/종설프/ICE_ToyProject/verilog/modules/cnn_top.v:1]
-WARNING: [VRFC 10-3248] data object 'u_fifo_0_rdata' is already declared [C:/Users/82108/Desktop/종설프/ICE_ToyProject/verilog/modules/cnn_top.v:25]
-WARNING: [VRFC 10-3703] second declaration of 'u_fifo_0_rdata' ignored [C:/Users/82108/Desktop/종설프/ICE_ToyProject/verilog/modules/cnn_top.v:25]
-WARNING: [VRFC 10-3029] 'u_fifo_0_rdata' was previously declared without a range [C:/Users/82108/Desktop/종설프/ICE_ToyProject/verilog/modules/cnn_top.v:25]
-WARNING: [VRFC 10-3676] redeclaration of ansi port 'buffer_1_valid_i' is not allowed [C:/Users/82108/Desktop/종설프/ICE_ToyProject/verilog/modules/cnn_top.v:29]
-WARNING: [VRFC 10-3676] redeclaration of ansi port 'dense_out' is not allowed [C:/Users/82108/Desktop/종설프/ICE_ToyProject/verilog/modules/cnn_top.v:63]
-WARNING: [VRFC 10-3676] redeclaration of ansi port 'dense_valid' is not allowed [C:/Users/82108/Desktop/종설프/ICE_ToyProject/verilog/modules/cnn_top.v:64]
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/82108/jongseoul_top/jongseoul_top.srcs/sim_1/new/tb_top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tb_cnn_top
