@@ -15,7 +15,7 @@ output [D*(W+2)*DATA_BITS*K-1:0] output_3;
 input valid_i;
 output valid_o;
 reg valid;
-reg [3:0] zero_padding_counter; 
+reg [4:0] zero_padding_counter; 
 reg [D*(W+2)*DATA_BITS*K-1:0] buffer [2:0];
 reg [1:0] buffer_full;
 reg [1:0] counter;
@@ -30,11 +30,11 @@ assign output_3 = buffer[ptr3];
 assign valid_o = valid;
 always@(posedge clk or negedge resetn) begin
     if(!resetn)
-        zero_padding_counter <= 4'h0;
+        zero_padding_counter <= 5'h0;
     else if(valid_i)
-        zero_padding_counter <= zero_padding_counter + 4'h1;
+        zero_padding_counter <= zero_padding_counter + 5'h1;
     else if ((zero_padding_counter == H) & behind_conv_done)
-        zero_padding_counter <= 4'h0;
+        zero_padding_counter <= 5'h0;
 end
 always @ (posedge clk or negedge resetn) begin
     if (!resetn)
