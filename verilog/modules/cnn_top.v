@@ -83,8 +83,8 @@ line_3_buffer #(
 );
 conv_top #(
 	.D 	( 	1	),
-	.H	(	26	),
-	.W	(	26	),
+	.H	(	24	),
+	.W	(	24	),
 	.F	(	3	),
 	.K	(	4	),
 	.DATA_WIDTH(8),
@@ -92,7 +92,7 @@ conv_top #(
 	.BIASFILE  ("mini_conv0_bias.txt")
 ) u_conv2d_1 (
 	.clk			(	clk						),
-	.rstn_i			(	resetn					),
+	.rstn_i			(	~resetn					),
 	.image0			(	u_conv_1_image0			),
 	.image1			(	u_conv_1_image1			),
 	.image2			(	u_conv_1_image2			),
@@ -142,8 +142,8 @@ line_3_buffer #(
 );
 conv_top #(
 	.D 	( 	4	),
-	.H	(	14	),
-	.W	(	14	),
+	.H	(	12	),
+	.W	(	12	),
 	.F	(	3	),
 	.K	(	8	),
 	.DATA_WIDTH(8),
@@ -152,7 +152,7 @@ conv_top #(
 
 ) u_conv2d_2 (
 	.clk			(	clk						),
-	.rstn_i			(	resetn					),
+	.rstn_i			(	~resetn					),
 	.image0			(u_conv_2_image0),
 	.image1			(u_conv_2_image1),
 	.image2			(u_conv_2_image2),
@@ -203,8 +203,8 @@ line_3_buffer #(
 );
 conv_top #(
 	.D 	( 	8	),
-	.H	(	8	),
-	.W	(	8	),
+	.H	(	6	),
+	.W	(	6	),
 	.F	(	3	),
 	.K	(	12	),
 	.DATA_WIDTH(8),
@@ -214,7 +214,7 @@ conv_top #(
 
 ) u_conv2d_3 (
 	.clk			(	clk						),
-	.rstn_i			(	resetn					),
+	.rstn_i			(	~resetn					),
 	.image0			(	u_conv_3_image0),
 	.image1			(	u_conv_3_image1),
 	.image2			(	u_conv_3_image2),
