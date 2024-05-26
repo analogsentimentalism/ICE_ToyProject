@@ -81,7 +81,7 @@ line_3_buffer #(
 	.behind_conv_done(u_conv_1_done)
 );
 conv_top #(
-	.D 	( 	1	)
+	.D 	( 	1	),
 	.H	(	26	),
 	.W	(	26	),
 	.F	(	3	),
@@ -137,7 +137,7 @@ line_3_buffer #(
 	.behind_conv_done(u_conv_2_done)
 );
 conv_top #(
-	.D 	( 	4	)
+	.D 	( 	4	),
 	.H	(	14	),
 	.W	(	14	),
 	.F	(	3	),
@@ -195,7 +195,7 @@ line_3_buffer #(
 	.behind_conv_done(u_conv_3_done)
 );
 conv_top #(
-	.D 	( 	8	)
+	.D 	( 	8	),
 	.H	(	8	),
 	.W	(	8	),
 	.F	(	3	),
