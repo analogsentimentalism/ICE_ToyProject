@@ -73,7 +73,7 @@ line_3_buffer #(
 ) u_line_3_buffer_1 (
 	.clk	(clk),
 	.resetn	(resetn),
-	.input_data(u_fifo_0_rdata),
+	.input_data(input_data),
 	.output_1(u_conv_1_image0),
 	.output_2(u_conv_1_image1),
 	.output_3(u_conv_1_image2),
@@ -87,7 +87,7 @@ conv_top #(
 	.W	(	26	),
 	.F	(	3	),
 	.K	(	4	),
-	.DATA_BITS(8),
+	.DATA_WIDTH(8),
 		.KERNELFILE ("mini_conv0_kernel.txt"),
 	.BIASFILE  ("mini_conv0_bias.txt")
 ) u_conv2d_1 (
@@ -97,8 +97,8 @@ conv_top #(
 	.image1			(	u_conv_1_image1			),
 	.image2			(	u_conv_1_image2			),
 	.image_start	(	u_conv_1_image_start	),
-	.result_o		(	u_conv_1_outputCONV		),
-	.done			(	u_conv_1_done			)
+	.output_add_o		(	u_conv_1_outputCONV		),
+	.output_add_done_o			(	u_conv_1_done			)
 );
 relu #(
 	.H	(	24	),
@@ -146,7 +146,7 @@ conv_top #(
 	.W	(	14	),
 	.F	(	3	),
 	.K	(	8	),
-	.DATA_BITS(8),
+	.DATA_WIDTH(8),
 			.KERNELFILE ("mini_conv1_kernel.txt"),
 	.BIASFILE  ("mini_conv1_bias.txt")
 
@@ -154,11 +154,11 @@ conv_top #(
 	.clk			(	clk						),
 	.rstn_i			(	resetn					),
 	.image0			(u_conv_2_image0),
-	.image0			(u_conv_2_image1),
-	.image0			(u_conv_2_image2),
+	.image1			(u_conv_2_image1),
+	.image2			(u_conv_2_image2),
 	.image_start	(	u_conv_2_image_start),
-	.result_o		(	u_conv_2_outputCONV		),
-	.done			(	u_conv_2_done			)
+	.output_add_o		(	u_conv_2_outputCONV		),
+	.output_add_done_o			(	u_conv_2_done			)
 	
 );
 relu #(
@@ -207,7 +207,7 @@ conv_top #(
 	.W	(	8	),
 	.F	(	3	),
 	.K	(	12	),
-	.DATA_BITS(8),
+	.DATA_WIDTH(8),
 				.KERNELFILE ("mini_conv1_kernel.txt"),
 	.BIASFILE  ("mini_conv1_bias.txt")
 
@@ -219,8 +219,8 @@ conv_top #(
 	.image1			(	u_conv_3_image1),
 	.image2			(	u_conv_3_image2),
 	.image_start	(	u_conv_3_image_start	),
-	.result_o		(	u_conv_3_outputCONV		),
-	.done			(	u_conv_3_done			)
+	.output_add_o		(	u_conv_3_outputCONV		),
+	.output_add_done_o			(	u_conv_3_done			)
 );
 relu #(
 	.H	(	6	),
