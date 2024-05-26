@@ -239,7 +239,7 @@ dense_top u_dense_top(
 	.rstn(resetn),
 	.valid_i(u_max_pooling2d_3_valid_o),
 	.data_i(u_max_pooling2d_3_output),
-	.data_o(dense_out)
+	.data_o(dense_out),
 	.valid_o(dense_valid)
 );
 
