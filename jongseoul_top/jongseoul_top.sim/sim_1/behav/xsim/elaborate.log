@@ -4,9 +4,7 @@ Running: C:/Xilinx/Vivado/2020.2/bin/unwrapped/win64.o/xelab.exe -wto f78192ae72
 Using 2 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
-WARNING: [VRFC 10-2861] module 'max_pooling_mult' does not have a parameter named DATABITS [C:/Users/82108/jongseoul_top/jongseoul_top.srcs/sources_1/imports/ICE_ToyProject/verilog/modules/cnn_top.v:177]
-WARNING: [VRFC 10-3091] actual bit length 56 differs from formal bit length 8 for port 'dense_out' [C:/Users/82108/jongseoul_top/jongseoul_top.srcs/sim_1/new/tb_top.v:25]
-WARNING: [VRFC 10-3091] actual bit length 8 differs from formal bit length 56 for port 'data_o' [C:/Users/82108/jongseoul_top/jongseoul_top.srcs/sources_1/imports/ICE_ToyProject/verilog/modules/cnn_top.v:252]
+WARNING: [VRFC 10-2861] module 'max_pooling_mult' does not have a parameter named DATABITS [C:/Users/82108/jongseoul_top/jongseoul_top.srcs/sources_1/imports/ICE_ToyProject/verilog/modules/cnn_top.v:170]
 WARNING: [VRFC 10-3705] select index 7 into 'add_output' is out of bounds [C:/Users/82108/jongseoul_top/jongseoul_top.srcs/sources_1/imports/ICE_ToyProject/verilog/modules/conv/add_output.v:52]
 Completed static elaboration
 Starting simulation data flow analysis
@@ -145,7 +143,7 @@ Compiling module xil_defaultlib.rom(RAM_WIDTH=96,RAM_DEPTH=1,INI...
 Compiling module xil_defaultlib.convLayerSingle_default
 Compiling module xil_defaultlib.convLayerMulti(K=12)
 Compiling module xil_defaultlib.add_output(D=8,H=6,K=12)
-Compiling module xil_defaultlib.conv_top(D=8,H=6,W=6,K=12)
+Compiling module xil_defaultlib.conv_top(KERNELFILE="mini_conv2_...
 Compiling module xil_defaultlib.relu(D=12,W=6)
 Compiling module xil_defaultlib.max_pooling_single(D=12,W=6,H=6)
 Compiling module xil_defaultlib.max_pooling_mult(D=12,H=6,W=6)

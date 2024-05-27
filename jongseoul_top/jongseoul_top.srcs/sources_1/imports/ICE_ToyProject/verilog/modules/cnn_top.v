@@ -13,13 +13,6 @@ module cnn_top #(
 `define		W			24
 `define 	DATA_WIDTH	8
 
-reg			u_fifo_0_resetn	;
-reg			u_fifo_0_ren	;
-reg			u_fifo_0_wen	;
-reg			u_fifo_0_wdata	;
-
-wire		u_fifo_0_rdata	;
-wire		u_fifo_0_empty	;
 
 
 wire [1*24*8-1 :0] u_fifo_0_rdata;
@@ -60,8 +53,8 @@ wire [1*6*12*8-1:0] u_relu_3_outputRELU;
 wire [1*3*12*8-1:0] u_max_pooling2d_3_output;
 wire u_max_pooling2d_3_valid_o;
 
-wire [7:0] dense_out;
-wire dense_valid;
+
+
 
 line_3_buffer #(
 	.D	(	1 	),
@@ -208,8 +201,8 @@ conv_top #(
 	.F	(	3	),
 	.K	(	12	),
 	.DATA_WIDTH(8),
-				.KERNELFILE ("mini_conv1_kernel.txt"),
-	.BIASFILE  ("mini_conv1_bias.txt")
+				.KERNELFILE ("mini_conv2_kernel.txt"),
+	.BIASFILE  ("mini_conv2_bias.txt")
 
 
 ) u_conv2d_3 (

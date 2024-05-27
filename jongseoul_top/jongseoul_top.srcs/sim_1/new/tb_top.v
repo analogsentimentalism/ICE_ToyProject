@@ -50,7 +50,7 @@ module tb_cnn_top();
         #(CLK_PERIOD);
         buffer_1_valid_i = 0;
         // Wait for outputs
-        #(10000*CLK_PERIOD);
+        #(99*CLK_PERIOD);
         
         #(CLK_PERIOD);
         buffer_1_valid_i = 1;
@@ -58,7 +58,7 @@ module tb_cnn_top();
         #(CLK_PERIOD);
         buffer_1_valid_i = 0;
         // Wait for outputs
-        #(10000*CLK_PERIOD);
+        #(99*CLK_PERIOD);
         
                 #(CLK_PERIOD);
         buffer_1_valid_i = 1;
@@ -66,7 +66,7 @@ module tb_cnn_top();
         #(CLK_PERIOD);
         buffer_1_valid_i = 0;
         // Wait for outputs
-        #(10000*CLK_PERIOD);
+        #(99*CLK_PERIOD);
         
                 #(CLK_PERIOD);
         buffer_1_valid_i = 1;
@@ -74,7 +74,7 @@ module tb_cnn_top();
         #(CLK_PERIOD);
         buffer_1_valid_i = 0;
         // Wait for outputs
-        #(10000*CLK_PERIOD);
+        #(99*CLK_PERIOD);
         
                 #(CLK_PERIOD);
         buffer_1_valid_i = 1;
@@ -82,7 +82,7 @@ module tb_cnn_top();
         #(CLK_PERIOD);
         buffer_1_valid_i = 0;
         // Wait for outputs
-        #(100000*CLK_PERIOD);
+        #(99*CLK_PERIOD);
         
                 #(CLK_PERIOD);
         buffer_1_valid_i = 1;
@@ -90,7 +90,7 @@ module tb_cnn_top();
         #(CLK_PERIOD);
         buffer_1_valid_i = 0;
         // Wait for outputs
-        #(10000*CLK_PERIOD);
+        #(99*CLK_PERIOD);
         
                 #(CLK_PERIOD);
         buffer_1_valid_i = 1;
@@ -98,7 +98,7 @@ module tb_cnn_top();
         #(CLK_PERIOD);
         buffer_1_valid_i = 0;
         // Wait for outputs
-        #(10000*CLK_PERIOD);
+        #(99*CLK_PERIOD);
         
         // Apply test vectors
         #(CLK_PERIOD);
@@ -107,7 +107,7 @@ module tb_cnn_top();
         #(CLK_PERIOD);
         buffer_1_valid_i = 0;
         // Wait for outputs
-        #(10000*CLK_PERIOD);
+        #(99*CLK_PERIOD);
         
         #(CLK_PERIOD);
         buffer_1_valid_i = 1;
@@ -115,7 +115,7 @@ module tb_cnn_top();
         #(CLK_PERIOD);
         buffer_1_valid_i = 0;
         // Wait for outputs
-        #(10000*CLK_PERIOD);
+        #(99*CLK_PERIOD);
         
                 #(CLK_PERIOD);
         buffer_1_valid_i = 1;
@@ -123,7 +123,7 @@ module tb_cnn_top();
         #(CLK_PERIOD);
         buffer_1_valid_i = 0;
         // Wait for outputs
-        #(10000*CLK_PERIOD);
+        #(99*CLK_PERIOD);
         
                 #(CLK_PERIOD);
         buffer_1_valid_i = 1;
@@ -131,7 +131,7 @@ module tb_cnn_top();
         #(CLK_PERIOD);
         buffer_1_valid_i = 0;
         // Wait for outputs
-        #(10000*CLK_PERIOD);
+        #(99*CLK_PERIOD);
         
                 #(CLK_PERIOD);
         buffer_1_valid_i = 1;
@@ -139,7 +139,7 @@ module tb_cnn_top();
         #(CLK_PERIOD);
         buffer_1_valid_i = 0;
         // Wait for outputs
-        #(10000*CLK_PERIOD);
+        #(99*CLK_PERIOD);
         
                 #(CLK_PERIOD);
         buffer_1_valid_i = 1;
@@ -147,7 +147,7 @@ module tb_cnn_top();
         #(CLK_PERIOD);
         buffer_1_valid_i = 0;
         // Wait for outputs
-        #(10000*CLK_PERIOD);
+        #(99*CLK_PERIOD);
         
                 #(CLK_PERIOD);
         buffer_1_valid_i = 1;
@@ -155,7 +155,7 @@ module tb_cnn_top();
         #(CLK_PERIOD);
         buffer_1_valid_i = 0;
         // Wait for outputs
-        #(10000*CLK_PERIOD);
+        #(99*CLK_PERIOD);
         
         // Apply test vectors
         #(CLK_PERIOD);
@@ -164,7 +164,7 @@ module tb_cnn_top();
         #(CLK_PERIOD);
         buffer_1_valid_i = 0;
         // Wait for outputs
-        #(10000*CLK_PERIOD);
+        #(99*CLK_PERIOD);
         
         #(CLK_PERIOD);
         buffer_1_valid_i = 1;
@@ -172,7 +172,7 @@ module tb_cnn_top();
         #(CLK_PERIOD);
         buffer_1_valid_i = 0;
         // Wait for outputs
-        #(10000*CLK_PERIOD);
+        #(99*CLK_PERIOD);
         
                 #(CLK_PERIOD);
         buffer_1_valid_i = 1;
@@ -180,7 +180,7 @@ module tb_cnn_top();
         #(CLK_PERIOD);
         buffer_1_valid_i = 0;
         // Wait for outputs
-        #(10000*CLK_PERIOD);
+        #(99*CLK_PERIOD);
         
                 #(CLK_PERIOD);
         buffer_1_valid_i = 1;
@@ -188,7 +188,7 @@ module tb_cnn_top();
         #(CLK_PERIOD);
         buffer_1_valid_i = 0;
         // Wait for outputs
-        #(10000*CLK_PERIOD);
+        #(99*CLK_PERIOD);
         
                 #(CLK_PERIOD);
         buffer_1_valid_i = 1;
@@ -196,7 +196,7 @@ module tb_cnn_top();
         #(CLK_PERIOD);
         buffer_1_valid_i = 0;
         // Wait for outputs
-        #(10000*CLK_PERIOD);
+        #(99*CLK_PERIOD);
         
                 #(CLK_PERIOD);
         buffer_1_valid_i = 1;
@@ -204,7 +204,7 @@ module tb_cnn_top();
         #(CLK_PERIOD);
         buffer_1_valid_i = 0;
         // Wait for outputs
-        #(10000*CLK_PERIOD);
+        #(99*CLK_PERIOD);
         
                 #(CLK_PERIOD);
         buffer_1_valid_i = 1;
@@ -212,28 +212,28 @@ module tb_cnn_top();
         #(CLK_PERIOD);
         buffer_1_valid_i = 0;
         // Wait for outputs
-        #(10000*CLK_PERIOD);
+        #(99*CLK_PERIOD);
                         #(CLK_PERIOD);
         buffer_1_valid_i = 1;
         input_data = 192'h35353536342A26272622211C1C1C1C212423262B31313232;
         #(CLK_PERIOD);
         buffer_1_valid_i = 0;
         // Wait for outputs
-        #(10000*CLK_PERIOD);
+        #(99*CLK_PERIOD);
                         #(CLK_PERIOD);
         buffer_1_valid_i = 1;
         input_data = 192'h35363635342F272528272322232222242424272B31313131;
         #(CLK_PERIOD);
         buffer_1_valid_i = 0;
         // Wait for outputs
-        #(10000*CLK_PERIOD);
+        #(99*CLK_PERIOD);
                         #(CLK_PERIOD);
         buffer_1_valid_i = 1;
         input_data = 192'h3636363533302C2626292523252322242423272A30313131;
         #(CLK_PERIOD);
         buffer_1_valid_i = 0;
         // Wait for outputs
-        #(10000*CLK_PERIOD);
+        #(2000*CLK_PERIOD);
         
         
         
@@ -246,7 +246,7 @@ module tb_cnn_top();
         end
 
         // Finish simulation
-        #(10*CLK_PERIOD);
+        #(1000*CLK_PERIOD);
         $finish;
     end
 
