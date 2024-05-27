@@ -69,7 +69,7 @@ generate
 	       .image_start(	image_start		),
 	       .filters	    (	kernel[K*F*F*DATA_WIDTH*(i+1)-1:K*F*F*DATA_WIDTH*i]	),
            .outputCONV  (   result_w[DATA_WIDTH*W*K*(i+1)-1:DATA_WIDTH*K*W*i]),
-	       .done        (   done_w   )
+		.done        (   done_w[i]   )
         );
     end
 endgenerate
