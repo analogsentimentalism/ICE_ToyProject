@@ -20,7 +20,7 @@ module conv_top #(
 );
 
 wire        [DATA_WIDTH * D * W * K - 1:0]      result_w;
-wire                                            done_w;
+wire                                            done_w[D-1:0];
 wire        [D*K*F*F*DATA_WIDTH-1:0]            kernel;
 wire        [K*DATA_WIDTH-1:0]                  bias;
 
@@ -69,7 +69,7 @@ generate
 	       .image_start(	image_start		),
 	       .filters	    (	kernel[K*F*F*DATA_WIDTH*(i+1)-1:K*F*F*DATA_WIDTH*i]	),
            .outputCONV  (   result_w[DATA_WIDTH*W*K*(i+1)-1:DATA_WIDTH*K*W*i]),
-		.done        (   done_w[i]   )
+	       .done        (   done_w[i]   )
         );
     end
 endgenerate
@@ -86,7 +86,7 @@ add_output #(
 .clk(clk),
 .rst_n(rstn_i),
 .output_convmul_i(result_w),
-.done_convmul_i(done_w),
+.done_convmul_i(done_w[0]),
 .bias(bias),
 .output_add_o(output_add_o),
 .done_add_o(output_add_done_o)
