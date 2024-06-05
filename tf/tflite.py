@@ -61,7 +61,7 @@ converter = tf.lite.TFLiteConverter.from_keras_model(model)
 converter.optimizations = [tf.lite.Optimize.DEFAULT]
 converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8]
 converter.inference_input_type = tf.uint8
-converter.inference_output_type = tf.int8
+converter.inference_output_type = tf.uint8
 converter.representative_dataset = representative_data_gen
 #%%
 tflite_model = converter.convert()
@@ -144,4 +144,9 @@ for i, test_image in enumerate(X_test):
 # %%
 print(test_image)
 print(interpreter.get_tensor(11))
+# %%
+a = np.array([-128, -128, -128, -128, -128, -128, -128, -128, -128, -124, -128, -128, -125, -128, -128, -128, -128, -128, -128, -128, -128, -128, -125, -126, -128, -128, -123, -128, -128, -128, -128, -128, -119, -128, -128, -128, -128, -128, -128, -128, -126, -128, -128, -128, -128, -128, -128, -128, -124, -128, -128, -128, -128, -128, -128, -128, -128, -128, -128, -128, -127, -128, -128, -128])
+b = np.array([-79, -34, -24, -5, 6, -19, 10, -20, -34, 9, -33, 14, 25, -10, -43, 13, -24, 20, -25, -39, -43, -13, -71, 21, -23, 25, -24, -9, 8, -52, 35, 13, -37, -34, -55, -37, -127, -12, 17, 9, -86, -126, -88, -48, -4, -31, 16, -49, -84, -5, -10, -2, -56, -26, 44, -52, 28, -29, -28, -42, -63, -9, -57, -21])
+
+print(sum(a*b))
 # %%

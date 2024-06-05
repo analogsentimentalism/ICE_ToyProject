@@ -6,7 +6,7 @@ import numpy as np
 
 from sklearn.utils import shuffle
 from sklearn.model_selection import train_test_split
-
+import tensorflow as tf
 # Input data files are available in the "../input/" directory.
 # For example, running this (by clicking run or pressing Shift+Enter) will list the files in the input directory
 
@@ -17,7 +17,8 @@ import os
 # from keras.utils import np_utils
 from keras.utils import to_categorical
 from keras.models import Sequential
-from keras.layers import Conv2D, MaxPooling2D, Activation, Flatten, Dense, Dropout
+from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
+from keras.layers import ReLU, Softmax
 from keras.callbacks import ModelCheckpoint, EarlyStopping
 
 
@@ -89,19 +90,24 @@ def create_model():
     input_shape=(24,24,1)
 
     model = Sequential()
-    model.add(Conv2D(4, (3, 3), input_shape=input_shape, padding='same', activation = 'relu'))
+    model.add(Conv2D(2, (3, 3), input_shape=input_shape, padding='same'))
+    model.add(ReLU())
     model.add(MaxPooling2D(pool_size=(2, 2)))
 
-    model.add(Conv2D(8, (3, 3), padding='same', activation = 'relu'))
+    model.add(Conv2D(4, (3, 3), padding='same'))
+    model.add(ReLU())
     model.add(MaxPooling2D(pool_size=(2, 2)))
 
-    model.add(Conv2D(12, (3, 3), padding='same', activation = 'relu'))
+    model.add(Conv2D(8, (3, 3), padding='same'))
+    model.add(ReLU())
     model.add(MaxPooling2D(pool_size=(2, 2)))
 
     model.add(Flatten())
-    model.add(Dense(64, activation = 'relu'))
+    model.add(Dense(64))
+    model.add(ReLU())
     model.add(Dropout(0.5))
-    model.add(Dense(7, activation = 'softmax'))
+    model.add(Dense(7))
+    model.add(Softmax())
 
     model.compile(loss='categorical_crossentropy', metrics=['accuracy'],optimizer='RMSprop')
     
