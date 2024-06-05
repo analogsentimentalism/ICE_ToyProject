@@ -43,13 +43,13 @@ initial begin
 	for(i=0;i<3;i=i+1) begin
 		for(j=0;j<NUMI_ONCE;j=j+1) begin
 			if(i==0) begin
-				data_temp	[j*DATA_WIDTH+:DATA_WIDTH]	= 8'h1C + j/2;
+				data_temp	[j*DATA_WIDTH+:DATA_WIDTH]	= 8'h1;
 			end
 			if(i==1) begin
-				data_temp	[j*DATA_WIDTH+:DATA_WIDTH]	= 8'h2C + j/2;
+				data_temp	[j*DATA_WIDTH+:DATA_WIDTH]	= 8'h2;
 			end
 			if(i==2) begin
-				data_temp	[j*DATA_WIDTH+:DATA_WIDTH]	= 8'h10 + j/2;
+				data_temp	[j*DATA_WIDTH+:DATA_WIDTH]	= 8'h3;
 			end
 		end 
 		input_data(data_temp);
@@ -69,5 +69,16 @@ begin
 	valid_i	= 1'b0;
 end
 endtask
+
+integer cnt;
+
+initial begin
+	cnt = 0;
+end
+
+always @(posedge u_densedense.valid_w) begin
+	cnt = cnt + 1;
+	$display("VALID:::::::%d",cnt);
+end
 
 endmodule
