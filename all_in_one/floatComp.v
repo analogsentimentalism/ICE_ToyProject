@@ -4,7 +4,7 @@ module floatComp(
 parameter DATA_BITS = 8;
 
 input signed [DATA_BITS-1 : 0] floatA, floatB;
-output signed reg [DATA_BITS-1 : 0] Max;
+output reg signed [DATA_BITS-1 : 0] Max;
 
 always @ (floatA or floatB) begin
     if(floatA > floatB)
