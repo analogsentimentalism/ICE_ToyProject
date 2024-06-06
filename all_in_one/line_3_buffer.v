@@ -3,7 +3,7 @@ module line_3_buffer(
 );
 parameter DATA_BITS = 8;
 parameter D = 1;
-parameter H = 12;
+parameter H = 3;
 parameter W = 12;
 parameter K = 2;
 input clk, resetn;
@@ -22,6 +22,7 @@ reg [1:0] counter;
 wire [1:0] ptr1, ptr2, ptr3;
 reg [2:0] out_counter;
 
+reg button;
 assign ptr1 = counter;
 assign ptr2 = (counter<2'b10) ? counter + 2'h1 : 2'b00;
 assign ptr3 = (ptr2<2'b10) ? ptr2+3'h1 : 2'b00;   
@@ -30,6 +31,15 @@ assign output_2 = buffer[ptr2][D*(W+2)*DATA_BITS*out_counter +: D*(W+2)*DATA_BIT
 assign output_3 = buffer[ptr3][D*(W+2)*DATA_BITS*out_counter +: D*(W+2)*DATA_BITS];
 assign valid_o = valid;
 
+always@(posedge clk or negedge resetn) begin
+    if (!resetn)
+        button <= 1'b0;
+    else if ((zero_padding_counter == H) & (out_counter == K-1) & behind_conv_done & button)
+        button <= 1'b0;
+    else if ((zero_padding_counter == H) & (out_counter == K-1) & behind_conv_done)
+        button <= 1'b1;
+    
+end
 always@ (posedge clk or negedge resetn) begin
     if(!resetn)
         out_counter <= 3'h0;
@@ -47,7 +57,7 @@ always@(posedge clk or negedge resetn) begin
         zero_padding_counter <= 5'h0;
     else if(valid_i)
         zero_padding_counter <= zero_padding_counter + 5'h1;
-    else if ((zero_padding_counter == H) & behind_conv_done & (out_counter == K))
+    else if ((zero_padding_counter == H) & behind_conv_done & (out_counter == K-1) & button)
         zero_padding_counter <= 5'h0;
 end
 always @ (posedge clk or negedge resetn) begin
@@ -55,15 +65,20 @@ always @ (posedge clk or negedge resetn) begin
         valid <= 1'b0;
     else if (valid)
         valid<= 1'b0;
+    else if (button)
+        valid <= 1'b1;
+    else if((zero_padding_counter == H) & (out_counter < K-1) & (behind_conv_done))
+        valid <= 1'b1;
     else if ((valid_i & (buffer_full >= 2'b01)) | ((out_counter < K-1) & behind_conv_done))
         valid<=1'b1;
+    
 end
 always @(posedge clk or negedge resetn)begin
     if (!resetn)
         counter <= 2'h0;
-    else if ((counter == 2'b10)&(valid_i | ((zero_padding_counter == H) & behind_conv_done)))
+    else if ((counter == 2'b10)&(valid_i | ((zero_padding_counter == H) & behind_conv_done & (out_counter == K-1))))
         counter <= 2'h0;
-    else if(valid_i|((zero_padding_counter == H)& behind_conv_done)&(out_counter == K))
+    else if(valid_i|((zero_padding_counter == H)& behind_conv_done)&(out_counter == K-1))
         counter <= counter + 2'b1;
 end
 always@(posedge clk or negedge resetn) begin
@@ -83,7 +98,7 @@ generate
                 buffer[i][D*(W+2)*DATA_BITS*j+:D*(W+2)*DATA_BITS] <= 'h0;
             else if ((valid_i)&(i == counter))
                 buffer[i][D*(W+2)*DATA_BITS*j+:D*(W+2)*DATA_BITS] <= {{D*DATA_BITS{1'b0}},input_data[D*W*DATA_BITS*j+:D*W*DATA_BITS],{D*DATA_BITS{1'b0}}};
-            else if (((zero_padding_counter==H)&behind_conv_done) & (i == counter))
+            else if (((zero_padding_counter==H)&behind_conv_done&(out_counter == K-1)) & (i == counter))
                 buffer[i][D*(W+2)*DATA_BITS*j+:D*(W+2)*DATA_BITS] <= 'h0;
         end
     end
