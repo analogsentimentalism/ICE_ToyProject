@@ -47,14 +47,11 @@ always @(posedge clk) begin
 				else begin
 					if(conv_done) begin
 						mem_wait	<= 1'b1;
-						if(cnt==W+1) begin
-							cnt	<= {clogb2(W-1){1'b0}};
-						end
-						else if (cnt == W) begin
-							valid_o		<= 1'b1;
-							cnt	<= cnt + 1;
+						if(cnt==W-1) begin
+							cnt	<= cnt;
 						end
 						else begin
+							valid_o		<= 1'b1;
 							cnt	<= cnt + 1;
 						end
 					end
