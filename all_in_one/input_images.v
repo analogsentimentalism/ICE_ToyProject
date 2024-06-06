@@ -47,7 +47,7 @@ always @(posedge clk) begin
 				else begin
 					if(conv_done) begin
 						mem_wait	<= 1'b1;
-						if(cnt==W-1) begin
+						if(cnt==W) begin
 							cnt	<= cnt;
 						end
 						else begin
