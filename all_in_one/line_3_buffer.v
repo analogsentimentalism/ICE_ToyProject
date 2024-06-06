@@ -3,9 +3,9 @@ module line_3_buffer(
 );
 parameter DATA_BITS = 8;
 parameter D = 1;
-parameter H = 24;
-parameter W = 24;
-parameter K = 6;
+parameter H = 12;
+parameter W = 12;
+parameter K = 2;
 input clk, resetn;
 input [D*W*DATA_BITS*K-1:0] input_data;
 input behind_conv_done;
@@ -33,10 +33,11 @@ assign valid_o = valid;
 always@ (posedge clk or negedge resetn) begin
     if(!resetn)
         out_counter <= 3'h0;
+    else if ((out_counter == K-1 ) & behind_conv_done)
+        out_counter <= 3'h0;        
     else if(behind_conv_done)
         out_counter <= out_counter + 3'b001;
-    else if (out_counter == K)
-        out_counter <= 3'h0;
+
     else
         out_counter <= out_counter;
 end
@@ -54,7 +55,7 @@ always @ (posedge clk or negedge resetn) begin
         valid <= 1'b0;
     else if (valid)
         valid<= 1'b0;
-    else if ((valid_i & (buffer_full == 2'b01)) | behind_conv_done)
+    else if ((valid_i & (buffer_full >= 2'b01)) | ((out_counter < K-1) & behind_conv_done))
         valid<=1'b1;
 end
 always @(posedge clk or negedge resetn)begin
