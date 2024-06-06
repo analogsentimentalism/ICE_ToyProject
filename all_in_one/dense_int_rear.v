@@ -22,7 +22,7 @@ wire	signed	[31:0				]	before_result	[0:B-1];
 
 reg				[clogb2(D-1)-1:0	]	d_cnt;
 
-reg										mem_wait,	mem_wait_p;
+reg										mem_wait;
 
 initial begin: mem_b_init
 	$readmemh(BIASFILE, bias);

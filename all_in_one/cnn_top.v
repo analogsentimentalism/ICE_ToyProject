@@ -26,9 +26,9 @@ wire [1*24*2*8-1:0] u_relu_1_outputRELU;
 wire [1*12*2*8-1:0] u_max_pooling2d_1_output;
 wire u_max_pooling2d_1_valid_o;
 
-wire [1*(12+2)*2*8-1:0] u_conv_2_image0;
-wire [1*(12+2)*2*8-1:0] u_conv_2_image1;
-wire [1*(12+2)*2*8-1:0] u_conv_2_image2;
+wire [1*(12+2)*8-1:0] u_conv_2_image0;
+wire [1*(12+2)*8-1:0] u_conv_2_image1;
+wire [1*(12+2)*8-1:0] u_conv_2_image2;
 wire u_conv_2_image_start;
 wire u_conv_2_done;
 
@@ -38,9 +38,9 @@ wire [1*12*4*8-1:0] u_relu_2_outputRELU;
 wire [1*6*4*8-1:0] u_max_pooling2d_2_output;
 wire u_max_pooling2d_2_valid_o;
 
-wire [1*(6+2)*4*8-1:0] u_conv_3_image0;
-wire [1*(6+2)*4*8-1:0] u_conv_3_image1;
-wire [1*(6+2)*4*8-1:0] u_conv_3_image2;
+wire [1*(6+2)*8-1:0] u_conv_3_image0;
+wire [1*(6+2)*8-1:0] u_conv_3_image1;
+wire [1*(6+2)*8-1:0] u_conv_3_image2;
 wire u_conv_3_image_start;
 wire u_conv_3_done;
 
