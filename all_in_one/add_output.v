@@ -136,7 +136,7 @@ end
    end
 end
 
-integer debug;
+
 
     integer u,U;
    always @ (*) begin
