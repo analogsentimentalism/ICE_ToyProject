@@ -5,7 +5,7 @@ module cnn_top #(
 	input   resetn,
 	input 	[1*24*8-1:0] input_data,
 	input buffer_1_valid_i,
-	output [8*7-1:0] dense_out,
+	output [7:0] led_o,
 	output dense_valid
 );
 
@@ -53,6 +53,28 @@ wire [1*6*8*8-1:0] u_relu_3_outputRELU;
 wire [1*3*8*8-1:0] u_max_pooling2d_3_output;
 wire u_max_pooling2d_3_valid_o;
 
+wire [8*7-1:0] dense_out;
+reg		[7:0]	dense_reg;		
+reg [31:0] result_cnt;
+reg			flag;
+
+assign	led_o	= dense_reg;
+
+always @(posedge clk) begin
+	if(~resetn) begin
+		result_cnt	<= 32'b0;
+		flag	<= 1'b0;
+		dense_reg	<= 8'b0;
+	end
+	else begin
+		if(dense_valid) flag	<= 1'b1;
+		if(flag) begin
+			result_cnt	<= result_cnt + 32'b1;
+			dense_reg	<= dense_out[(result_cnt/10000)*8+:8];
+		end
+	end
+end
+
 line_3_buffer #(
 	.D	(	1 	),
 	.H  ( 	24	),
@@ -77,7 +99,6 @@ conv_top #(
 	.W	(	24	),
 	.F	(	3	),
 	.K	(	2	),
-	.DATA_WIDTH(8),
 	.KERNELFILE ("mini_conv0_kernel.txt"),
 	.BIASFILE  ("mini_conv0_bias.txt")
 ) u_conv2d_1 (
@@ -136,7 +157,6 @@ conv_top #(
 	.W	(	12	),
 	.F	(	3	),
 	.K	(	4	),
-	.DATA_WIDTH(8),
 	.KERNELFILE ("mini_conv1_kernel.txt"),
 	.BIASFILE  ("mini_conv1_bias.txt")
 
@@ -164,7 +184,7 @@ max_pooling_mult #(
 	.D	(	4	),
 	.H	(	12	),
 	.W	(	12	),
-	.DATABITS(8)
+	.DATA_BITS(8)
 ) u_max_pooling2d_2 (
 	.clk				(	clk				), 
 	.reset				(	resetn			), 
@@ -197,8 +217,7 @@ conv_top #(
 	.W	(	6	),
 	.F	(	3	),
 	.K	(	8	),
-	.DATA_WIDTH(8),
-				.KERNELFILE ("mini_conv2_kernel.txt"),
+	.KERNELFILE ("mini_conv2_kernel.txt"),
 	.BIASFILE  ("mini_conv2_bias.txt")
 
 
