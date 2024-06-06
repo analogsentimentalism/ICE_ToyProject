@@ -105,7 +105,7 @@ endmodule*/
 module floatMult (floatA,floatB,product);
 
 input signed [7:0] floatA, floatB;
-output reg signed [31:0] product;
+output reg signed [15:0] product;
 always @ (floatA or floatB) begin
     product = floatA * floatB;
 end

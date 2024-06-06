@@ -10,16 +10,14 @@ input [input_DATA_WIDTH-1:0] floatA, floatB;
 output reg signed [output_DATA_WIDTH-1:0] result;
 
 wire signed [output_DATA_WIDTH-1:0] multResult;
-wire signed[output_DATA_WIDTH-1:0] addResult;
 
 floatMult FM (floatA,floatB,multResult);
-floatAdd FADD (multResult,result,addResult);
 
 always @ (posedge clk or posedge reset) begin
 	if (reset == 1'b1) begin
 		result = 0;
 	end else begin
-		result = addResult;
+		result <= result + multResult;
 	end
 end
 

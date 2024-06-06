@@ -139,7 +139,7 @@ endmodule*/
 module floatAdd (floatA,floatB,sum);
 	
 input signed [7:0] floatA, floatB;
-output reg signed [31:0] sum;
+output reg signed [16:0] sum;
 
 always @ (floatA or floatB) begin
     sum = floatA + floatB;
