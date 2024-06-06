@@ -27,7 +27,13 @@ endgenerate
 
 always @(posedge clk) begin
 	if (en) begin
-		temp	<= ROM[addra];
+		if(addra<RAM_DEPTH) begin
+			temp	<= ROM[addra];
+		end
+		else begin
+			temp	<= {RAM_WIDTH{1'b0}};
+			$display("time: %d\t\tInvalid Address!!", $time);
+		end
 	end
 end
 
