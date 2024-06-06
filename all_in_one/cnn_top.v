@@ -114,7 +114,7 @@ max_pooling_mult #(
 	.valid_o			(	u_max_pooling2d_1_valid_o)
 );
 line_3_buffer #(
-	.D	(	2 	),
+	.D	(	1 	),
 	.H  ( 	12	),
 	.W	(	12	),
 	.DATA_BITS	(8),
@@ -175,7 +175,7 @@ max_pooling_mult #(
 );
 
 line_3_buffer #(
-	.D	(	4 	),
+	.D	(	1 	),
 	.H  ( 	6	),
 	.W	(	6	),
 	.DATA_BITS	(8),
