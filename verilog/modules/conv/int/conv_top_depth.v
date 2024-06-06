@@ -109,7 +109,7 @@ always @ (posedge clk) begin
     if(D==1) begin
                 result_reg[output_DATA_WIDTH * (1) * W * K - 1:output_DATA_WIDTH * (0) * W * K ] = result_w;
     end
-    else if(D==4) begin
+    else if(D==2) begin
            if(depth_calc==0) begin
                 result_reg[output_DATA_WIDTH * (1) * W * K - 1:output_DATA_WIDTH * (0) * W * K ] = result_w;
            end else if(depth_calc==1)begin
@@ -120,7 +120,7 @@ always @ (posedge clk) begin
                 result_reg[output_DATA_WIDTH * (4) * W * K - 1:output_DATA_WIDTH * (3) * W * K ] = result_w;
            end
     end
-    else if(D==8) begin
+    else if(D==4) begin
            if(depth_calc==0) begin
                 result_reg[output_DATA_WIDTH * (1) * W * K - 1:output_DATA_WIDTH * (0) * W * K ] = result_w;
            end else if(depth_calc==1)begin
