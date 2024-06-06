@@ -29,12 +29,12 @@ assign ptr3 = (ptr2<2'b10) ? ptr2+3'h1 : 2'b00;
 assign output_1 = buffer[ptr1][D*(W+2)*DATA_BITS*out_counter +: D*(W+2)*DATA_BITS];
 assign output_2 = buffer[ptr2][D*(W+2)*DATA_BITS*out_counter +: D*(W+2)*DATA_BITS];
 assign output_3 = buffer[ptr3][D*(W+2)*DATA_BITS*out_counter +: D*(W+2)*DATA_BITS];
-assign valid_o = valid;
+assign valid_o = (zero_padding_counter == 'h0) ? 1'b0 : valid;
 
 always@(posedge clk or negedge resetn) begin
     if (!resetn)
         button <= 1'b0;
-    else if ((zero_padding_counter == H) & (out_counter == K-1) & behind_conv_done & button)
+    else if((zero_padding_counter == H) & (out_counter == K-1) & behind_conv_done & button)
         button <= 1'b0;
     else if ((zero_padding_counter == H) & (out_counter == K-1) & behind_conv_done)
         button <= 1'b1;
@@ -65,9 +65,11 @@ always @ (posedge clk or negedge resetn) begin
         valid <= 1'b0;
     else if (valid)
         valid<= 1'b0;
-    else if (button)
+    else if (button & behind_conv_done)
         valid <= 1'b1;
-    else if((zero_padding_counter == H) & (out_counter < K-1) & (behind_conv_done))
+    else if((zero_padding_counter == H) & (out_counter < K) & (behind_conv_done) & !button)
+        valid <= 1'b1;
+    else if((zero_padding_counter == H) & (out_counter < K-1) & (behind_conv_done) & button)
         valid <= 1'b1;
     else if ((valid_i & (buffer_full >= 2'b01)) | ((out_counter < K-1) & behind_conv_done))
         valid<=1'b1;
