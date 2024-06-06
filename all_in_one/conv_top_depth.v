@@ -25,9 +25,9 @@ module conv_top #(
 wire    signed     [output_DATA_WIDTH * 1 * W * K - 1:0]     result_w; // conv_multi result
 wire                                                         done_w;
 wire                                                         add_start_w;
-wire    signed     [1*K*F*F*input_DATA_WIDTH-1:0]            kernel;
-wire    signed     [K*output_DATA_WIDTH-1:0]                 bias;
-
+wire         [1*K*F*F*input_DATA_WIDTH-1:0]            kernel;
+reg         [K*output_DATA_WIDTH-1:0]                 bias[0:0];
+wire        [K*output_DATA_WIDTH-1:0]                 bias_w;
 reg                [D* output_DATA_WIDTH * 1 * W * K - 1:0]  result_reg;
 reg     [1:0]           depth_calc; // depth_calc is depth of calc (# of input channel)
 
@@ -58,8 +58,13 @@ assign add_start_w = ((depth_calc == (D-1)) && done_w);
 .en(1'b1),
 .dout(kernel)
   );
+  
+initial begin
+    $readmemh(BIASFILE, bias);
+end
+assign bias_w = bias[0];
 
-rom #(
+/*rom #(
     .RAM_WIDTH(K*output_DATA_WIDTH),                       // Specify RAM data width
     .RAM_DEPTH(1),                     // Specify RAM depth (number of entries)
     //.RAM_PERFORMANCE("LOW_LATENCY"), // Select "HIGH_PERFORMANCE" or "LOW_LATENCY" 
@@ -70,7 +75,7 @@ rom #(
 .en(1'b1),
 .dout(bias)
   );
-
+*/
 /*genvar i;
 generate
     for (i=0;i<D;i=i+1) begin  
@@ -142,7 +147,7 @@ add_output #(
 .rst_n(rstn_i),
 .output_convmul_i(result_reg),
 .done_convmul_i(add_start_w),
-.bias(bias),
+.bias(bias_w),
 .output_add_o(output_add_o),
 .done_add_o(output_add_done_o)
 );
