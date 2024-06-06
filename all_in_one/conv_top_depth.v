@@ -29,23 +29,23 @@ wire    signed     [1*K*F*F*input_DATA_WIDTH-1:0]            kernel;
 wire    signed     [K*output_DATA_WIDTH-1:0]                 bias;
 
 reg                [D* output_DATA_WIDTH * 1 * W * K - 1:0]  result_reg;
-integer                depth_calc; // depth_calc is depth of calc (# of input channel)
+reg     [1:0]           depth_calc; // depth_calc is depth of calc (# of input channel)
 
 always @ (posedge clk) begin
     if(rstn_i) begin
-        depth_calc <= 0;
+        depth_calc <= 'b0;
     end
     else begin
         if(depth_calc < (D-1) && done_w) begin
-            depth_calc <= depth_calc + 1;
+            depth_calc <= depth_calc + 1'b1;
         end
         else if(depth_calc == (D-1) && done_w) begin
-            depth_calc <= 0;
+            depth_calc <= 'b0;
         end
     end
 end
 
-assign add_start_w = (depth_calc == (D-1) && done_w);
+assign add_start_w = ((depth_calc == (D-1)) && done_w);
 
   rom #(
     .RAM_WIDTH(F*F*K*input_DATA_WIDTH),                       // Specify RAM data width
@@ -109,35 +109,23 @@ always @ (posedge clk) begin
     if(D==1) begin
                 result_reg[output_DATA_WIDTH * (1) * W * K - 1:output_DATA_WIDTH * (0) * W * K ] = result_w;
     end
-    else if(D==4) begin
-           if(depth_calc==0) begin
+    else if(D==2) begin
+           if(depth_calc=='b0) begin
                 result_reg[output_DATA_WIDTH * (1) * W * K - 1:output_DATA_WIDTH * (0) * W * K ] = result_w;
-           end else if(depth_calc==1)begin
+           end else if(depth_calc=='b1)begin
                 result_reg[output_DATA_WIDTH * (2) * W * K - 1:output_DATA_WIDTH * (1) * W * K ] = result_w;
-           end else if(depth_calc==2)begin
-                result_reg[output_DATA_WIDTH * (3) * W * K - 1:output_DATA_WIDTH * (2) * W * K ] = result_w;
-           end else if(depth_calc==3)begin
-                result_reg[output_DATA_WIDTH * (4) * W * K - 1:output_DATA_WIDTH * (3) * W * K ] = result_w;
-           end
+           end 
     end
-    else if(D==8) begin
-           if(depth_calc==0) begin
+    else if(D==4) begin
+           if(depth_calc=='b0) begin
                 result_reg[output_DATA_WIDTH * (1) * W * K - 1:output_DATA_WIDTH * (0) * W * K ] = result_w;
-           end else if(depth_calc==1)begin
+           end else if(depth_calc=='b1)begin
                 result_reg[output_DATA_WIDTH * (2) * W * K - 1:output_DATA_WIDTH * (1) * W * K ] = result_w;
-           end else if(depth_calc==2)begin
+           end else if(depth_calc=='b10)begin
                 result_reg[output_DATA_WIDTH * (3) * W * K - 1:output_DATA_WIDTH * (2) * W * K ] = result_w;
-           end else if(depth_calc==3)begin
+           end else if(depth_calc=='b11)begin
                 result_reg[output_DATA_WIDTH * (4) * W * K - 1:output_DATA_WIDTH * (3) * W * K ] = result_w;
-           end else if(depth_calc==4)begin
-                result_reg[output_DATA_WIDTH * (5) * W * K - 1:output_DATA_WIDTH * (4) * W * K ] = result_w;
-           end else if(depth_calc==5)begin
-                result_reg[output_DATA_WIDTH * (6) * W * K - 1:output_DATA_WIDTH * (5) * W * K ] = result_w;
-           end else if(depth_calc==6)begin
-                result_reg[output_DATA_WIDTH * (7) * W * K - 1:output_DATA_WIDTH * (6) * W * K ] = result_w;
-           end else if(depth_calc==7)begin
-                result_reg[output_DATA_WIDTH * (8) * W * K - 1:output_DATA_WIDTH * (7) * W * K ] = result_w;
-           end
+           end 
     end
     end
 end
