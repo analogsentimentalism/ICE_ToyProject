@@ -1,10 +1,7 @@
-module cnn_top #(
-
-) (
+module cnn_top (
 	input	clk,
 	input   resetn,
 	input 	[1*24*8-1:0] input_data,
-	input buffer_1_valid_i,
 	output [7:0] led_o,
 	output dense_valid
 );

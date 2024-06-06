@@ -51,10 +51,10 @@ parameter       output_DATA_WIDTH = 8
     reg    signed     [0:H*output_DATA_WIDTH-1   ]  add_out_wire [K-1:0];
 
    // assign output_add_o = {add_output[7],add_output[6],add_output[5],add_output[4],add_output[3],add_output[2],add_output[1],add_output[0]};
-   integer i;
+   integer m;
    always @ (*) begin
-        for(i=0;i<K;i=i+1) begin
-            output_add_o[H*output_DATA_WIDTH*i+:H*output_DATA_WIDTH] = add_out_wire[K-i-1];
+        for(m=0;m<K;m=m+1) begin
+            output_add_o[H*output_DATA_WIDTH*m+:H*output_DATA_WIDTH] = add_out_wire[K-m-1];
         end
 end
 
@@ -103,7 +103,7 @@ end
         end
     end
     
-    integer m,h;
+    integer i,h;
     
     always @ (*) begin
         for(h = 0; h < K ; h = h + 1) begin
@@ -112,8 +112,8 @@ end
     end
     
     always @ (*) begin
-        for(m = 0; m < K ; m = m + 1) begin
-            add_input[m]    = (counter < D) ? input_data[(m*H*D*input_DATA_WIDTH + H*input_DATA_WIDTH*counter)+:H*input_DATA_WIDTH] : bias_r[m];//add_input[i];
+        for(i = 0; i < K ; i = i + 1) begin
+            add_input[i]    = (counter < D) ? input_data[(i*H*D*input_DATA_WIDTH + H*input_DATA_WIDTH*counter)+:H*input_DATA_WIDTH] : bias_r[i];//add_input[i];
         end
     end
     
