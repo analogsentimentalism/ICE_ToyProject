@@ -2,6 +2,7 @@ module cnn_top (
 	input	clk,
 	input   resetn,
 	input 	[1*24*8-1:0] input_data,
+	input 	buffer_1_valid_i,
 	output [7:0] led_o,
 	output dense_valid
 );
@@ -16,7 +17,7 @@ wire [1*24*8-1 :0] u_fifo_0_rdata;
 wire [1*(24+2)*8-1 :0] u_conv_1_image0;
 wire [1*(24+2)*8-1 :0] u_conv_1_image1;
 wire [1*(24+2)*8-1 :0] u_conv_1_image2;
-wire buffer_1_valid_i;
+//wire buffer_1_valid_i;
 wire u_conv_1_image_start;
 wire u_conv_1_done;
 
