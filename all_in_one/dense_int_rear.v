@@ -63,7 +63,6 @@ always @(posedge clk) begin: set_result
 	if (~rstn) begin
 		d_cnt		<= 'b0;
 		mem_wait	<= 'b0;
-		mem_wait_p	<= 'b0;
 		valid_o		<= 'b0;
 		for(k=0;k<B;k=k+1) begin
 			before_bias[k]	<= 16'b0;
