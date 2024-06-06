@@ -36,7 +36,7 @@ initial begin
 		buffer_1_valid_i	= 1'b1;
 		repeat(1) @(posedge clk);
 		buffer_1_valid_i	= 1'b0;
-		repeat(1000) @(posedge clk);
+		repeat(100) @(posedge clk);
 	end
 end
 

@@ -1,6 +1,6 @@
 module dense_top #(
 	parameter	DATA_WIDTH	= 8,
-	parameter	NUMI_ONCE = 3*12
+	parameter	NUMI_ONCE = 3*8
 ) (
 	input									clk,
 	input									rstn,
@@ -18,7 +18,7 @@ dense_int_front #(
 	.KERNELFILE	(	"mini_dense0_kernel.txt"	),
 	.H			(	3							),
 	.W			(	3							),
-	.D			(	12							),
+	.D			(	8							),
 	.B			(	64							),
 	.DATA_WIDTH	(	DATA_WIDTH					)
 ) dense_front (
