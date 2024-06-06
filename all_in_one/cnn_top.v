@@ -1,8 +1,8 @@
 module cnn_top (
 	input	clk,
 	input   resetn,
-	input 	[1*24*8-1:0] input_data,
-	input 	buffer_1_valid_i,
+	input	[3:0		]	sw,
+	input					button,
 	output [7:0] led_o,
 	output dense_valid
 );
@@ -56,6 +56,9 @@ reg		[7:0]	dense_reg;
 reg [31:0] result_cnt;
 reg			flag;
 
+wire	[191:0]	input_data;
+wire			buffer_1_valid_i;
+
 assign	led_o	= dense_reg;
 
 always @(posedge clk) begin
@@ -72,6 +75,19 @@ always @(posedge clk) begin
 		end
 	end
 end
+
+input_images #(
+	.W		(	24				),
+	.IMAGES	(	"images.txt"	)
+) u_images (
+	.clk		(	clk				),
+	.rstn		(	resetn			),
+	.sw			(	sw				),
+	.button		(	button			),
+	.conv_done	(	u_conv_1_done	),
+	.data_o		(	input_data		),
+	.valid_o	(	buffer_1_valid_i)
+);
 
 line_3_buffer #(
 	.D	(	1 	),
