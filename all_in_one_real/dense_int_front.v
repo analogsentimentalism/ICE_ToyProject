@@ -71,7 +71,7 @@ generate
 endgenerate
 
 assign	before_result	= before_bias [b_cnt] + bias;
-assign	data_o	= before_result	> 8'sd127 ? 8'sd127 : (before_result < -8'd128 ? -8'd128 : before_result & 8'hFF);
+assign	data_o	= before_result	> 8'sd127 ? 8'sd127 : (before_result < -8'd128 ? -8'd128 : {before_result[31], before_result[6:0]});
 
 always @(posedge clk) begin: input_reg
 	if (~rstn) begin
@@ -81,6 +81,8 @@ always @(posedge clk) begin: input_reg
 		if(valid_i) data_i_reg	<= data_i;
 	end
 end
+
+reg				yet;
 
 integer i, j, k;
 always	@(posedge clk) begin: set_results_onces
@@ -92,6 +94,7 @@ always	@(posedge clk) begin: set_results_onces
 		valid_o		<= 'b0;
 		flag		<= 'b0;
 		flag_n		<= 'b0;
+		yet			<= 'b0;
 		for(k=0;k<B;k=k+1) begin
 			before_bias[k] <= 32'b0;
 		end
@@ -99,7 +102,13 @@ always	@(posedge clk) begin: set_results_onces
 	else begin
 		flag_n		<= flag;
 		mem_wait_p	<= mem_wait;
-		if (valid_i | |b_cnt | mem_wait) begin
+		if(valid_i & |b_cnt) begin
+			yet	<= 'b1;
+		end
+		if (valid_i | |b_cnt | mem_wait | yet) begin
+			if(~(valid_i | |b_cnt | mem_wait) & yet) begin
+				yet	<= 1'b0;
+			end
 			if(mem_wait) begin
 				mem_wait	<= 'b0;
 				for(k=0;k<W*D;k=k+1) begin

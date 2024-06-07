@@ -18,7 +18,7 @@ dense_int_front #(
 	.KERNELFILE	(	"mini_dense0_kernel.txt"	),
 	.H			(	3							),
 	.W			(	3							),
-	.D			(	12							),
+	.D			(	8							),
 	.B			(	64							),
 	.DATA_WIDTH	(	DATA_WIDTH					)
 ) dense_front (

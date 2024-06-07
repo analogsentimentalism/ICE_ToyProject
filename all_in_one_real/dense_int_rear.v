@@ -22,7 +22,7 @@ wire	signed	[31:0				]	before_result	[0:B-1];
 
 reg				[clogb2(D-1)-1:0	]	d_cnt;
 
-reg										mem_wait,	mem_wait_p;
+reg										mem_wait;
 
 initial begin: mem_b_init
 	$readmemh(BIASFILE, bias);
@@ -63,7 +63,6 @@ always @(posedge clk) begin: set_result
 	if (~rstn) begin
 		d_cnt		<= 'b0;
 		mem_wait	<= 'b0;
-		mem_wait_p	<= 'b0;
 		valid_o		<= 'b0;
 		for(k=0;k<B;k=k+1) begin
 			before_bias[k]	<= 16'b0;
