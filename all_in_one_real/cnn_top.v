@@ -20,7 +20,7 @@ wire [1*(24+2)*8-1 :0] u_conv_1_image2;
 //wire buffer_1_valid_i;
 wire u_conv_1_image_start;
 wire u_conv_1_done;
-
+wire u_conv_1_depth_done;
 wire [1*24*2*8-1:0] u_conv_1_outputCONV;
 wire [1*24*2*8-1:0] u_relu_1_outputRELU;
 
@@ -33,6 +33,8 @@ wire [1*(12+2)*8-1:0] u_conv_2_image2;
 wire u_conv_2_image_start;
 wire u_conv_2_done;
 
+wire u_conv_2_depth_done;
+
 wire [1*12*4*8-1:0] u_conv_2_outputCONV;
 wire [1*12*4*8-1:0] u_relu_2_outputRELU;
 
@@ -44,6 +46,7 @@ wire [1*(6+2)*8-1:0] u_conv_3_image1;
 wire [1*(6+2)*8-1:0] u_conv_3_image2;
 wire u_conv_3_image_start;
 wire u_conv_3_done;
+wire u_conv_3_depth_done;
 
 wire [1*6*8*8-1:0] u_conv_3_outputCONV;
 wire [1*6*8*8-1:0] u_relu_3_outputRELU;
@@ -105,7 +108,7 @@ line_3_buffer #(
 	.output_3(u_conv_1_image2),
 	.valid_i(buffer_1_valid_i),
 	.valid_o(u_conv_1_image_start),
-	.behind_conv_done(u_conv_1_done)
+	.behind_conv_done(u_conv_1_depth_done)
 );
 conv_top #(
 	.D 	( 	1	),
@@ -123,8 +126,8 @@ conv_top #(
 	.image2			(	u_conv_1_image2			),
 	.image_start	(	u_conv_1_image_start	),
 	.output_add_o		(	u_conv_1_outputCONV		),
-	.output_add_done_o			(				),
-	.done_w                (u_conv_1_done)
+	.output_add_done_o			(			u_conv_1_done	),
+	.done_w                (u_conv_1_depth_done)
 );
 relu #(
 	.H	(	24	),
@@ -164,7 +167,7 @@ line_3_buffer #(
 	.output_3(u_conv_2_image2),
 	.valid_i(u_max_pooling2d_1_valid_o),
 	.valid_o(u_conv_2_image_start),
-	.behind_conv_done(u_conv_2_done)
+	.behind_conv_done(u_conv_2_depth_done)
 );
 conv_top #(
 	.D 	( 	2	),
@@ -183,8 +186,8 @@ conv_top #(
 	.image2			(u_conv_2_image2),
 	.image_start	(	u_conv_2_image_start),
 	.output_add_o		(	u_conv_2_outputCONV		),
-	.output_add_done_o			(			),
-	.done_w                (u_conv_2_done)
+	.output_add_done_o			(		u_conv_2_done	),
+	.done_w                (u_conv_2_depth_done)
 	
 );
 relu #(
@@ -225,7 +228,7 @@ line_3_buffer #(
 	.output_3(u_conv_3_image2),
 	.valid_i(u_max_pooling2d_2_valid_o),
 	.valid_o(u_conv_3_image_start),
-	.behind_conv_done(u_conv_3_done)
+	.behind_conv_done(u_conv_3_depth_done)
 );
 conv_top #(
 	.D 	( 	4	),
@@ -245,8 +248,8 @@ conv_top #(
 	.image2			(	u_conv_3_image2),
 	.image_start	(	u_conv_3_image_start	),
 	.output_add_o		(	u_conv_3_outputCONV		),
-	.output_add_done_o			(			),
-	.done_w            (u_conv_3_done)
+	.output_add_done_o			(	u_conv_3_done		),
+	.done_w            (u_conv_3_depth_done)
 );
 relu #(
 	.H	(	6	),
