@@ -15,7 +15,7 @@ floatMult FM (floatA,floatB,multResult);
 
 always @ (posedge clk or posedge reset) begin
 	if (reset == 1'b1) begin
-		result = 0;
+		result <= 0;
 	end else begin
 		result <= result + multResult;
 	end
