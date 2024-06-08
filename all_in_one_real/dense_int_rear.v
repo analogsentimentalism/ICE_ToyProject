@@ -42,10 +42,9 @@ rom #(
 genvar gi;
 generate
 	for(gi=0;gi<B;gi=gi+1) begin
-		assign	before_result[gi]					= ((before_bias[gi] + bias[gi]) >>> 14) + 21;
-		// assign	before_result[gi]					= (before_bias[gi] + bias[gi]);
-		assign	data_o[gi*DATA_WIDTH+:DATA_WIDTH]	= before_result[gi]	> 8'sd127 ? 8'sd127 :
-														(before_result[gi] < -8'd128 ? -8'd128 :
+		assign	before_result[gi]					= ((before_bias[gi] + bias[gi]) >>> 14) + $signed({1'b0,5'd21});
+		assign	data_o[gi*DATA_WIDTH+:DATA_WIDTH]	= before_result[gi]	> $signed({1'b0, 8'd127}) ? $signed({1'b0, 8'd127}) :
+														(before_result[gi] < -$signed({1'b0, 8'd128}) ? -$signed({1'b0, 8'd128}) :
 														{before_result[gi][31], before_result[gi][6:0]});
 	end
 endgenerate
