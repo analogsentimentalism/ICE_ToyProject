@@ -66,7 +66,7 @@ parameter       shift = 10
  end
 
 
-   assign done_add_o = (counter == D);
+   assign done_add_o = (counter == D+1);
     
  //  reg      [0:H*input_DATA_WIDTH-1]      bias_r[K-1:0];
     
@@ -78,8 +78,8 @@ parameter       shift = 10
              if(done_convmul_i) begin
                 counter = 'h0;
              end
-             else if (counter == D)
-                counter = D+1;
+             else if (counter == D+1)
+                counter = D+2;
              else if(state) begin
                 counter = counter + 'b1;
              end
@@ -94,7 +94,7 @@ parameter       shift = 10
             if(done_convmul_i) begin
                 state = 1'b1;
             end
-            else if(counter == D) begin
+            else if(counter == D+1) begin
                 state = 1'b0;
             end
         end
@@ -132,11 +132,11 @@ parameter       shift = 10
    always @ (posedge clk) begin
    for(k=0;k<K;k=k+1) begin
         for(j=0;j<H;j=j+1) begin
-            if(counter == D+1 || counter == 0) begin
+            if(counter == D+2 || counter == 0) begin
                 add_output[k][j] = 'h0;
             end 
             else begin
-                add_output[k][j] = add_input[k][j] + add_output[k][j];
+                add_output[k][j] = (add_input[k][j]) + (add_output[k][j]);
             end
            /* floatAdd u_floatAdd(
             .floatA(add_input[k][DATA_WIDTH*j+:8]),
