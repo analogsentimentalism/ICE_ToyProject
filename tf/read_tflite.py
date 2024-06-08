@@ -295,24 +295,28 @@ def decimal_to_hex(num, shift, width):
 	num = num * 2 ** shift
 	if(num<0):
 		sign = '1'
+		n = '0'
+		p = '1'
 		num = -num
 	elif(num == 0):
 		return '0' * int(width/4)
 	else:
 		sign = '0'
+		n = '1'
+		p = '0'
   
 	for i in range(32):
 		if(num >= 2 ** (31-i)):
-			temp = temp + '1'
+			temp = temp + n
 			num = num - 2 ** (31-i)
 			flag = 1
 		elif(flag == 1):
-			temp = temp + '0'
+			temp = temp + p
 	result = result + sign
 	for i in range (width-len(temp)-1):
 		result = result + sign
 	result = result + temp
-	result = hex(int(result[0:width],2))[2:].zfill(int(width/4))
+	result = hex(int(result[0:width],2) + (sign == '1'))[2:].zfill(int(width/4))
 	return result
 
 def find_shift(num):
