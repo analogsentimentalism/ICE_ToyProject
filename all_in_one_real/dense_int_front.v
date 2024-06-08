@@ -70,7 +70,7 @@ generate
 	end
 endgenerate
 
-assign	before_result	= before_bias [b_cnt] + bias;
+assign	before_result	= (before_bias [b_cnt] + bias) >>> 16;
 assign	data_o	= before_result	> 8'sd127 ? 8'sd127 : (before_result < -8'd128 ? -8'd128 : {before_result[31], before_result[6:0]});
 
 always @(posedge clk) begin: input_reg

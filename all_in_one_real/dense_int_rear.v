@@ -18,7 +18,7 @@ reg		signed	[31:0				]	bias	[0:B-1];
 wire			[B*DATA_WIDTH-1:0	]	mem_k;
 
 reg		signed	[15:0				]	before_bias		[0:B-1];
-wire	signed	[31:0				]	before_result	[0:B-1];
+wire	signed	[63:0				]	before_result	[0:B-1];
 
 reg				[clogb2(D-1)-1:0	]	d_cnt;
 
@@ -42,7 +42,7 @@ rom #(
 genvar gi;
 generate
 	for(gi=0;gi<B;gi=gi+1) begin
-		assign	before_result[gi]					= before_bias[gi] + bias[gi];
+		assign	before_result[gi]					= (before_bias[gi] + bias[gi]) >>> 14 + 21;
 		assign	data_o[gi*DATA_WIDTH+:DATA_WIDTH]	= before_result[gi]	> 8'sd127 ? 8'sd127 :
 														(before_result[gi] < -8'd128 ? -8'd128 :
 														before_result[gi] & 8'hFF);
