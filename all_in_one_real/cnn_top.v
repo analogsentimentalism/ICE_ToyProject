@@ -1,6 +1,6 @@
 module cnn_top (
 	input	clk,
-	input   resetn,
+	input   reset,
 	input	[3:0		]	sw,
 	input					button,
 	output reg [7:0] led_o,
@@ -11,7 +11,8 @@ module cnn_top (
 `define		W			24
 `define 	DATA_WIDTH	8
 
-
+wire resetn;
+assign resetn = ~reset;
 
 wire [1*24*8-1 :0] u_fifo_0_rdata;
 wire [1*(24+2)*8-1 :0] u_conv_1_image0;

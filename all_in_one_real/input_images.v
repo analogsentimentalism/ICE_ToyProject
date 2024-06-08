@@ -16,6 +16,9 @@ reg								button_reg;
 reg								button_p;
 reg								mem_wait;
 
+wire	[8:0]					addr;
+assign	addr	= cnt + sw * W;
+
 rom #(
 	.RAM_WIDTH	(	W * 8			), 
 	.RAM_DEPTH	(	W * 16			),
@@ -23,7 +26,7 @@ rom #(
 ) image_rom (
 	.clk	(	clk				),
 	.en		(	1'b1			),
-	.addra	(	cnt + sw * W	),
+	.addra	(	addr			),
 	.dout	(	data_o			)
 );
 
