@@ -9,7 +9,7 @@ module conv_top #(
 	parameter  output_DATA_WIDTH   = 32                ,
 	parameter	K           = 8,
 	parameter  F           = 3,
-	parameter	shift = 10
+	parameter  shift       =14
 ) (
 	input									clk				,
 	input signed 	[input_DATA_WIDTH * 1 * (W+2) - 1:0]	    image0			,
@@ -18,14 +18,13 @@ module conv_top #(
 	input                                   image_start     ,
 	input									rstn_i			,
 	output signed 	[input_DATA_WIDTH * W * K - 1:0]      output_add_o,
-	output                                  output_add_done_o,
-	output                                 done_w
+	output                                  output_add_done_o
 );
 
 
 
 wire    signed     [output_DATA_WIDTH * 1 * W * K - 1:0]     result_w; // conv_multi result
-
+wire                                                         done_w;
 wire                                                         add_start_w;
 wire         [1*K*F*F*input_DATA_WIDTH-1:0]            kernel;
 reg         [K*output_DATA_WIDTH-1:0]                 bias[0:0];
@@ -144,7 +143,7 @@ add_output #(
 .K(K),
 .input_DATA_WIDTH(32),
 .output_DATA_WIDTH(8),
-.shift(shift)	
+.shift(shift)
 ) add_output(
 .clk(clk),
 .rst_n(rstn_i),
