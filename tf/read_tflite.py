@@ -137,9 +137,9 @@ interpreter.invoke()
 # print("*1st Conv Bias")
 # print(interpreter.get_tensor(10))
 # print("--------------------------")
-print("1st Conv")
-print(interpreter.get_tensor(13))
-print("--------------------------")
+# print("1st Conv")
+# print(interpreter.get_tensor(13))
+# print("--------------------------")
 # print("1st Maxpool")
 # print(interpreter.get_tensor(14))
 # print("--------------------------")
@@ -172,10 +172,10 @@ print("--------------------------")
 # print("--------------------------")
 # print("*2nd Dense BIAS")
 # print(interpreter.get_tensor(9))
-# print("--------------------------")
-# print("2nd Dense")
-# print(interpreter.get_tensor(21))
-# print("--------------------------")
+print("--------------------------")
+print("2nd Dense")
+print(interpreter.get_tensor(21))
+print("--------------------------")
 # print("Softmax")
 # print(interpreter.get_tensor(22))
 # print("--------------------------")
@@ -240,7 +240,7 @@ for i in range(7):
 #%%
 for i in range(7):
 	print(i+1,"번째")
-	print("계산값: ", (ans[i].sum()+c[0][i]))
+	print("계산값: ", (ans[i].sum()+c[0][i])/o_scale + o_zero_points)
 	print("정답: ",answer[0][i])
 
 #%% 합치기
@@ -296,29 +296,23 @@ def decimal_to_hex(num, shift, width):
 	if(num<0):
 		sign = '1'
 		num = -num
+	elif(num == 0):
+		return '0' * int(width/4)
 	else:
 		sign = '0'
-	
-	for i in range(100):
-		if(num > 2 ** (31-i)):
+  
+	for i in range(32):
+		if(num >= 2 ** (31-i)):
 			temp = temp + '1'
 			num = num - 2 ** (31-i)
 			flag = 1
 		elif(flag == 1):
 			temp = temp + '0'
-		if(shift):
-			if(len(temp) == shift):
-				break
-		else:
-			if(len(temp) == width-1):
-				break
-	if(shift):
-		for i in range (width-shift):
-			result = result + sign
-		result = result + temp
-	else:
-		result = sign + temp
-	result = hex(int(result,2))[2:].zfill(int(width/4))
+	result = result + sign
+	for i in range (width-len(temp)-1):
+		result = result + sign
+	result = result + temp
+	result = hex(int(result[0:width],2))[2:].zfill(int(width/4))
 	return result
 
 def find_shift(num):
@@ -338,15 +332,16 @@ def find_shift(num):
 
 to_hex_v = np.vectorize(decimal_to_hex)
 # %%
-to_hex_v(all['conv0_bias'], 0)
+to_hex_v(all['conv0_bias'], 0, 32)
 # %%
-decimal_to_hex(0.0352352351, 0)
+decimal_to_hex(0.0352352351, 0, 32)
 # %%
 all['conv0_kernel'] = decimal_to_hex(all['conv0_kernel'])
 # %%
-find_shift(0.0016566326)
+find_shift(0.10810178)
+decimal_to_hex(0.10810178, 14, 8)
 # %%
-decimal_to_hex(1.0016566326, 11, 32)
+decimal_to_hex(1.0016566326, 15, 32)
 
 #%%
 for item in all:
@@ -362,18 +357,21 @@ for item in all:
 		print(find_shift(max(ll)))
 	else:
 		print(find_shift(min(mi)))
-# %%
+# %% shift 2개 뺀 값으로 넣어야 함.
 mod = {}
 mod['conv0_bias'] = to_hex_v(all['conv0_bias'], 13, 32)
-mod['conv0_kernel'] = to_hex_v(all['conv0_kernel'], 0, 8)
+mod['conv0_kernel'] = to_hex_v(all['conv0_kernel'], 13, 8)
 mod['conv1_bias'] = to_hex_v(all['conv1_bias'], 13, 32)
-mod['conv1_kernel'] = to_hex_v(all['conv1_kernel'], 0, 8)
+mod['conv1_kernel'] = to_hex_v(all['conv1_kernel'], 13, 8)
 mod['conv2_bias'] = to_hex_v(all['conv2_bias'], 15, 32)
-mod['conv2_kernel'] = to_hex_v(all['conv2_kernel'], 0, 8)
+mod['conv2_kernel'] = to_hex_v(all['conv2_kernel'], 15, 8)
 mod['dense0_bias'] = to_hex_v(all['dense0_bias'], 16, 32)
-mod['dense0_kernel'] = to_hex_v(all['dense0_kernel'], 0, 8)
+mod['dense0_kernel'] = to_hex_v(all['dense0_kernel'], 16, 8)
 mod['dense1_bias'] = to_hex_v(all['dense1_bias'], 14, 32)
-mod['dense1_kernel'] = to_hex_v(all['dense1_kernel'], 0, 8)
+mod['dense1_kernel'] = to_hex_v(all['dense1_kernel'], 14, 8)
+
+print(all['dense1_kernel'][0])
+print(mod['dense1_kernel'][0])
 # %%
 dst_path = os.path.dirname(os.path.realpath(__file__))+"\\last_hex\\"
 
