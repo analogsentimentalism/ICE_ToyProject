@@ -104,10 +104,11 @@ endmodule*/
 
 module floatMult (floatA,floatB,product);
 
-input signed [7:0] floatA, floatB;
+input [7:0] floatA;
+input [7:0] floatB;
 output reg signed [31:0] product;
 always @ (floatA or floatB) begin
-    product = floatA * floatB;
+    product = $signed({1'b0,floatA}) * $signed(floatB);
 end
 /*
 reg sign;
