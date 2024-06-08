@@ -116,6 +116,7 @@ conv_top #(
 	.W	(	24	),
 	.F	(	3	),
 	.K	(	2	),
+	.shift	(	13	),
 	.KERNELFILE ("mini_conv0_kernel.txt"),
 	.BIASFILE  ("mini_conv0_bias.txt")
 ) u_conv2d_1 (
@@ -175,6 +176,7 @@ conv_top #(
 	.W	(	12	),
 	.F	(	3	),
 	.K	(	4	),
+	.shift	(	13	),
 	.KERNELFILE ("mini_conv1_kernel.txt"),
 	.BIASFILE  ("mini_conv1_bias.txt")
 
@@ -236,6 +238,7 @@ conv_top #(
 	.W	(	6	),
 	.F	(	3	),
 	.K	(	8	),
+	.shift	(	15	),
 	.KERNELFILE ("mini_conv2_kernel.txt"),
 	.BIASFILE  ("mini_conv2_bias.txt")
 

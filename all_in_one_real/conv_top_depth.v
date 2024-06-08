@@ -8,7 +8,8 @@ module conv_top #(
 	parameter	input_DATA_WIDTH	= 8					,
 	parameter  output_DATA_WIDTH   = 32                ,
 	parameter	K           = 8,
-	parameter  F           = 3
+	parameter  F           = 3,
+	parameter	shift = 10
 ) (
 	input									clk				,
 	input signed 	[input_DATA_WIDTH * 1 * (W+2) - 1:0]	    image0			,
@@ -142,7 +143,8 @@ add_output #(
 .F(F),
 .K(K),
 .input_DATA_WIDTH(32),
-.output_DATA_WIDTH(8)
+.output_DATA_WIDTH(8),
+.shift(shift)	
 ) add_output(
 .clk(clk),
 .rst_n(rstn_i),
