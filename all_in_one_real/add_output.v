@@ -79,7 +79,7 @@ parameter       shift = 10
                 counter = 'h0;
              end
              else if (counter == D)
-                counter <= D+1;
+                counter = D+1;
              else if(state) begin
                 counter = counter + 'b1;
              end
@@ -156,15 +156,12 @@ always @ (*) begin
         for(U=0;U<H;U=U+1) begin
             if($signed(add_output[u][U]>>>shift) >= $signed('d127)) begin
                  add_out_wire[u][U] = 8'b0111_1111;
-                 add_output[u][U] = $signed(add_output[u][U]>>>shift);
             end
             else if($signed(add_output[u][U]>>>shift) < $signed(-'d128)) begin
                 add_out_wire[u][U] = 8'b1000_0000;
-                add_output[u][U] = $signed(add_output[u][U]>>>shift);
             end 
             else begin
                 add_out_wire[u][U] = $signed(add_output[u][U]>>>shift);
-                add_output[u][U] = $signed(add_output[u][U]>>>shift);
             end 
           end
    end
