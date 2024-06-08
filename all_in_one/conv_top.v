@@ -17,13 +17,14 @@ module conv_top #(
 	input                                   image_start     ,
 	input									rstn_i			,
 	output signed 	[input_DATA_WIDTH * W * K - 1:0]      output_add_o,
-	output                                  output_add_done_o
+	output                                  output_add_done_o,
+    output                              done_w
 );
 
 
 
 wire    signed     [output_DATA_WIDTH * 1 * W * K - 1:0]     result_w; // conv_multi result
-wire                                                         done_w;
+//wire                                                         done_w;
 wire                                                         add_start_w;
 wire         [1*K*F*F*input_DATA_WIDTH-1:0]            kernel;
 reg         [K*output_DATA_WIDTH-1:0]                 bias[0:0];
