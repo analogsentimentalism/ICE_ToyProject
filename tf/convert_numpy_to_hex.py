@@ -9,8 +9,8 @@ def to_hex(num, length):
 to_hex_v = np.vectorize(to_hex)
 
 #%%
-src_path = os.path.dirname(os.path.realpath(__file__))+"\\npy\\"
-dst_path = os.path.dirname(os.path.realpath(__file__))+"\\npy_hex\\"
+src_path = os.path.dirname(os.path.realpath(__file__))+"\\npy_quantized\\"
+dst_path = os.path.dirname(os.path.realpath(__file__))+"\\hex_quantized\\"
 
 file_list = os.listdir(src_path)
 print(file_list)

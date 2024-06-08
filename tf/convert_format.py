@@ -2,7 +2,7 @@
 import os
 
 
-src_path = os.path.dirname(os.path.realpath(__file__))+"\\npy_hex\\"
+src_path = os.path.dirname(os.path.realpath(__file__))+"\\last_hex\\"
 dst_path = os.path.dirname(os.path.realpath(__file__))+"\\last\\"
 
 files = ["mini_conv0_kernel.txt", "mini_conv1_kernel.txt", "mini_conv2_kernel.txt", "mini_dense0_kernel.txt", "mini_dense1_kernel.txt"]

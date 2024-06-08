@@ -127,7 +127,7 @@ x_test.shape
 y_test.shape
 
 #%%
-interpreter = tf.lite.Interpreter(model_path=src_path2+"\\model.tflite")
+interpreter = tf.lite.Interpreter("qmodel.tflite")
 interpreter.allocate_tensors()
 
 input_details = interpreter.get_input_details()[0]
