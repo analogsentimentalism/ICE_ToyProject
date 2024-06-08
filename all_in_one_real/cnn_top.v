@@ -3,7 +3,7 @@ module cnn_top (
 	input   resetn,
 	input	[3:0		]	sw,
 	input					button,
-	output [7:0] led_o,
+	output reg [7:0] led_o,
 	output dense_valid
 );
 
@@ -62,19 +62,77 @@ reg			flag;
 wire	[191:0]	input_data;
 wire			buffer_1_valid_i;
 
-assign	led_o	= dense_reg;
+always @(posedge clk) begin
+	if (~resetn) begin
+		led_o[7]	<= 1'b0;
+	end
+	else begin
+		if(dense_valid) led_o[7] <= 1'b1;
+	end
+end
 
 always @(posedge clk) begin
 	if(~resetn) begin
-		result_cnt	<= 32'b0;
-		flag	<= 1'b0;
-		dense_reg	<= 8'b0;
+		led_o[6:0] <= 7'b0;
 	end
 	else begin
-		if(dense_valid) flag	<= 1'b1;
-		if(flag) begin
-			result_cnt	<= result_cnt + 32'b1;
-			dense_reg	<= dense_out[(result_cnt/10000)*8+:8];
+		if(dense_valid) begin
+			if ($signed(dense_out[0+:8]) >= $signed(dense_out[8+:8]) &
+				$signed(dense_out[0+:8]) > $signed(dense_out[16+:8]) &
+				$signed(dense_out[0+:8]) >= $signed(dense_out[24+:8]) &
+				$signed(dense_out[0+:8]) > $signed(dense_out[32+:8]) &
+				$signed(dense_out[0+:8]) >= $signed(dense_out[40+:8]) &
+				$signed(dense_out[0+:8]) > $signed(dense_out[48+:8])) begin
+				led_o[6]	<= 1'b1;
+			end
+			else if (	$signed(dense_out[8+:8]) > $signed(dense_out[0+:8]) &
+						$signed(dense_out[8+:8]) > $signed(dense_out[16+:8]) &
+						$signed(dense_out[8+:8]) > $signed(dense_out[24+:8]) &
+						$signed(dense_out[8+:8]) > $signed(dense_out[32+:8]) &
+						$signed(dense_out[8+:8]) > $signed(dense_out[40+:8]) &
+						$signed(dense_out[8+:8]) > $signed(dense_out[48+:8])) begin
+				led_o[5]	<= 1'b1;
+			end
+			else if (	$signed(dense_out[16+:8]) >= $signed(dense_out[0+:8]) &
+						$signed(dense_out[16+:8]) >= $signed(dense_out[8+:8]) &
+						$signed(dense_out[16+:8]) >= $signed(dense_out[24+:8]) &
+						$signed(dense_out[16+:8]) > $signed(dense_out[32+:8]) &
+						$signed(dense_out[16+:8]) >= $signed(dense_out[40+:8]) &
+						$signed(dense_out[16+:8]) > $signed(dense_out[48+:8])) begin
+				led_o[4]	<= 1'b1;
+			end
+			else if (	$signed(dense_out[24+:8]) > $signed(dense_out[0+:8]) &
+						$signed(dense_out[24+:8]) >= $signed(dense_out[8+:8]) &
+						$signed(dense_out[24+:8]) > $signed(dense_out[16+:8]) &
+						$signed(dense_out[24+:8]) > $signed(dense_out[32+:8]) &
+						$signed(dense_out[24+:8]) > $signed(dense_out[40+:8]) &
+						$signed(dense_out[24+:8]) > $signed(dense_out[48+:8])) begin
+				led_o[3]	<= 1'b1;
+			end
+			else if (	$signed(dense_out[32+:8]) >= $signed(dense_out[0+:8]) &
+						$signed(dense_out[32+:8]) >= $signed(dense_out[8+:8]) &
+						$signed(dense_out[32+:8]) >= $signed(dense_out[16+:8]) &
+						$signed(dense_out[32+:8]) >= $signed(dense_out[24+:8]) &
+						$signed(dense_out[32+:8]) >= $signed(dense_out[40+:8]) &
+						$signed(dense_out[32+:8]) > $signed(dense_out[48+:8])) begin
+				led_o[2]	<= 1'b1;
+			end
+			else if (	$signed(dense_out[40+:8]) > $signed(dense_out[0+:8]) &
+						$signed(dense_out[40+:8]) >= $signed(dense_out[8+:8]) &
+						$signed(dense_out[40+:8]) > $signed(dense_out[16+:8]) &
+						$signed(dense_out[40+:8]) >= $signed(dense_out[24+:8]) &
+						$signed(dense_out[40+:8]) > $signed(dense_out[32+:8]) &
+						$signed(dense_out[40+:8]) > $signed(dense_out[48+:8])) begin
+				led_o[1]	<= 1'b1;
+			end
+			else if (	$signed(dense_out[48+:8]) >= $signed(dense_out[0+:8]) &
+						$signed(dense_out[48+:8]) >= $signed(dense_out[8+:8]) &
+						$signed(dense_out[48+:8]) >= $signed(dense_out[16+:8]) &
+						$signed(dense_out[48+:8]) >= $signed(dense_out[24+:8]) &
+						$signed(dense_out[48+:8]) >= $signed(dense_out[32+:8]) &
+						$signed(dense_out[48+:8]) >= $signed(dense_out[40+:8])) begin
+				led_o[0]	<= 1'b1;
+			end
 		end
 	end
 end
@@ -284,47 +342,5 @@ dense_top u_dense_top(
 	.data_o(dense_out),
 	.valid_o(dense_valid)
 );
-
-//dense_top #(
-//	.H			(	`H/4-2				),
-//	.W			(	`W/4-2				),
-//	.DEPTH		(	64					),
-//	.BIAS		(	128					),
-//	.BIASFILE	(	"dense0_bias.txt"	),
-//	.KERNELFILE	(	"dense0_kernel.txt"	)
-//) u_dense_0 (
-//	.clk		(	clk					),
-//	.rstn 		(	resetn				),
-//	.valid_i 	(	u_max_pooling2d_3_valid_o),
-//	.valid_o	(	u_dense_0_valid_o	),
-//	.data_i	(	u_max_pooling2d_3_output),
-//	.data_o		(	u_dense_0_output	)
-//);
-//
-//relu #(
-//	.H	(	`H	),
-//	.W	(	`W	),
-//	.D	(	6	)
-//) u_relu_4 (
-//	.input_data		(u_dense_0_output),
-//	.output_data	(u_relu_4_outputRELU)
-//);
-//
-//dense_top #(
-//	.H			(	`H/4-2				),
-//	.W			(	`W/4-2				),
-//	.DEPTH		(	1					),
-//	.BIAS		(	7					)
-//	.BIASFILE	(	"dense1_bias.txt"	),
-//	.KERNELFILE	(	"dense1_kernel.txt"	)
-//) u_dense_1 (
-//	.clk		(	clk					),
-//	.rstn 		(	resetn				),
-//	.valid_i 	(	u_dense_0_valid_o),
-//	.valid_o	(	u_dense_1_valid_o	),
-//	.data_i		(	u_relu_4_outputRELU),
-//	.data_o		(	u_dense_1_output	)
-//);
-
 
 endmodule
