@@ -45,7 +45,7 @@ generate
 		assign	before_result[gi]					= (before_bias[gi] + bias[gi]) >>> 14 + 21;
 		assign	data_o[gi*DATA_WIDTH+:DATA_WIDTH]	= before_result[gi]	> 8'sd127 ? 8'sd127 :
 														(before_result[gi] < -8'd128 ? -8'd128 :
-														before_result[gi] & 8'hFF);
+														{before_result[31], before_result[6:0]});
 	end
 endgenerate
 
