@@ -84,7 +84,7 @@ end
 
 reg				yet;
 
-integer i, j, k;
+integer k;
 always	@(posedge clk) begin: set_results_onces
 	if(~rstn) begin
 		b_cnt		<= 'b0;
