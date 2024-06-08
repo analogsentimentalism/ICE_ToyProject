@@ -27,7 +27,8 @@ parameter       H = 24,
 parameter       F = 3,
 parameter       K = 8,
 parameter       input_DATA_WIDTH = 32,
-parameter       output_DATA_WIDTH = 8
+parameter       output_DATA_WIDTH = 8,
+parameter       shift = 14
  
     
 )
@@ -139,22 +140,23 @@ end
 
 
     integer u,U;
-   always @ (*) begin
+always @ (*) begin
    for(u=0;u<K;u=u+1) begin
         for(U=0;U<H;U=U+1) begin
-            if(add_output[u][input_DATA_WIDTH*U+:input_DATA_WIDTH] >= 'd127) begin
-                 add_out_wire[u][output_DATA_WIDTH*U+:output_DATA_WIDTH] = 8'b0111_1111;
+            if((add_output[u][U]>>>shift) >= 'd127) begin
+                 add_out_wire[u][U] = 8'b0111_1111;
                  
             end
-            else if(add_output[u][input_DATA_WIDTH*U+:input_DATA_WIDTH] < -'d128) begin
-                add_out_wire[u][output_DATA_WIDTH*U+:output_DATA_WIDTH] = 8'b1000_0000;
+            else if((add_output[u][U]>>>shift) < -'d128) begin
+                add_out_wire[u][U] = 8'b1000_0000;
             end 
             else begin
-                add_out_wire[u][output_DATA_WIDTH*U+:output_DATA_WIDTH] = add_output[u][input_DATA_WIDTH*j+:output_DATA_WIDTH];
+                add_out_wire[u][U] = (add_output[u][U]>>>shift);
             end 
           end
    end
 end
+ 
  
  
     
